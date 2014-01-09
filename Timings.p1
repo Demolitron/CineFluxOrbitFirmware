@@ -1,0 +1,667 @@
+Version 3.2 HI-TECH Software Intermediate Code
+[u S1 `uc -> 4 `i `c -> 4 `i `ui -> 2 `i `i -> 2 `i `ul 1 `l 1 ]
+[n S1 LONG ub b ui i ul l ]
+"4 Z:\CineFlux\Dropbox\Orbit\timings.h
+[v _Wait_ms_nonblocking `(v ~T0 0 ef1`ui ]
+"2
+[v _Wait_ms `(v ~T0 0 ef1`ui ]
+"40 Z:\CineFlux\Dropbox\Orbit\main.h
+[v _Idle `(v ~T0 0 ef ]
+"5 Z:\CineFlux\Dropbox\Orbit\timings.h
+[v _Wait_ticks `(v ~T0 0 ef1`uc ]
+[; ;main.h: 7: typedef union LONG {
+[; ;main.h: 8: unsigned char ub[4];
+[; ;main.h: 9: signed char b[4];
+[; ;main.h: 10: unsigned int ui[2];
+[; ;main.h: 11: signed int i[2];
+[; ;main.h: 12: unsigned long ul;
+[; ;main.h: 13: signed long l;
+[; ;main.h: 14: };
+[; ;main.h: 16: typedef union {
+[; ;main.h: 17: unsigned char ub[4];
+[; ;main.h: 18: signed char b[4];
+[; ;main.h: 19: unsigned int ui[2];
+[; ;main.h: 20: signed int i[2];
+[; ;main.h: 21: unsigned long ul;
+[; ;main.h: 22: signed long l;
+[; ;main.h: 23: float fl;
+[; ;main.h: 24: double dbl;
+[; ;main.h: 25: } MULTI;
+[; ;main.h: 29: void main(void);
+[; ;main.h: 30: void AckCmd(unsigned char CmdID);
+[; ;main.h: 31: void NackCmd(unsigned char CmdID, unsigned char Reason);
+[; ;main.h: 32: void MessageStream_WriteMULTI(MULTI dat, unsigned char CmdID);
+[; ;main.h: 33: void MessageStream_WriteByte(unsigned char dat);
+[; ;main.h: 34: unsigned char MessageStream_ReadByte();
+[; ;main.h: 35: void GoToSleep();
+[; ;main.h: 36: void SetupIO();
+[; ;main.h: 37: void interrupt FastTick(void);
+[; ;main.h: 38: void interrupt low_priority SlowTick();
+[; ;main.h: 39: void SetupHardware();
+[; ;main.h: 40: void Idle(void);
+[; ;main.h: 41: double GetCurrentLinearPosition();
+[; ;main.h: 42: double GetCurrentAngle();
+"44 Z:\CineFlux\Dropbox\Orbit\main.h
+[v _enc_states `Cc ~T0 -> 0 `x e ]
+[i _enc_states
+:U ..
+-> -> 0 `i `c
+-> -U -> 1 `i `c
+-> -> 1 `i `c
+-> -> 0 `i `c
+-> -> 1 `i `c
+-> -> 0 `i `c
+-> -> 0 `i `c
+-> -U -> 1 `i `c
+-> -U -> 1 `i `c
+-> -> 0 `i `c
+-> -> 0 `i `c
+-> -> 1 `i `c
+-> -> 0 `i `c
+-> -> 1 `i `c
+-> -U -> 1 `i `c
+-> -> 0 `i `c
+..
+]
+[; ;main.h: 44: const signed char enc_states[] = {0, -1, 1, 0, 1, 0, 0, -1, -1, 0, 0, 1, 0, 1, -1, 0};
+"49
+[v _ReadIdx `uc ~T0 1 e ]
+[i _ReadIdx
+-> -> 0 `i `uc
+]
+[; ;main.h: 49: unsigned char ReadIdx = 0;
+"50
+[v _TX_Idx `Vuc ~T0 1 e ]
+[i _TX_Idx
+-> -> 0 `i `uc
+]
+[; ;main.h: 50: volatile unsigned char TX_Idx = 0;
+"51
+[v _TX_bCount `Vuc ~T0 1 e ]
+[i _TX_bCount
+-> -> 0 `i `uc
+]
+[; ;main.h: 51: volatile unsigned char TX_bCount = 0;
+"52
+[v _TXBuffer `Vuc ~T0 -> 255 `i e ]
+[; ;main.h: 52: volatile unsigned char TXBuffer[255];
+"53
+[v _RX_MsgComplete `Vb ~T0 1 e ]
+[; ;main.h: 53: volatile bit RX_MsgComplete;
+"54
+[v _RX_InProgress `Vb ~T0 1 e ]
+[; ;main.h: 54: volatile bit RX_InProgress;
+"55
+[v _RX_Idx `Vuc ~T0 1 e ]
+[i _RX_Idx
+-> -> 0 `i `uc
+]
+[; ;main.h: 55: volatile unsigned char RX_Idx = 0;
+"56
+[v _RXBuffer `Vuc ~T0 -> 255 `i e ]
+[; ;main.h: 56: volatile unsigned char RXBuffer[255];
+"57
+[v _MyID `Vuc ~T0 1 e ]
+[i _MyID
+-> -> 170 `i `uc
+]
+[; ;main.h: 57: volatile unsigned char MyID = 0xAA;
+"58
+[v _isPendingExternalUIEvent `Vb ~T0 1 e ]
+[; ;main.h: 58: volatile bit isPendingExternalUIEvent;
+"59
+[v _PendingExternalUIEvent `Vuc ~T0 1 e ]
+[; ;main.h: 59: volatile char PendingExternalUIEvent;
+"60
+[v _ExtModeActive `Vb ~T0 1 e ]
+[; ;main.h: 60: volatile bit ExtModeActive;
+"65
+[v _ClearUI_Event `Vb ~T0 1 e ]
+[i _ClearUI_Event
+-> 0 `i
+]
+[; ;main.h: 65: volatile bit ClearUI_Event = 0;
+"66
+[v _bLock_RotaryDetentIntervals `Vb ~T0 1 e ]
+[i _bLock_RotaryDetentIntervals
+-> 0 `i
+]
+[; ;main.h: 66: volatile bit bLock_RotaryDetentIntervals = 0;
+"67
+[v _RotaryDetentIntervals `uc ~T0 -> 16 `i e ]
+[; ;main.h: 67: unsigned char RotaryDetentIntervals[16];
+"68
+[v _ZeroRotaryDetentIntervals `Vb ~T0 1 e ]
+[i _ZeroRotaryDetentIntervals
+-> 0 `i
+]
+[; ;main.h: 68: volatile bit ZeroRotaryDetentIntervals = 0;
+"69
+[v _bLock_UI_Event `Vb ~T0 1 e ]
+[i _bLock_UI_Event
+-> 0 `i
+]
+[; ;main.h: 69: volatile bit bLock_UI_Event = 0;
+"70
+[v _UI_Event `Vuc ~T0 1 e ]
+[; ;main.h: 70: volatile char UI_Event;
+"83
+[v _bLock_BatteryVoltage `Vb ~T0 1 e ]
+[i _bLock_BatteryVoltage
+-> 0 `i
+]
+[; ;main.h: 83: volatile bit bLock_BatteryVoltage = 0;
+"84
+[v _BatteryVoltage `ui ~T0 1 e ]
+[i _BatteryVoltage
+-> -> 0 `i `ui
+]
+[; ;main.h: 84: unsigned int BatteryVoltage = 0;
+"85
+[v _bLowVoltageTrip `Vb ~T0 1 e ]
+[i _bLowVoltageTrip
+-> 0 `i
+]
+[; ;main.h: 85: volatile bit bLowVoltageTrip = 0;
+"88
+[v _LCD_BacklightEnabled `Vb ~T0 1 e ]
+[; ;main.h: 88: volatile bit LCD_BacklightEnabled;
+"91
+[v _bFollowMode `Vb ~T0 1 e ]
+[i _bFollowMode
+-> 0 `i
+]
+[; ;main.h: 91: volatile bit bFollowMode = 0;
+"92
+[v _bMove_InProgress `Vb ~T0 1 e ]
+[i _bMove_InProgress
+-> 0 `i
+]
+[; ;main.h: 92: volatile bit bMove_InProgress = 0;
+"93
+[v _Move_speedQ24 `ul ~T0 1 e ]
+[i _Move_speedQ24
+-> -> -> 0 `i `l `ul
+]
+[; ;main.h: 93: unsigned long Move_speedQ24 = 0;
+"94
+[v _Move_shifted_position `S1 ~T0 1 e ]
+[; ;main.h: 94: union LONG Move_shifted_position;
+"95
+[v _Move_position `S1 ~T0 -> 2 `i e ]
+[; ;main.h: 95: union LONG Move_position[2];
+"96
+[v _Move_AccelValueQ24 `ul ~T0 1 e ]
+[i _Move_AccelValueQ24
+-> -> -> 0 `i `l `ul
+]
+[; ;main.h: 96: unsigned long Move_AccelValueQ24 = 0;
+"97
+[v _Move_CoastSpeedQ24 `ul ~T0 1 e ]
+[i _Move_CoastSpeedQ24
+-> -> -> 0 `i `l `ul
+]
+[; ;main.h: 97: unsigned long Move_CoastSpeedQ24 = 0;
+"98
+[v _Move_DecelPosition `ul ~T0 1 e ]
+[i _Move_DecelPosition
+-> -> -> 0 `i `l `ul
+]
+[; ;main.h: 98: unsigned long Move_DecelPosition = 0;
+"99
+[v _Move_FinalPosition `l ~T0 1 e ]
+[i _Move_FinalPosition
+-> -> 0 `i `l
+]
+[; ;main.h: 99: signed long Move_FinalPosition = 0;
+"100
+[v _Move_Origin `l ~T0 1 e ]
+[i _Move_Origin
+-> -> 0 `i `l
+]
+[; ;main.h: 100: signed long Move_Origin = 0;
+"101
+[v _bMove_Neg `Vb ~T0 1 e ]
+[i _bMove_Neg
+-> 0 `i
+]
+[; ;main.h: 101: volatile bit bMove_Neg = 0;
+"105
+[v _bSpeedMode `Vb ~T0 1 e ]
+[i _bSpeedMode
+-> 0 `i
+]
+[; ;main.h: 105: volatile bit bSpeedMode = 0;
+"106
+[v _Speed_SetToThis `ul ~T0 1 e ]
+[; ;main.h: 106: unsigned long Speed_SetToThis;
+"107
+[v _Speed_SetPending `Vb ~T0 1 e ]
+[; ;main.h: 107: volatile bit Speed_SetPending;
+"108
+[v _Speed_IsAccelerating `Vb ~T0 1 e ]
+[; ;main.h: 108: volatile bit Speed_IsAccelerating;
+"112
+[v _bClear_MotorPosition `Vb ~T0 1 e ]
+[i _bClear_MotorPosition
+-> 0 `i
+]
+[; ;main.h: 112: volatile bit bClear_MotorPosition = 0;
+"113
+[v _Motor_Position `l ~T0 1 e ]
+[i _Motor_Position
+-> -> 0 `i `l
+]
+[; ;main.h: 113: signed long Motor_Position = 0;
+"114
+[v _bLock_Motor_Position `Vb ~T0 1 e ]
+[i _bLock_Motor_Position
+-> 0 `i
+]
+[; ;main.h: 114: volatile bit bLock_Motor_Position = 0;
+"117
+[v _bIncrement_PID_Setpoint `Vb ~T0 1 e ]
+[i _bIncrement_PID_Setpoint
+-> 0 `i
+]
+[; ;main.h: 117: volatile bit bIncrement_PID_Setpoint = 0;
+"118
+[v _bDecrement_PID_Setpoint `Vb ~T0 1 e ]
+[i _bDecrement_PID_Setpoint
+-> 0 `i
+]
+[; ;main.h: 118: volatile bit bDecrement_PID_Setpoint = 0;
+"119
+[v _bLock_PID_SetPoint `Vb ~T0 1 e ]
+[i _bLock_PID_SetPoint
+-> 0 `i
+]
+[; ;main.h: 119: volatile bit bLock_PID_SetPoint = 0;
+"121
+[v _bMotionError `Vb ~T0 1 e ]
+[i _bMotionError
+-> 0 `i
+]
+[; ;main.h: 121: volatile bit bMotionError = 0;
+"122
+[v _bPowerOff `Vb ~T0 1 e ]
+[i _bPowerOff
+-> 0 `i
+]
+[; ;main.h: 122: volatile bit bPowerOff = 0;
+"181
+[v _ASCII_HEX_TO_BINARY `Cuc ~T0 -> 128 `i e ]
+[i _ASCII_HEX_TO_BINARY
+:U ..
+-> -> 0 `i `uc
+-> -> 0 `i `uc
+-> -> 0 `i `uc
+-> -> 0 `i `uc
+-> -> 0 `i `uc
+-> -> 0 `i `uc
+-> -> 0 `i `uc
+-> -> 0 `i `uc
+-> -> 0 `i `uc
+-> -> 0 `i `uc
+-> -> 0 `i `uc
+-> -> 0 `i `uc
+-> -> 0 `i `uc
+-> -> 0 `i `uc
+-> -> 0 `i `uc
+-> -> 0 `i `uc
+"182
+-> -> 0 `i `uc
+-> -> 0 `i `uc
+-> -> 0 `i `uc
+-> -> 0 `i `uc
+-> -> 0 `i `uc
+-> -> 0 `i `uc
+-> -> 0 `i `uc
+-> -> 0 `i `uc
+-> -> 0 `i `uc
+-> -> 0 `i `uc
+-> -> 0 `i `uc
+-> -> 0 `i `uc
+-> -> 0 `i `uc
+-> -> 0 `i `uc
+-> -> 0 `i `uc
+-> -> 0 `i `uc
+"183
+-> -> 0 `i `uc
+-> -> 0 `i `uc
+-> -> 0 `i `uc
+-> -> 0 `i `uc
+-> -> 0 `i `uc
+-> -> 0 `i `uc
+-> -> 0 `i `uc
+-> -> 0 `i `uc
+-> -> 0 `i `uc
+-> -> 0 `i `uc
+-> -> 0 `i `uc
+-> -> 0 `i `uc
+-> -> 0 `i `uc
+-> -> 0 `i `uc
+-> -> 0 `i `uc
+-> -> 0 `i `uc
+"184
+-> -> 0 `i `uc
+-> -> 1 `i `uc
+-> -> 2 `i `uc
+-> -> 3 `i `uc
+-> -> 4 `i `uc
+-> -> 5 `i `uc
+-> -> 6 `i `uc
+-> -> 7 `i `uc
+-> -> 8 `i `uc
+-> -> 9 `i `uc
+-> -> 0 `i `uc
+-> -> 0 `i `uc
+-> -> 0 `i `uc
+-> -> 0 `i `uc
+-> -> 0 `i `uc
+-> -> 0 `i `uc
+"185
+-> -> 0 `i `uc
+-> -> 10 `i `uc
+-> -> 11 `i `uc
+-> -> 12 `i `uc
+-> -> 13 `i `uc
+-> -> 14 `i `uc
+-> -> 15 `i `uc
+-> -> 0 `i `uc
+-> -> 0 `i `uc
+-> -> 0 `i `uc
+-> -> 0 `i `uc
+-> -> 0 `i `uc
+-> -> 0 `i `uc
+-> -> 0 `i `uc
+-> -> 0 `i `uc
+-> -> 0 `i `uc
+"186
+-> -> 0 `i `uc
+-> -> 10 `i `uc
+-> -> 11 `i `uc
+-> -> 12 `i `uc
+-> -> 13 `i `uc
+-> -> 14 `i `uc
+-> -> 15 `i `uc
+-> -> 0 `i `uc
+-> -> 0 `i `uc
+-> -> 0 `i `uc
+-> -> 0 `i `uc
+-> -> 0 `i `uc
+-> -> 0 `i `uc
+-> -> 0 `i `uc
+-> -> 0 `i `uc
+-> -> 0 `i `uc
+..
+]
+[; ;main.h: 181: const unsigned char ASCII_HEX_TO_BINARY[128] ={0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+[; ;main.h: 182: 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+[; ;main.h: 183: 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+[; ;main.h: 184: 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 0, 0, 0, 0, 0, 0,
+[; ;main.h: 185: 0, 10, 11, 12, 13, 14, 15, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+[; ;main.h: 186: 0, 10, 11, 12, 13, 14, 15, 0, 0, 0, 0, 0, 0, 0, 0, 0};
+"188
+[v _BINARY_TO_ASCII_HEX `Cuc ~T0 -> 16 `i e ]
+[i _BINARY_TO_ASCII_HEX
+:U ..
+-> -> 48 `ui `uc
+-> -> 49 `ui `uc
+-> -> 50 `ui `uc
+-> -> 51 `ui `uc
+-> -> 52 `ui `uc
+-> -> 53 `ui `uc
+-> -> 54 `ui `uc
+-> -> 55 `ui `uc
+-> -> 56 `ui `uc
+-> -> 57 `ui `uc
+-> -> 65 `ui `uc
+-> -> 66 `ui `uc
+-> -> 67 `ui `uc
+-> -> 68 `ui `uc
+-> -> 69 `ui `uc
+-> -> 70 `ui `uc
+..
+]
+[; ;main.h: 188: const unsigned char BINARY_TO_ASCII_HEX[16] = {'0', '1', '2', '3', '4', '5', '6', '7', '8', '9', 'A', 'B', 'C', 'D', 'E', 'F'};
+[; ;timings.h: 1: void Wait_seconds(unsigned int time);
+[; ;timings.h: 2: void Wait_ms(unsigned int time);
+[; ;timings.h: 3: void Wait_seconds_nonblocking(unsigned int time);
+[; ;timings.h: 4: void Wait_ms_nonblocking(unsigned int time);
+[; ;timings.h: 5: void Wait_ticks(unsigned char time);
+[; ;timings.h: 6: void Wait_us(unsigned int time);
+[; ;timings.h: 7: double Now();
+"10 Z:\CineFlux\Dropbox\Orbit\timings.h
+[v _bWaiting `Vb ~T0 1 e ]
+[i _bWaiting
+-> 0 `i
+]
+[; ;timings.h: 10: volatile bit bWaiting=0;
+"11
+[v _WaitUntil_Tick500Hz `Vul ~T0 1 e ]
+[i _WaitUntil_Tick500Hz
+-> -> -> 0 `i `l `ul
+]
+[; ;timings.h: 11: volatile unsigned long WaitUntil_Tick500Hz=0;
+"12
+[v _bTick40Khz `Vb ~T0 1 e ]
+[i _bTick40Khz
+-> 0 `i
+]
+[; ;timings.h: 12: volatile bit bTick40Khz=0;
+"13
+[v _bLock_Tick500Hz `Vb ~T0 1 e ]
+[i _bLock_Tick500Hz
+-> 0 `i
+]
+[; ;timings.h: 13: volatile bit bLock_Tick500Hz=0;
+"14
+[v _Tick500Hz `Vul ~T0 1 e ]
+[i _Tick500Hz
+-> -> -> 0 `i `l `ul
+]
+[; ;timings.h: 14: volatile unsigned long Tick500Hz=0;
+"5 Z:\CineFlux\Dropbox\Orbit\Timings.c
+[v _Wait_seconds_nonblocking `(v ~T0 1 ef1`ui ]
+{
+[; ;Timings.c: 5: void Wait_seconds_nonblocking(unsigned int time) {
+[e :U _Wait_seconds_nonblocking ]
+[v _time `ui ~T0 1 r1 ]
+[f ]
+"6
+[v _msWait `ui ~T0 1 a ]
+[; ;Timings.c: 6: unsigned int msWait = time * 1000;
+[e = _msWait * _time -> -> 1000 `i `ui ]
+[; ;Timings.c: 7: Wait_ms_nonblocking(msWait);
+"7
+[e ( _Wait_ms_nonblocking (1 _msWait ]
+[; ;Timings.c: 8: }
+"8
+[e :UE 3 ]
+}
+"10
+[v _Wait_seconds `(v ~T0 1 ef1`ui ]
+{
+[; ;Timings.c: 10: void Wait_seconds(unsigned int time) {
+[e :U _Wait_seconds ]
+[v _time `ui ~T0 1 r1 ]
+[f ]
+"11
+[v _msWait `ui ~T0 1 a ]
+[; ;Timings.c: 11: unsigned int msWait = time * 1000;
+[e = _msWait * _time -> -> 1000 `i `ui ]
+[; ;Timings.c: 12: Wait_ms(msWait);
+"12
+[e ( _Wait_ms (1 _msWait ]
+[; ;Timings.c: 13: }
+"13
+[e :UE 4 ]
+}
+"15
+[v _Wait_ms_nonblocking `(v ~T0 1 ef1`ui ]
+{
+[; ;Timings.c: 15: void Wait_ms_nonblocking(unsigned int time) {
+[e :U _Wait_ms_nonblocking ]
+[v _time `ui ~T0 1 r1 ]
+[f ]
+[; ;Timings.c: 16: time >>= 1;
+"16
+[e =>> _time -> 1 `i ]
+[; ;Timings.c: 17: if (time == 0) time = 1;
+"17
+[e $ ! == _time -> -> 0 `i `ui 6  ]
+[e = _time -> -> 1 `i `ui ]
+[e :U 6 ]
+[; ;Timings.c: 19: time++;
+"19
+[e ++ _time -> -> 1 `i `ui ]
+[; ;Timings.c: 21: bLock_Tick500Hz = 1;
+"21
+[e = _bLock_Tick500Hz -> -> 1 `i `b ]
+[; ;Timings.c: 22: WaitUntil_Tick500Hz = Tick500Hz;
+"22
+[e = _WaitUntil_Tick500Hz _Tick500Hz ]
+[; ;Timings.c: 23: bLock_Tick500Hz = 0;
+"23
+[e = _bLock_Tick500Hz -> -> 0 `i `b ]
+[; ;Timings.c: 25: bWaiting = 0;
+"25
+[e = _bWaiting -> -> 0 `i `b ]
+[; ;Timings.c: 26: WaitUntil_Tick500Hz += time;
+"26
+[e =+ _WaitUntil_Tick500Hz -> _time `ul ]
+[; ;Timings.c: 27: bWaiting = 1;
+"27
+[e = _bWaiting -> -> 1 `i `b ]
+[; ;Timings.c: 28: }
+"28
+[e :UE 5 ]
+}
+"30
+[v _Wait_ms `(v ~T0 1 ef1`ui ]
+{
+[; ;Timings.c: 30: void Wait_ms(unsigned int time) {
+[e :U _Wait_ms ]
+[v _time `ui ~T0 1 r1 ]
+[f ]
+[; ;Timings.c: 31: Wait_ms_nonblocking(time);
+"31
+[e ( _Wait_ms_nonblocking (1 _time ]
+[; ;Timings.c: 32: while (bWaiting) Idle();
+"32
+[e $U 8  ]
+[e :U 9 ]
+[e ( _Idle ..  ]
+[e :U 8 ]
+[e $ _bWaiting 9  ]
+[e :U 10 ]
+[; ;Timings.c: 33: }
+"33
+[e :UE 7 ]
+}
+"35
+[v _Wait_us `(v ~T0 1 ef1`ui ]
+{
+[; ;Timings.c: 35: void Wait_us(unsigned int time) {
+[e :U _Wait_us ]
+[v _time `ui ~T0 1 r1 ]
+[f ]
+"36
+[v _tickcount `uc ~T0 1 a ]
+[; ;Timings.c: 36: unsigned char tickcount;
+[; ;Timings.c: 37: if (time > 3180) time = 3180;
+"37
+[e $ ! > _time -> -> 3180 `i `ui 12  ]
+[e = _time -> -> 3180 `i `ui ]
+[e :U 12 ]
+[; ;Timings.c: 38: time /= 25;
+"38
+[e =/ _time -> -> 25 `uc `ui ]
+[; ;Timings.c: 39: if(time==0) time=1;
+"39
+[e $ ! == _time -> -> 0 `i `ui 13  ]
+[e = _time -> -> 1 `i `ui ]
+[e :U 13 ]
+[; ;Timings.c: 40: tickcount=(unsigned char)time;
+"40
+[e = _tickcount -> _time `uc ]
+[; ;Timings.c: 41: Wait_ticks(tickcount);
+"41
+[e ( _Wait_ticks (1 _tickcount ]
+[; ;Timings.c: 42: }
+"42
+[e :UE 11 ]
+}
+"46
+[v _Wait_ticks `(v ~T0 1 ef1`uc ]
+{
+[; ;Timings.c: 46: void Wait_ticks(unsigned char Ticks) {
+[e :U _Wait_ticks ]
+[v _Ticks `uc ~T0 1 r1 ]
+[f ]
+"47
+[v F119 `b ~T0 1 s LastFlop ]
+[i F119
+-> 0 `i
+]
+"48
+[v _remaining `uc ~T0 1 a ]
+[; ;Timings.c: 47: static bit LastFlop = 0;
+[; ;Timings.c: 48: unsigned char remaining=Ticks+1;
+[e = _remaining -> + -> _Ticks `i -> 1 `i `uc ]
+[; ;Timings.c: 49: while (remaining) {
+"49
+[e $U 15  ]
+[e :U 16 ]
+{
+[; ;Timings.c: 50: while (LastFlop==bTick40Khz);
+"50
+[e $U 18  ]
+[e :U 19 ]
+[e :U 18 ]
+[e $ == F119 _bTick40Khz 19  ]
+[e :U 20 ]
+[; ;Timings.c: 51: remaining--;
+"51
+[e -- _remaining -> -> 1 `i `uc ]
+[; ;Timings.c: 52: LastFlop = !LastFlop;
+"52
+[e = F119 ! F119 ]
+"53
+}
+[e :U 15 ]
+"49
+[e $ != -> _remaining `i -> -> -> 0 `i `uc `i 16  ]
+[e :U 17 ]
+[; ;Timings.c: 53: }
+[; ;Timings.c: 54: }
+"54
+[e :UE 14 ]
+}
+"58
+[v _Now `(d ~T0 1 ef ]
+{
+[; ;Timings.c: 58: double Now() {
+[e :U _Now ]
+[f ]
+"59
+[v _ret `d ~T0 1 a ]
+[; ;Timings.c: 59: double ret;
+[; ;Timings.c: 60: bLock_Tick500Hz = 1;
+"60
+[e = _bLock_Tick500Hz -> -> 1 `i `b ]
+[; ;Timings.c: 61: ret = Tick500Hz;
+"61
+[e = _ret -> _Tick500Hz `d ]
+[; ;Timings.c: 62: bLock_Tick500Hz = 0;
+"62
+[e = _bLock_Tick500Hz -> -> 0 `i `b ]
+[; ;Timings.c: 63: return (ret * 2);
+"63
+[e ) * _ret -> -> 2 `i `d ]
+[e $UE 21  ]
+[; ;Timings.c: 64: }
+"64
+[e :UE 21 ]
+}

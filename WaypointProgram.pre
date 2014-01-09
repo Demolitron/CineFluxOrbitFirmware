@@ -1,0 +1,647 @@
+
+# 1 "Z:\CineFlux\Dropbox\Orbit\WaypointProgram.c"
+
+# 1 "Z:\CineFlux\Dropbox\Orbit\LCD.h"
+void LCD_PrintString(const unsigned char *dat);
+void LCD_PrintChar(char dat);
+void LCD_PrintLong(long dat, char places, char sign);
+void LCD_PrintFloat(double dat, char whole, char fract, char sign);
+
+void LCD_ClearDisplay(void);
+void LCD_PowerUp(void);
+
+void LCD_SetPosition(char Row, char Col);
+void LCD_FunctionSet(char EightBit, char DualLine, char FiveByTenDots);
+void LCD_CursorShift(char ShiftDisplay, char ShiftRight);
+void LCD_DisplayOnOff(char DisplayOn, char CursorOn, char BlinkOn);
+void LCD_EntryModeSet(char Increment, char ShiftOn);
+void LCD_ReturnHome(void);
+
+void putc(unsigned char dat);
+
+unsigned char LCD_Line1[20];
+unsigned char LCD_Line2[20];
+unsigned char LCD_Row=0;
+unsigned char LCD_Col=0;
+
+# 1 "Z:\CineFlux\Dropbox\Orbit\WaypointProgram.h"
+signed char CreateWaypointProgram();
+signed char RunWaypointProgram();
+
+# 7 "Z:\CineFlux\Dropbox\Orbit\Main.h"
+typedef union LONG {
+unsigned char ub[4];
+signed char b[4];
+unsigned int ui[2];
+signed int i[2];
+unsigned long ul;
+signed long l;
+};
+
+typedef union {
+unsigned char ub[4];
+signed char b[4];
+unsigned int ui[2];
+signed int i[2];
+unsigned long ul;
+signed long l;
+float fl;
+double dbl;
+} MULTI;
+
+
+
+void main(void);
+void AckCmd(unsigned char CmdID);
+void NackCmd(unsigned char CmdID, unsigned char Reason);
+void MessageStream_WriteMULTI(MULTI dat, unsigned char CmdID);
+void MessageStream_WriteByte(unsigned char dat);
+unsigned char MessageStream_ReadByte();
+void GoToSleep();
+void SetupIO();
+void interrupt FastTick(void);
+void interrupt low_priority SlowTick();
+void SetupHardware();
+void Idle(void);
+double GetCurrentLinearPosition();
+double GetCurrentAngle();
+
+const signed char enc_states[] = {0, -1, 1, 0, 1, 0, 0, -1, -1, 0, 0, 1, 0, 1, -1, 0};
+
+
+
+
+unsigned char ReadIdx = 0;
+volatile unsigned char TX_Idx = 0;
+volatile unsigned char TX_bCount = 0;
+volatile unsigned char TXBuffer[255];
+volatile bit RX_MsgComplete;
+volatile bit RX_InProgress;
+volatile unsigned char RX_Idx = 0;
+volatile unsigned char RXBuffer[255];
+volatile unsigned char MyID = 0xAA;
+volatile bit isPendingExternalUIEvent;
+volatile char PendingExternalUIEvent;
+volatile bit ExtModeActive;
+
+
+
+
+volatile bit ClearUI_Event = 0;
+volatile bit bLock_RotaryDetentIntervals = 0;
+unsigned char RotaryDetentIntervals[16];
+volatile bit ZeroRotaryDetentIntervals = 0;
+volatile bit bLock_UI_Event = 0;
+volatile char UI_Event;
+
+# 83
+volatile bit bLock_BatteryVoltage = 0;
+unsigned int BatteryVoltage = 0;
+volatile bit bLowVoltageTrip = 0;
+
+
+volatile bit LCD_BacklightEnabled;
+
+
+volatile bit bFollowMode = 0;
+volatile bit bMove_InProgress = 0;
+unsigned long Move_speedQ24 = 0;
+union LONG Move_shifted_position;
+union LONG Move_position[2];
+unsigned long Move_AccelValueQ24 = 0;
+unsigned long Move_CoastSpeedQ24 = 0;
+unsigned long Move_DecelPosition = 0;
+signed long Move_FinalPosition = 0;
+signed long Move_Origin = 0;
+volatile bit bMove_Neg = 0;
+
+
+
+volatile bit bSpeedMode = 0;
+unsigned long Speed_SetToThis;
+volatile bit Speed_SetPending;
+volatile bit Speed_IsAccelerating;
+
+
+
+volatile bit bClear_MotorPosition = 0;
+signed long Motor_Position = 0;
+volatile bit bLock_Motor_Position = 0;
+
+
+volatile bit bIncrement_PID_Setpoint = 0;
+volatile bit bDecrement_PID_Setpoint = 0;
+volatile bit bLock_PID_SetPoint = 0;
+
+volatile bit bMotionError = 0;
+volatile bit bPowerOff = 0;
+
+# 181
+const unsigned char ASCII_HEX_TO_BINARY[128] ={0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 0, 0, 0, 0, 0, 0,
+0, 10, 11, 12, 13, 14, 15, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+0, 10, 11, 12, 13, 14, 15, 0, 0, 0, 0, 0, 0, 0, 0, 0};
+
+const unsigned char BINARY_TO_ASCII_HEX[16] = {'0', '1', '2', '3', '4', '5', '6', '7', '8', '9', 'A', 'B', 'C', 'D', 'E', 'F'};
+
+# 4 "Z:\CineFlux\Dropbox\Orbit\UserInterface.h"
+void ShowVoltage();
+signed char GetClick(void);
+signed char GetYesNo(const char *prompt, signed char Initial);
+signed char GetFloat(const char *prompt, const char *unit, double* Value, double Min, double Max, double Precision);
+signed char GetInput(void);
+signed char GetInput_nonblocking(void);
+signed char DisplayMenu(const char *Menu[], char ItemCount, char Initial);
+signed char DisplayChoices(const char *Menu[], char ItemCount, const char *Prompt, char Initial);
+signed char GetPresetNumber();
+
+signed char GetTime(const char *prompt, double *Time, double Min, double Max, char Precision);
+void PrintTime(double dat, unsigned char precision, unsigned char EditChevron);
+void ConvertTimeToDiscrete(double Time, char *Hours, char *Minutes, char *Seconds, int *Milliseconds);
+double ConvertTimeFromDiscrete(char Hours, char Minutes, char Seconds, int Milliseconds);
+double RoundTimeUp(double Time,unsigned char precision);
+double RoundTimeDown(double Time,unsigned char precision);
+
+unsigned char GetRotaryMultiplier();
+
+# 1 "Z:\CineFlux\Dropbox\Orbit\Timings.h"
+void Wait_seconds(unsigned int time);
+void Wait_ms(unsigned int time);
+void Wait_seconds_nonblocking(unsigned int time);
+void Wait_ms_nonblocking(unsigned int time);
+void Wait_ticks(unsigned char time);
+void Wait_us(unsigned int time);
+double Now();
+
+
+volatile bit bWaiting=0;
+volatile unsigned long WaitUntil_Tick500Hz=0;
+volatile bit bTick40Khz=0;
+volatile bit bLock_Tick500Hz=0;
+volatile unsigned long Tick500Hz=0;
+
+# 2 "Z:\CineFlux\Dropbox\Orbit\Settings.h"
+typedef struct {
+unsigned char Version;
+unsigned int BatteryLowVoltageLevel;
+unsigned int Battery12V_Q8;
+unsigned char PowerResponseLimiter_Slope;
+unsigned char PowerResponseLimiter_Intercept;
+double Counts_per_Volt;
+double Volts_per_Count;
+unsigned char BacklightPWM_Duty;
+unsigned int BacklightIdleTimeout;
+double SystemAcceleration;
+double MaxSpeed;
+signed int PID_MaxError;
+unsigned int PID_Kp;
+unsigned int PID_Kd;
+double Counts_Per_Degree;
+double Degrees_Per_Count;
+} ConfigStruct;
+
+typedef struct {
+char Type;
+unsigned int Origin_deg;
+char EndMode;
+char IsClockWise;
+double ProgramRunTime_sec;
+double CycleCount_rev;
+double CycleTime_sec;
+double Speed_deg_sec;
+char SpeedMode;
+} OrbitProgramStruct;
+
+typedef struct {
+char Type;
+unsigned int Origin_deg;
+unsigned char PointCount;
+unsigned char Bounce;
+unsigned int LoopCount;
+signed int Distances_deg[18];
+unsigned int TravelTimes_sec[18];
+unsigned int DwellTimes_sec[19];
+} WaypointProgramStruct;
+
+typedef union {
+unsigned char ub[120];
+WaypointProgramStruct WayPoint;
+OrbitProgramStruct Orbit;
+} PRESET;
+
+ConfigStruct Config;
+WaypointProgramStruct CurrentPath;
+OrbitProgramStruct CurrentOrbitProgram;
+
+void FactoryDefault();
+void SaveSettings();
+void LoadSettings();
+void EEprom_write(unsigned int *addr, unsigned char *dat, unsigned char bCount);
+void EEprom_read(unsigned int *addr, unsigned char *dat, unsigned char bCount);
+unsigned char GetPresetType(char pnum);
+void SavePreset(char pnum, unsigned char *dat);
+void LoadPreset(char pnum, unsigned char *dat);
+
+# 1 "Z:\CineFlux\Dropbox\Orbit\MotionEngine.h"
+char Move(double Distance_deg, double Speed_deg_sec);
+char MoveAdvanced(double Distance_deg, double _Speed_Deg_Sec, double _Acceleration_Deg_Sec_Sec);
+char MoveToLinear(double DestinationPostion, double Speed_Deg_Sec);
+char MoveToAngle(double DestinationAngle, double Speed_Deg_Sec);
+double SpeedRequiredToMoveInTime(double Distance, double Time);
+double MinTimeToMove(double Distance);
+
+# 9 "Z:\CineFlux\Dropbox\Orbit\WaypointProgram.c"
+signed char CreateWaypointProgram() {
+signed char ret = 0;
+double LastPos = 0;
+double CurrentPos = 0;
+double DeltaDistance = 0;
+signed int intDistance = 0;
+double TravelTime = 0;
+double MinTravelTime = 0;
+unsigned int intTravelTime = 0;
+double DwellTime = 0;
+double CycleCount = 0;
+
+char Done = 0;
+signed char idx = 0;
+CurrentPath.PointCount = 0;
+
+const char *DIRECTION_0 = "ONE-WAY\0";
+const char *DIRECTION_1 = "BOUNCE\0";
+const char*DirectionMenu[2];
+DirectionMenu[0] = DIRECTION_0;
+DirectionMenu[1] = DIRECTION_1;
+
+const char *COMMAND_0 = "RUN PROGRAM\0";
+const char *COMMAND_1 = "SAVE PRESET\0";
+const char*CommandMenu[2];
+CommandMenu[0] = COMMAND_0;
+CommandMenu[1] = COMMAND_1;
+
+labelSetOrigin:
+TravelTime = 0;
+MinTravelTime = 0;
+intDistance = 0;
+DeltaDistance = 0;
+
+CurrentPos = 0;
+LastPos = 0;
+ret = 0;
+DwellTime = 0;
+
+idx = 0;
+
+LCD_ClearDisplay();
+LCD_PrintString("MOVE TO START...\0");
+LCD_SetPosition(1, 0);
+LCD_PrintString("THEN CLICK.\0");
+bFollowMode = 1;
+ret = GetClick();
+if (ret < 0) return ret;
+bFollowMode = 0;
+CurrentPath.Origin_deg = (unsigned int) GetCurrentAngle();
+
+LastPos = GetCurrentLinearPosition();
+
+ret = GetTime("DWELL TIME:\0", &DwellTime, 0, 65535, 0b1110);
+if (ret == -2) return -2;
+if (ret == -1) goto labelSetOrigin;
+CurrentPath.DwellTimes_sec[idx] = (unsigned int) (DwellTime);
+
+while (!Done) {
+labelInputWaypoint1:
+LCD_ClearDisplay();
+LCD_PrintString("MOVE TO NEXT POINT\0");
+LCD_SetPosition(1, 0);
+LCD_PrintString("+XXXX\xDF THEN CLICK\0");
+
+bFollowMode = 1;
+
+ClearUI_Event = 1;
+while (ClearUI_Event) Idle();
+ret = 0;
+while (!(ret == 1)) {
+Idle();
+CurrentPos = GetCurrentLinearPosition();
+DeltaDistance = CurrentPos - LastPos;
+intDistance = (signed int) (DeltaDistance);
+LCD_SetPosition(1, 0);
+LCD_PrintLong(intDistance, 4, 1);
+
+bLock_UI_Event = 1;
+ret = UI_Event;
+bLock_UI_Event = 0;
+
+if (ret == 3) {
+bFollowMode = 0;
+return -2;
+}
+
+if (ret == 2) {
+bFollowMode = 0;
+if (idx == 0) {
+goto labelSetOrigin;
+} else {
+idx--;
+goto labelInputWaypoint1;
+}
+}
+
+if (ret == 5) {
+ClearUI_Event = 1;
+bFollowMode = 0;
+Move(-1, 90);
+while (bMove_InProgress) Idle();
+bFollowMode = 1;
+while (ClearUI_Event) Idle();
+}
+
+if (ret == 4) {
+ClearUI_Event = 1;
+bFollowMode = 0;
+Move(1, 90);
+while (bMove_InProgress) Idle();
+bFollowMode = 1;
+while (ClearUI_Event) Idle();
+}
+}
+bFollowMode = 0;
+
+
+CurrentPath.Distances_deg[idx] = intDistance;
+MinTravelTime = MinTimeToMove(DeltaDistance);
+intTravelTime = (unsigned int) MinTravelTime;
+MinTravelTime -= intTravelTime;
+if (MinTravelTime > 0) MinTravelTime = intTravelTime + 1;
+else MinTravelTime = intTravelTime;
+
+
+labelInputWaypoint2:
+ret = GetTime("TRAVEL TIME:\0", &TravelTime, MinTravelTime, 65535, 0b1110);
+if (ret == -2) return -2;
+if (ret == -1) goto labelInputWaypoint1;
+CurrentPath.TravelTimes_sec[idx] = (unsigned int) (TravelTime);
+
+labelInputWaypoint3:
+ret = GetTime("DWELL TIME:\0", &DwellTime, 0, 65535, 0b1110);
+if (ret == -2) return -2;
+if (ret == -1) goto labelInputWaypoint2;
+CurrentPath.DwellTimes_sec[idx + 1] = (unsigned int) (DwellTime);
+
+if (idx < 17) {
+ret = GetYesNo("ADD ANOTHER POINT?", 1);
+if (ret == -2) return -2;
+if (ret == -1) goto labelInputWaypoint3;
+if (ret == 0) Done = 1;
+if (ret == 1) {
+idx++;
+LastPos = CurrentPos;
+goto labelInputWaypoint1;
+}
+} else {
+LCD_ClearDisplay();
+LCD_PrintString("MAX WAYPOINTS HAVE\0");
+LCD_SetPosition(1, 0);
+LCD_PrintString("BEEN ADDED\0");
+ret = GetClick();
+if (ret == -2) return -2;
+if (ret == -1) goto labelInputWaypoint3;
+Done = 1;
+}
+}
+
+CurrentPath.PointCount = idx;
+labelDirection:
+ret = DisplayChoices(DirectionMenu, 1, "LOOP MODE?\0", CurrentPath.Bounce);
+if (ret == -1) goto labelInputWaypoint3;
+if (ret == -2) return (-2);
+CurrentPath.Bounce = ret;
+
+labelCycleCount:
+ret = GetFloat("CYCLE COUNT:0=INF.\0", " CYCLES\0", &CycleCount, 0, 999, 1.0);
+if (ret == -1) goto labelDirection;
+if (ret == -2) return (-2);
+CurrentPath.LoopCount = (unsigned int) (CycleCount);
+
+labelActions:
+ret = DisplayChoices(CommandMenu, 1, "ACTION:\0", 0);
+if (ret == -1) goto labelCycleCount;
+if (ret == -2) return (-2);
+
+if (ret == 0) {
+return RunWaypointProgram();
+}
+
+ret = GetPresetNumber();
+if (ret == -1) goto labelActions;
+if (ret == -2) return (-2);
+
+CurrentPath.Type = 1;
+SavePreset(ret, (unsigned char *) &CurrentPath);
+
+goto labelActions;
+
+}
+
+signed char RunWaypointProgram() {
+char EarlyExit = 0;
+signed char ret;
+double D;
+double T;
+double S;
+char PingPong = 0;
+signed char idx;
+unsigned int CycleIndex = 1;
+
+LCD_ClearDisplay();
+LCD_PrintString("MOVING TO START\0");
+MoveToAngle(CurrentPath.Origin_deg, 90);
+while (bMove_InProgress) {
+Idle();
+ret = GetInput_nonblocking();
+if (ret == 3) {
+EarlyExit = 1;
+goto labelFinished;
+}
+}
+
+LCD_ClearDisplay();
+LCD_PrintString("DWELL ON START\0");
+Wait_seconds_nonblocking(CurrentPath.DwellTimes_sec[0]);
+while (bWaiting) {
+Idle();
+ret = GetInput_nonblocking();
+if (ret == 3) {
+EarlyExit = 1;
+goto labelFinished;
+}
+}
+
+while (1) {
+if (PingPong) idx = CurrentPath.PointCount;
+else idx = 0;
+
+while ((idx >= 0) && (idx <= CurrentPath.PointCount)) {
+D = CurrentPath.Distances_deg[idx];
+T = CurrentPath.TravelTimes_sec[idx];
+S = SpeedRequiredToMoveInTime(D, T);
+if (PingPong) {
+LCD_ClearDisplay();
+LCD_PrintString("MOVING TO POINT #\0");
+LCD_PrintLong(idx, 2, 0);
+LCD_SetPosition(1, 0);
+if (CurrentPath.LoopCount == 0) LCD_PrintString("INFINITE CYCLES\0");
+else {
+LCD_PrintString("CYCLE \0");
+LCD_PrintLong(CycleIndex, 3, 0);
+LCD_PrintString(" OF \0");
+LCD_PrintLong(CurrentPath.LoopCount, 3, 0);
+}
+
+Move(-D, S);
+while (bMove_InProgress) {
+Idle();
+ret = GetInput_nonblocking();
+if (ret == 3) {
+EarlyExit = 1;
+goto labelFinished;
+}
+}
+
+LCD_ClearDisplay();
+LCD_PrintString("DWELL ON POINT #\0");
+LCD_PrintLong(idx, 2, 0);
+LCD_SetPosition(1, 0);
+if (CurrentPath.LoopCount == 0) LCD_PrintString("INFINITE CYCLES\0");
+else {
+LCD_PrintString("CYCLE \0");
+LCD_PrintLong(CycleIndex, 3, 0);
+LCD_PrintString(" OF \0");
+LCD_PrintLong(CurrentPath.LoopCount, 3, 0);
+}
+
+Wait_seconds_nonblocking(CurrentPath.DwellTimes_sec[idx]);
+while (bWaiting) {
+Idle();
+ret = GetInput_nonblocking();
+if (ret == 3) {
+EarlyExit = 1;
+goto labelFinished;
+}
+}
+idx--;
+} else {
+
+LCD_ClearDisplay();
+LCD_PrintString("MOVING TO POINT #\0");
+LCD_PrintLong(idx + 1, 2, 0);
+LCD_SetPosition(1, 0);
+if (CurrentPath.LoopCount == 0) LCD_PrintString("INFINITE CYCLES\0");
+else {
+LCD_PrintString("CYCLE \0");
+LCD_PrintLong(CycleIndex, 3, 0);
+LCD_PrintString(" OF \0");
+LCD_PrintLong(CurrentPath.LoopCount, 3, 0);
+}
+
+Move(D, S);
+while (bMove_InProgress) {
+Idle();
+ret = GetInput_nonblocking();
+if (ret == 3) {
+EarlyExit = 1;
+goto labelFinished;
+}
+}
+
+LCD_ClearDisplay();
+LCD_PrintString("DWELL ON POINT #\0");
+LCD_PrintLong(idx + 1, 2, 0);
+LCD_SetPosition(1, 0);
+if (CurrentPath.LoopCount == 0) LCD_PrintString("INFINITE CYCLES\0");
+else {
+LCD_PrintString("CYCLE \0");
+LCD_PrintLong(CycleIndex, 3, 0);
+LCD_PrintString(" OF \0");
+LCD_PrintLong(CurrentPath.LoopCount, 3, 0);
+}
+
+Wait_seconds_nonblocking(CurrentPath.DwellTimes_sec[idx + 1]);
+while (bWaiting) {
+Idle();
+ret = GetInput_nonblocking();
+if (ret == 3) {
+EarlyExit = 1;
+goto labelFinished;
+}
+}
+idx++;
+}
+}
+
+if (CurrentPath.Bounce) PingPong = !PingPong;
+else {
+PingPong = 0;
+LCD_ClearDisplay();
+LCD_PrintString("MOVING TO ORIGIN\0");
+LCD_SetPosition(1, 0);
+if (CurrentPath.LoopCount == 0) LCD_PrintString("INFINITE CYCLES\0");
+else {
+LCD_PrintString("CYCLE \0");
+LCD_PrintLong(CycleIndex, 3, 0);
+LCD_PrintString(" OF \0");
+LCD_PrintLong(CurrentPath.LoopCount, 3, 0);
+}
+
+MoveToAngle(CurrentPath.Origin_deg, 90);
+while (bMove_InProgress) {
+Idle();
+ret = GetInput_nonblocking();
+if (ret == 3) {
+EarlyExit = 1;
+goto labelFinished;
+}
+}
+
+LCD_ClearDisplay();
+LCD_PrintString("DWELL ON POINT #00\0");
+LCD_SetPosition(1, 0);
+if (CurrentPath.LoopCount == 0) LCD_PrintString("INFINITE CYCLES\0");
+else {
+LCD_PrintString("CYCLE \0");
+LCD_PrintLong(CycleIndex, 3, 0);
+LCD_PrintString(" OF \0");
+LCD_PrintLong(CurrentPath.LoopCount, 3, 0);
+}
+Wait_seconds_nonblocking(CurrentPath.DwellTimes_sec[0]);
+while (bWaiting) {
+Idle();
+ret = GetInput_nonblocking();
+if (ret == 3) {
+EarlyExit = 1;
+goto labelFinished;
+}
+}
+}
+
+if (CurrentPath.LoopCount) {
+CycleIndex++;
+if (CycleIndex > CurrentPath.LoopCount) goto labelFinished;
+}
+}
+
+labelFinished:
+bMove_InProgress = 0;
+bFollowMode = 1;
+LCD_ClearDisplay();
+LCD_PrintString("STOPPING...\0");
+Idle();
+bMove_InProgress = 0;
+bFollowMode = 1;
+Wait_ms(500);
+bFollowMode = 0;
+return EarlyExit;
+}

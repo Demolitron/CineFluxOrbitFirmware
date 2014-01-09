@@ -1,0 +1,1084 @@
+Version 3.2 HI-TECH Software Intermediate Code
+[u S1 `uc -> 4 `i `c -> 4 `i `ui -> 2 `i `i -> 2 `i `ul 1 `l 1 ]
+[n S1 LONG ub b ui i ul l ]
+[s S3 `uc 1 `ui 1 `ui 1 `uc 1 `uc 1 `d 1 `d 1 `uc 1 `ui 1 `d 1 `d 1 `i 1 `ui 1 `ui 1 `d 1 `d 1 ]
+[n S3 . Version BatteryLowVoltageLevel Battery12V_Q8 PowerResponseLimiter_Slope PowerResponseLimiter_Intercept Counts_per_Volt Volts_per_Count BacklightPWM_Duty BacklightIdleTimeout SystemAcceleration MaxSpeed PID_MaxError PID_Kp PID_Kd Counts_Per_Degree Degrees_Per_Count ]
+[s S5 `uc 1 `ui 1 `uc 1 `uc 1 `ui 1 `i -> 18 `i `ui -> 18 `i `ui -> 19 `i ]
+[n S5 . Type Origin_deg PointCount Bounce LoopCount Distances_deg TravelTimes_sec DwellTimes_sec ]
+[s S4 `uc 1 `ui 1 `uc 1 `uc 1 `d 1 `d 1 `d 1 `d 1 `uc 1 ]
+[n S4 . Type Origin_deg EndMode IsClockWise ProgramRunTime_sec CycleCount_rev CycleTime_sec Speed_deg_sec SpeedMode ]
+"7 C:\Program Files (x86)\HI-TECH Software\PICC-18\9.80\include\math.h
+[v _sqrt `(d ~T0 0 ef1`d ]
+"1 Z:\CineFlux\Dropbox\Orbit\MotionEngine.h
+[v _Move `(uc ~T0 0 ef2`d`d ]
+"2
+[v _MoveAdvanced `(uc ~T0 0 ef3`d`d`d ]
+[; ;math.h: 3: extern double fabs(double);
+[; ;math.h: 4: extern double floor(double);
+[; ;math.h: 5: extern double ceil(double);
+[; ;math.h: 6: extern double modf(double, double *);
+[; ;math.h: 7: extern double sqrt(double);
+[; ;math.h: 8: extern double atof(const char *);
+[; ;math.h: 9: extern double sin(double);
+[; ;math.h: 10: extern double cos(double);
+[; ;math.h: 11: extern double tan(double);
+[; ;math.h: 12: extern double asin(double);
+[; ;math.h: 13: extern double acos(double);
+[; ;math.h: 14: extern double atan(double);
+[; ;math.h: 15: extern double atan2(double, double);
+[; ;math.h: 16: extern double log(double);
+[; ;math.h: 17: extern double log10(double);
+[; ;math.h: 18: extern double pow(double, double);
+[; ;math.h: 19: extern double exp(double);
+[; ;math.h: 20: extern double sinh(double);
+[; ;math.h: 21: extern double cosh(double);
+[; ;math.h: 22: extern double tanh(double);
+[; ;math.h: 23: extern double eval_poly(double, const double *, int);
+[; ;math.h: 24: extern double frexp(double, int *);
+[; ;math.h: 25: extern double ldexp(double, int);
+[; ;math.h: 26: extern double fmod(double, double);
+[; ;math.h: 27: extern double trunc(double);
+[; ;math.h: 28: extern double round(double);
+[; ;main.h: 7: typedef union LONG {
+[; ;main.h: 8: unsigned char ub[4];
+[; ;main.h: 9: signed char b[4];
+[; ;main.h: 10: unsigned int ui[2];
+[; ;main.h: 11: signed int i[2];
+[; ;main.h: 12: unsigned long ul;
+[; ;main.h: 13: signed long l;
+[; ;main.h: 14: };
+[; ;main.h: 16: typedef union {
+[; ;main.h: 17: unsigned char ub[4];
+[; ;main.h: 18: signed char b[4];
+[; ;main.h: 19: unsigned int ui[2];
+[; ;main.h: 20: signed int i[2];
+[; ;main.h: 21: unsigned long ul;
+[; ;main.h: 22: signed long l;
+[; ;main.h: 23: float fl;
+[; ;main.h: 24: double dbl;
+[; ;main.h: 25: } MULTI;
+[; ;main.h: 29: void main(void);
+[; ;main.h: 30: void AckCmd(unsigned char CmdID);
+[; ;main.h: 31: void NackCmd(unsigned char CmdID, unsigned char Reason);
+[; ;main.h: 32: void MessageStream_WriteMULTI(MULTI dat, unsigned char CmdID);
+[; ;main.h: 33: void MessageStream_WriteByte(unsigned char dat);
+[; ;main.h: 34: unsigned char MessageStream_ReadByte();
+[; ;main.h: 35: void GoToSleep();
+[; ;main.h: 36: void SetupIO();
+[; ;main.h: 37: void interrupt FastTick(void);
+[; ;main.h: 38: void interrupt low_priority SlowTick();
+[; ;main.h: 39: void SetupHardware();
+[; ;main.h: 40: void Idle(void);
+[; ;main.h: 41: double GetCurrentLinearPosition();
+[; ;main.h: 42: double GetCurrentAngle();
+"44 Z:\CineFlux\Dropbox\Orbit\main.h
+[v _enc_states `Cc ~T0 -> 0 `x e ]
+[i _enc_states
+:U ..
+-> -> 0 `i `c
+-> -U -> 1 `i `c
+-> -> 1 `i `c
+-> -> 0 `i `c
+-> -> 1 `i `c
+-> -> 0 `i `c
+-> -> 0 `i `c
+-> -U -> 1 `i `c
+-> -U -> 1 `i `c
+-> -> 0 `i `c
+-> -> 0 `i `c
+-> -> 1 `i `c
+-> -> 0 `i `c
+-> -> 1 `i `c
+-> -U -> 1 `i `c
+-> -> 0 `i `c
+..
+]
+[; ;main.h: 44: const signed char enc_states[] = {0, -1, 1, 0, 1, 0, 0, -1, -1, 0, 0, 1, 0, 1, -1, 0};
+"49
+[v _ReadIdx `uc ~T0 1 e ]
+[i _ReadIdx
+-> -> 0 `i `uc
+]
+[; ;main.h: 49: unsigned char ReadIdx = 0;
+"50
+[v _TX_Idx `Vuc ~T0 1 e ]
+[i _TX_Idx
+-> -> 0 `i `uc
+]
+[; ;main.h: 50: volatile unsigned char TX_Idx = 0;
+"51
+[v _TX_bCount `Vuc ~T0 1 e ]
+[i _TX_bCount
+-> -> 0 `i `uc
+]
+[; ;main.h: 51: volatile unsigned char TX_bCount = 0;
+"52
+[v _TXBuffer `Vuc ~T0 -> 255 `i e ]
+[; ;main.h: 52: volatile unsigned char TXBuffer[255];
+"53
+[v _RX_MsgComplete `Vb ~T0 1 e ]
+[; ;main.h: 53: volatile bit RX_MsgComplete;
+"54
+[v _RX_InProgress `Vb ~T0 1 e ]
+[; ;main.h: 54: volatile bit RX_InProgress;
+"55
+[v _RX_Idx `Vuc ~T0 1 e ]
+[i _RX_Idx
+-> -> 0 `i `uc
+]
+[; ;main.h: 55: volatile unsigned char RX_Idx = 0;
+"56
+[v _RXBuffer `Vuc ~T0 -> 255 `i e ]
+[; ;main.h: 56: volatile unsigned char RXBuffer[255];
+"57
+[v _MyID `Vuc ~T0 1 e ]
+[i _MyID
+-> -> 170 `i `uc
+]
+[; ;main.h: 57: volatile unsigned char MyID = 0xAA;
+"58
+[v _isPendingExternalUIEvent `Vb ~T0 1 e ]
+[; ;main.h: 58: volatile bit isPendingExternalUIEvent;
+"59
+[v _PendingExternalUIEvent `Vuc ~T0 1 e ]
+[; ;main.h: 59: volatile char PendingExternalUIEvent;
+"60
+[v _ExtModeActive `Vb ~T0 1 e ]
+[; ;main.h: 60: volatile bit ExtModeActive;
+"65
+[v _ClearUI_Event `Vb ~T0 1 e ]
+[i _ClearUI_Event
+-> 0 `i
+]
+[; ;main.h: 65: volatile bit ClearUI_Event = 0;
+"66
+[v _bLock_RotaryDetentIntervals `Vb ~T0 1 e ]
+[i _bLock_RotaryDetentIntervals
+-> 0 `i
+]
+[; ;main.h: 66: volatile bit bLock_RotaryDetentIntervals = 0;
+"67
+[v _RotaryDetentIntervals `uc ~T0 -> 16 `i e ]
+[; ;main.h: 67: unsigned char RotaryDetentIntervals[16];
+"68
+[v _ZeroRotaryDetentIntervals `Vb ~T0 1 e ]
+[i _ZeroRotaryDetentIntervals
+-> 0 `i
+]
+[; ;main.h: 68: volatile bit ZeroRotaryDetentIntervals = 0;
+"69
+[v _bLock_UI_Event `Vb ~T0 1 e ]
+[i _bLock_UI_Event
+-> 0 `i
+]
+[; ;main.h: 69: volatile bit bLock_UI_Event = 0;
+"70
+[v _UI_Event `Vuc ~T0 1 e ]
+[; ;main.h: 70: volatile char UI_Event;
+"83
+[v _bLock_BatteryVoltage `Vb ~T0 1 e ]
+[i _bLock_BatteryVoltage
+-> 0 `i
+]
+[; ;main.h: 83: volatile bit bLock_BatteryVoltage = 0;
+"84
+[v _BatteryVoltage `ui ~T0 1 e ]
+[i _BatteryVoltage
+-> -> 0 `i `ui
+]
+[; ;main.h: 84: unsigned int BatteryVoltage = 0;
+"85
+[v _bLowVoltageTrip `Vb ~T0 1 e ]
+[i _bLowVoltageTrip
+-> 0 `i
+]
+[; ;main.h: 85: volatile bit bLowVoltageTrip = 0;
+"88
+[v _LCD_BacklightEnabled `Vb ~T0 1 e ]
+[; ;main.h: 88: volatile bit LCD_BacklightEnabled;
+"91
+[v _bFollowMode `Vb ~T0 1 e ]
+[i _bFollowMode
+-> 0 `i
+]
+[; ;main.h: 91: volatile bit bFollowMode = 0;
+"92
+[v _bMove_InProgress `Vb ~T0 1 e ]
+[i _bMove_InProgress
+-> 0 `i
+]
+[; ;main.h: 92: volatile bit bMove_InProgress = 0;
+"93
+[v _Move_speedQ24 `ul ~T0 1 e ]
+[i _Move_speedQ24
+-> -> -> 0 `i `l `ul
+]
+[; ;main.h: 93: unsigned long Move_speedQ24 = 0;
+"94
+[v _Move_shifted_position `S1 ~T0 1 e ]
+[; ;main.h: 94: union LONG Move_shifted_position;
+"95
+[v _Move_position `S1 ~T0 -> 2 `i e ]
+[; ;main.h: 95: union LONG Move_position[2];
+"96
+[v _Move_AccelValueQ24 `ul ~T0 1 e ]
+[i _Move_AccelValueQ24
+-> -> -> 0 `i `l `ul
+]
+[; ;main.h: 96: unsigned long Move_AccelValueQ24 = 0;
+"97
+[v _Move_CoastSpeedQ24 `ul ~T0 1 e ]
+[i _Move_CoastSpeedQ24
+-> -> -> 0 `i `l `ul
+]
+[; ;main.h: 97: unsigned long Move_CoastSpeedQ24 = 0;
+"98
+[v _Move_DecelPosition `ul ~T0 1 e ]
+[i _Move_DecelPosition
+-> -> -> 0 `i `l `ul
+]
+[; ;main.h: 98: unsigned long Move_DecelPosition = 0;
+"99
+[v _Move_FinalPosition `l ~T0 1 e ]
+[i _Move_FinalPosition
+-> -> 0 `i `l
+]
+[; ;main.h: 99: signed long Move_FinalPosition = 0;
+"100
+[v _Move_Origin `l ~T0 1 e ]
+[i _Move_Origin
+-> -> 0 `i `l
+]
+[; ;main.h: 100: signed long Move_Origin = 0;
+"101
+[v _bMove_Neg `Vb ~T0 1 e ]
+[i _bMove_Neg
+-> 0 `i
+]
+[; ;main.h: 101: volatile bit bMove_Neg = 0;
+"105
+[v _bSpeedMode `Vb ~T0 1 e ]
+[i _bSpeedMode
+-> 0 `i
+]
+[; ;main.h: 105: volatile bit bSpeedMode = 0;
+"106
+[v _Speed_SetToThis `ul ~T0 1 e ]
+[; ;main.h: 106: unsigned long Speed_SetToThis;
+"107
+[v _Speed_SetPending `Vb ~T0 1 e ]
+[; ;main.h: 107: volatile bit Speed_SetPending;
+"108
+[v _Speed_IsAccelerating `Vb ~T0 1 e ]
+[; ;main.h: 108: volatile bit Speed_IsAccelerating;
+"112
+[v _bClear_MotorPosition `Vb ~T0 1 e ]
+[i _bClear_MotorPosition
+-> 0 `i
+]
+[; ;main.h: 112: volatile bit bClear_MotorPosition = 0;
+"113
+[v _Motor_Position `l ~T0 1 e ]
+[i _Motor_Position
+-> -> 0 `i `l
+]
+[; ;main.h: 113: signed long Motor_Position = 0;
+"114
+[v _bLock_Motor_Position `Vb ~T0 1 e ]
+[i _bLock_Motor_Position
+-> 0 `i
+]
+[; ;main.h: 114: volatile bit bLock_Motor_Position = 0;
+"117
+[v _bIncrement_PID_Setpoint `Vb ~T0 1 e ]
+[i _bIncrement_PID_Setpoint
+-> 0 `i
+]
+[; ;main.h: 117: volatile bit bIncrement_PID_Setpoint = 0;
+"118
+[v _bDecrement_PID_Setpoint `Vb ~T0 1 e ]
+[i _bDecrement_PID_Setpoint
+-> 0 `i
+]
+[; ;main.h: 118: volatile bit bDecrement_PID_Setpoint = 0;
+"119
+[v _bLock_PID_SetPoint `Vb ~T0 1 e ]
+[i _bLock_PID_SetPoint
+-> 0 `i
+]
+[; ;main.h: 119: volatile bit bLock_PID_SetPoint = 0;
+"121
+[v _bMotionError `Vb ~T0 1 e ]
+[i _bMotionError
+-> 0 `i
+]
+[; ;main.h: 121: volatile bit bMotionError = 0;
+"122
+[v _bPowerOff `Vb ~T0 1 e ]
+[i _bPowerOff
+-> 0 `i
+]
+[; ;main.h: 122: volatile bit bPowerOff = 0;
+"181
+[v _ASCII_HEX_TO_BINARY `Cuc ~T0 -> 128 `i e ]
+[i _ASCII_HEX_TO_BINARY
+:U ..
+-> -> 0 `i `uc
+-> -> 0 `i `uc
+-> -> 0 `i `uc
+-> -> 0 `i `uc
+-> -> 0 `i `uc
+-> -> 0 `i `uc
+-> -> 0 `i `uc
+-> -> 0 `i `uc
+-> -> 0 `i `uc
+-> -> 0 `i `uc
+-> -> 0 `i `uc
+-> -> 0 `i `uc
+-> -> 0 `i `uc
+-> -> 0 `i `uc
+-> -> 0 `i `uc
+-> -> 0 `i `uc
+"182
+-> -> 0 `i `uc
+-> -> 0 `i `uc
+-> -> 0 `i `uc
+-> -> 0 `i `uc
+-> -> 0 `i `uc
+-> -> 0 `i `uc
+-> -> 0 `i `uc
+-> -> 0 `i `uc
+-> -> 0 `i `uc
+-> -> 0 `i `uc
+-> -> 0 `i `uc
+-> -> 0 `i `uc
+-> -> 0 `i `uc
+-> -> 0 `i `uc
+-> -> 0 `i `uc
+-> -> 0 `i `uc
+"183
+-> -> 0 `i `uc
+-> -> 0 `i `uc
+-> -> 0 `i `uc
+-> -> 0 `i `uc
+-> -> 0 `i `uc
+-> -> 0 `i `uc
+-> -> 0 `i `uc
+-> -> 0 `i `uc
+-> -> 0 `i `uc
+-> -> 0 `i `uc
+-> -> 0 `i `uc
+-> -> 0 `i `uc
+-> -> 0 `i `uc
+-> -> 0 `i `uc
+-> -> 0 `i `uc
+-> -> 0 `i `uc
+"184
+-> -> 0 `i `uc
+-> -> 1 `i `uc
+-> -> 2 `i `uc
+-> -> 3 `i `uc
+-> -> 4 `i `uc
+-> -> 5 `i `uc
+-> -> 6 `i `uc
+-> -> 7 `i `uc
+-> -> 8 `i `uc
+-> -> 9 `i `uc
+-> -> 0 `i `uc
+-> -> 0 `i `uc
+-> -> 0 `i `uc
+-> -> 0 `i `uc
+-> -> 0 `i `uc
+-> -> 0 `i `uc
+"185
+-> -> 0 `i `uc
+-> -> 10 `i `uc
+-> -> 11 `i `uc
+-> -> 12 `i `uc
+-> -> 13 `i `uc
+-> -> 14 `i `uc
+-> -> 15 `i `uc
+-> -> 0 `i `uc
+-> -> 0 `i `uc
+-> -> 0 `i `uc
+-> -> 0 `i `uc
+-> -> 0 `i `uc
+-> -> 0 `i `uc
+-> -> 0 `i `uc
+-> -> 0 `i `uc
+-> -> 0 `i `uc
+"186
+-> -> 0 `i `uc
+-> -> 10 `i `uc
+-> -> 11 `i `uc
+-> -> 12 `i `uc
+-> -> 13 `i `uc
+-> -> 14 `i `uc
+-> -> 15 `i `uc
+-> -> 0 `i `uc
+-> -> 0 `i `uc
+-> -> 0 `i `uc
+-> -> 0 `i `uc
+-> -> 0 `i `uc
+-> -> 0 `i `uc
+-> -> 0 `i `uc
+-> -> 0 `i `uc
+-> -> 0 `i `uc
+..
+]
+[; ;main.h: 181: const unsigned char ASCII_HEX_TO_BINARY[128] ={0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+[; ;main.h: 182: 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+[; ;main.h: 183: 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+[; ;main.h: 184: 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 0, 0, 0, 0, 0, 0,
+[; ;main.h: 185: 0, 10, 11, 12, 13, 14, 15, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+[; ;main.h: 186: 0, 10, 11, 12, 13, 14, 15, 0, 0, 0, 0, 0, 0, 0, 0, 0};
+"188
+[v _BINARY_TO_ASCII_HEX `Cuc ~T0 -> 16 `i e ]
+[i _BINARY_TO_ASCII_HEX
+:U ..
+-> -> 48 `ui `uc
+-> -> 49 `ui `uc
+-> -> 50 `ui `uc
+-> -> 51 `ui `uc
+-> -> 52 `ui `uc
+-> -> 53 `ui `uc
+-> -> 54 `ui `uc
+-> -> 55 `ui `uc
+-> -> 56 `ui `uc
+-> -> 57 `ui `uc
+-> -> 65 `ui `uc
+-> -> 66 `ui `uc
+-> -> 67 `ui `uc
+-> -> 68 `ui `uc
+-> -> 69 `ui `uc
+-> -> 70 `ui `uc
+..
+]
+[; ;main.h: 188: const unsigned char BINARY_TO_ASCII_HEX[16] = {'0', '1', '2', '3', '4', '5', '6', '7', '8', '9', 'A', 'B', 'C', 'D', 'E', 'F'};
+[; ;settings.h: 2: typedef struct {
+[; ;settings.h: 3: unsigned char Version;
+[; ;settings.h: 4: unsigned int BatteryLowVoltageLevel;
+[; ;settings.h: 5: unsigned int Battery12V_Q8;
+[; ;settings.h: 6: unsigned char PowerResponseLimiter_Slope;
+[; ;settings.h: 7: unsigned char PowerResponseLimiter_Intercept;
+[; ;settings.h: 8: double Counts_per_Volt;
+[; ;settings.h: 9: double Volts_per_Count;
+[; ;settings.h: 10: unsigned char BacklightPWM_Duty;
+[; ;settings.h: 11: unsigned int BacklightIdleTimeout;
+[; ;settings.h: 12: double SystemAcceleration;
+[; ;settings.h: 13: double MaxSpeed;
+[; ;settings.h: 14: signed int PID_MaxError;
+[; ;settings.h: 15: unsigned int PID_Kp;
+[; ;settings.h: 16: unsigned int PID_Kd;
+[; ;settings.h: 17: double Counts_Per_Degree;
+[; ;settings.h: 18: double Degrees_Per_Count;
+[; ;settings.h: 19: } ConfigStruct;
+[; ;settings.h: 21: typedef struct {
+[; ;settings.h: 22: char Type;
+[; ;settings.h: 23: unsigned int Origin_deg;
+[; ;settings.h: 24: char EndMode;
+[; ;settings.h: 25: char IsClockWise;
+[; ;settings.h: 26: double ProgramRunTime_sec;
+[; ;settings.h: 27: double CycleCount_rev;
+[; ;settings.h: 28: double CycleTime_sec;
+[; ;settings.h: 29: double Speed_deg_sec;
+[; ;settings.h: 30: char SpeedMode;
+[; ;settings.h: 31: } OrbitProgramStruct;
+[; ;settings.h: 33: typedef struct {
+[; ;settings.h: 34: char Type;
+[; ;settings.h: 35: unsigned int Origin_deg;
+[; ;settings.h: 36: unsigned char PointCount;
+[; ;settings.h: 37: unsigned char Bounce;
+[; ;settings.h: 38: unsigned int LoopCount;
+[; ;settings.h: 39: signed int Distances_deg[18];
+[; ;settings.h: 40: unsigned int TravelTimes_sec[18];
+[; ;settings.h: 41: unsigned int DwellTimes_sec[19];
+[; ;settings.h: 42: } WaypointProgramStruct;
+[; ;settings.h: 44: typedef union {
+[; ;settings.h: 45: unsigned char ub[120];
+[; ;settings.h: 46: WaypointProgramStruct WayPoint;
+[; ;settings.h: 47: OrbitProgramStruct Orbit;
+[; ;settings.h: 48: } PRESET;
+"50 Z:\CineFlux\Dropbox\Orbit\settings.h
+[v _Config `S3 ~T0 1 e ]
+[; ;settings.h: 50: ConfigStruct Config;
+"51
+[v _CurrentPath `S5 ~T0 1 e ]
+[; ;settings.h: 51: WaypointProgramStruct CurrentPath;
+"52
+[v _CurrentOrbitProgram `S4 ~T0 1 e ]
+[; ;settings.h: 52: OrbitProgramStruct CurrentOrbitProgram;
+[; ;settings.h: 54: void FactoryDefault();
+[; ;settings.h: 55: void SaveSettings();
+[; ;settings.h: 56: void LoadSettings();
+[; ;settings.h: 57: void EEprom_write(unsigned int *addr, unsigned char *dat, unsigned char bCount);
+[; ;settings.h: 58: void EEprom_read(unsigned int *addr, unsigned char *dat, unsigned char bCount);
+[; ;settings.h: 59: unsigned char GetPresetType(char pnum);
+[; ;settings.h: 60: void SavePreset(char pnum, unsigned char *dat);
+[; ;settings.h: 61: void LoadPreset(char pnum, unsigned char *dat);
+[; ;MotionEngine.h: 1: char Move(double Distance_deg, double Speed_deg_sec);
+[; ;MotionEngine.h: 2: char MoveAdvanced(double Distance_deg, double _Speed_Deg_Sec, double _Acceleration_Deg_Sec_Sec);
+[; ;MotionEngine.h: 3: char MoveToLinear(double DestinationPostion, double Speed_Deg_Sec);
+[; ;MotionEngine.h: 4: char MoveToAngle(double DestinationAngle, double Speed_Deg_Sec);
+[; ;MotionEngine.h: 5: double SpeedRequiredToMoveInTime(double Distance, double Time);
+[; ;MotionEngine.h: 6: double MinTimeToMove(double Distance);
+"6 Z:\CineFlux\Dropbox\Orbit\MotionEngine.c
+[v _MinTimeToMove `(d ~T0 1 ef1`d ]
+{
+[; ;MotionEngine.c: 6: double MinTimeToMove(double _Distance) {
+[e :U _MinTimeToMove ]
+[v __Distance `d ~T0 1 r1 ]
+[f ]
+"7
+[v _D `d ~T0 1 a ]
+"8
+[v _HalfD `d ~T0 1 a ]
+[; ;MotionEngine.c: 7: double D;
+[; ;MotionEngine.c: 8: double HalfD;
+[; ;MotionEngine.c: 10: if (_Distance < 0) D = -_Distance;
+"10
+[e $ ! < __Distance -> -> 0 `i `d 8  ]
+[e = _D -U __Distance ]
+[e $U 9  ]
+"11
+[e :U 8 ]
+[; ;MotionEngine.c: 11: else D = _Distance;
+[e = _D __Distance ]
+[e :U 9 ]
+[; ;MotionEngine.c: 12: HalfD = D * 0.5;
+"12
+[e = _HalfD * _D .0.5 ]
+"14
+[v _AccelTime `d ~T0 1 a ]
+[; ;MotionEngine.c: 14: double AccelTime = Config.MaxSpeed / Config.SystemAcceleration;
+[e = _AccelTime / . _Config 10 . _Config 9 ]
+"15
+[v _AccelDist `d ~T0 1 a ]
+[; ;MotionEngine.c: 15: double AccelDist = ((Config.SystemAcceleration * AccelTime) * AccelTime)*0.5;
+[e = _AccelDist * * * . _Config 9 _AccelTime _AccelTime .0.5 ]
+[; ;MotionEngine.c: 16: if (AccelDist > HalfD) {
+"16
+[e $ ! > _AccelDist _HalfD 10  ]
+{
+[; ;MotionEngine.c: 17: AccelTime = sqrt(D / Config.SystemAcceleration);
+"17
+[e = _AccelTime ( _sqrt (1 / _D . _Config 9 ]
+[; ;MotionEngine.c: 18: AccelDist = ((Config.SystemAcceleration * AccelTime) * AccelTime)*0.5;
+"18
+[e = _AccelDist * * * . _Config 9 _AccelTime _AccelTime .0.5 ]
+"19
+}
+[e :U 10 ]
+"20
+[v _RealSpeed `d ~T0 1 a ]
+[; ;MotionEngine.c: 19: }
+[; ;MotionEngine.c: 20: double RealSpeed = AccelTime * Config.SystemAcceleration;
+[e = _RealSpeed * _AccelTime . _Config 9 ]
+"21
+[v _CoastDistance `d ~T0 1 a ]
+[; ;MotionEngine.c: 21: double CoastDistance = D - (2 * AccelDist);
+[e = _CoastDistance - _D * -> -> 2 `i `d _AccelDist ]
+"22
+[v _CoastTime `d ~T0 1 a ]
+[; ;MotionEngine.c: 22: double CoastTime = CoastDistance / RealSpeed;
+[e = _CoastTime / _CoastDistance _RealSpeed ]
+"23
+[v _TotalTime `d ~T0 1 a ]
+[; ;MotionEngine.c: 23: double TotalTime = AccelTime * 2;
+[e = _TotalTime * _AccelTime -> -> 2 `i `d ]
+[; ;MotionEngine.c: 24: TotalTime += CoastTime;
+"24
+[e =+ _TotalTime _CoastTime ]
+[; ;MotionEngine.c: 25: return TotalTime;
+"25
+[e ) _TotalTime ]
+[e $UE 7  ]
+[; ;MotionEngine.c: 26: }
+"26
+[e :UE 7 ]
+}
+"28
+[v _SpeedRequiredToMoveInTime `(d ~T0 1 ef2`d`d ]
+{
+[; ;MotionEngine.c: 28: double SpeedRequiredToMoveInTime(double _Distance, double _Time) {
+[e :U _SpeedRequiredToMoveInTime ]
+[v __Distance `d ~T0 1 r1 ]
+[v __Time `d ~T0 1 r2 ]
+[f ]
+"29
+[v _D `d ~T0 1 a ]
+"30
+[v _T `d ~T0 1 a ]
+[; ;MotionEngine.c: 29: double D;
+[; ;MotionEngine.c: 30: double T;
+[; ;MotionEngine.c: 32: if (_Distance < 0) D = _Distance * -0.5;
+"32
+[e $ ! < __Distance -> -> 0 `i `d 12  ]
+[e = _D * __Distance -U .0.5 ]
+[e $U 13  ]
+"33
+[e :U 12 ]
+[; ;MotionEngine.c: 33: else D = _Distance * 0.5;
+[e = _D * __Distance .0.5 ]
+[e :U 13 ]
+[; ;MotionEngine.c: 35: if (_Time < 0) T = _Time * -0.5;
+"35
+[e $ ! < __Time -> -> 0 `i `d 14  ]
+[e = _T * __Time -U .0.5 ]
+[e $U 15  ]
+"36
+[e :U 14 ]
+[; ;MotionEngine.c: 36: else T = _Time * 0.5;
+[e = _T * __Time .0.5 ]
+[e :U 15 ]
+[; ;MotionEngine.c: 38: if (T > 4096) return D / T;
+"38
+[e $ ! > _T -> -> 4096 `i `d 16  ]
+[e ) / _D _T ]
+[e $UE 11  ]
+[e :U 16 ]
+"40
+[v _RootPrime `d ~T0 1 a ]
+[; ;MotionEngine.c: 40: double RootPrime = (T * T)-(2 * D / Config.SystemAcceleration);
+[e = _RootPrime - * _T _T / * -> -> 2 `i `d _D . _Config 9 ]
+[; ;MotionEngine.c: 41: if (RootPrime < 0) return -1;
+"41
+[e $ ! < _RootPrime -> -> 0 `i `d 17  ]
+[e ) -> -U -> 1 `i `d ]
+[e $UE 11  ]
+[e :U 17 ]
+"43
+[v _AccelTime `d ~T0 1 a ]
+[; ;MotionEngine.c: 43: double AccelTime = T - sqrt(RootPrime);
+[e = _AccelTime - _T ( _sqrt (1 _RootPrime ]
+"44
+[v _Speed `d ~T0 1 a ]
+[; ;MotionEngine.c: 44: double Speed = AccelTime*Config.SystemAcceleration;
+[e = _Speed * _AccelTime . _Config 9 ]
+[; ;MotionEngine.c: 45: if (Speed > Config.MaxSpeed) return -2;
+"45
+[e $ ! > _Speed . _Config 10 18  ]
+[e ) -> -U -> 2 `i `d ]
+[e $UE 11  ]
+[e :U 18 ]
+[; ;MotionEngine.c: 46: return Speed;
+"46
+[e ) _Speed ]
+[e $UE 11  ]
+[; ;MotionEngine.c: 47: }
+"47
+[e :UE 11 ]
+}
+"49
+[v _GetCurrentLinearPosition `(d ~T0 1 ef ]
+{
+[; ;MotionEngine.c: 49: double GetCurrentLinearPosition() {
+[e :U _GetCurrentLinearPosition ]
+[f ]
+"50
+[v _MotorPos `d ~T0 1 a ]
+[; ;MotionEngine.c: 50: double MotorPos;
+[; ;MotionEngine.c: 52: bLock_Motor_Position = 1;
+"52
+[e = _bLock_Motor_Position -> -> 1 `i `b ]
+[; ;MotionEngine.c: 53: MotorPos = Motor_Position;
+"53
+[e = _MotorPos -> _Motor_Position `d ]
+[; ;MotionEngine.c: 54: bLock_Motor_Position = 0;
+"54
+[e = _bLock_Motor_Position -> -> 0 `i `b ]
+[; ;MotionEngine.c: 56: MotorPos *= Config.Degrees_Per_Count;
+"56
+[e =* _MotorPos . _Config 15 ]
+[; ;MotionEngine.c: 57: return MotorPos;
+"57
+[e ) _MotorPos ]
+[e $UE 19  ]
+[; ;MotionEngine.c: 58: }
+"58
+[e :UE 19 ]
+}
+"60
+[v _GetCurrentAngle `(d ~T0 1 ef ]
+{
+[; ;MotionEngine.c: 60: double GetCurrentAngle() {
+[e :U _GetCurrentAngle ]
+[f ]
+"61
+[v _MotorPos `d ~T0 1 a ]
+[; ;MotionEngine.c: 61: double MotorPos;
+[; ;MotionEngine.c: 63: bLock_Motor_Position = 1;
+"63
+[e = _bLock_Motor_Position -> -> 1 `i `b ]
+[; ;MotionEngine.c: 64: MotorPos = Motor_Position;
+"64
+[e = _MotorPos -> _Motor_Position `d ]
+[; ;MotionEngine.c: 65: bLock_Motor_Position = 0;
+"65
+[e = _bLock_Motor_Position -> -> 0 `i `b ]
+[; ;MotionEngine.c: 67: MotorPos *= Config.Degrees_Per_Count;
+"67
+[e =* _MotorPos . _Config 15 ]
+[; ;MotionEngine.c: 69: if (MotorPos > 0) {
+"69
+[e $ ! > _MotorPos -> -> 0 `i `d 21  ]
+{
+[; ;MotionEngine.c: 70: while (MotorPos > 360) MotorPos -= 360;
+"70
+[e $U 22  ]
+[e :U 23 ]
+[e =- _MotorPos -> -> 360 `i `d ]
+[e :U 22 ]
+[e $ > _MotorPos -> -> 360 `i `d 23  ]
+[e :U 24 ]
+"71
+}
+[; ;MotionEngine.c: 71: } else {
+[e $U 25  ]
+[e :U 21 ]
+{
+[; ;MotionEngine.c: 72: while (MotorPos<-360) MotorPos += 360;
+"72
+[e $U 26  ]
+[e :U 27 ]
+[e =+ _MotorPos -> -> 360 `i `d ]
+[e :U 26 ]
+[e $ < _MotorPos -> -U -> 360 `i `d 27  ]
+[e :U 28 ]
+[; ;MotionEngine.c: 73: MotorPos += 360;
+"73
+[e =+ _MotorPos -> -> 360 `i `d ]
+"74
+}
+[e :U 25 ]
+[; ;MotionEngine.c: 74: }
+[; ;MotionEngine.c: 75: return MotorPos;
+"75
+[e ) _MotorPos ]
+[e $UE 20  ]
+[; ;MotionEngine.c: 76: }
+"76
+[e :UE 20 ]
+}
+"78
+[v _MoveToLinear `(uc ~T0 1 ef2`d`d ]
+{
+[; ;MotionEngine.c: 78: char MoveToLinear(double DestinationPostion, double Speed_Deg_Sec) {
+[e :U _MoveToLinear ]
+[v _DestinationPostion `d ~T0 1 r1 ]
+[v _Speed_Deg_Sec `d ~T0 1 r2 ]
+[f ]
+"79
+[v _CurrentPosition `d ~T0 1 a ]
+[; ;MotionEngine.c: 79: double CurrentPosition = GetCurrentLinearPosition();
+[e = _CurrentPosition ( _GetCurrentLinearPosition ..  ]
+"80
+[v _Distance `d ~T0 1 a ]
+[; ;MotionEngine.c: 80: double Distance = DestinationPostion - CurrentPosition;
+[e = _Distance - _DestinationPostion _CurrentPosition ]
+[; ;MotionEngine.c: 81: return Move(Distance, Speed_Deg_Sec);
+"81
+[e ) ( _Move (2 , _Distance _Speed_Deg_Sec ]
+[e $UE 29  ]
+[; ;MotionEngine.c: 82: }
+"82
+[e :UE 29 ]
+}
+"84
+[v _MoveToAngle `(uc ~T0 1 ef2`d`d ]
+{
+[; ;MotionEngine.c: 84: char MoveToAngle(double _DestinationAngle, double _Speed_Deg_Sec) {
+[e :U _MoveToAngle ]
+[v __DestinationAngle `d ~T0 1 r1 ]
+[v __Speed_Deg_Sec `d ~T0 1 r2 ]
+[f ]
+"85
+[v _DestinationAngle `d ~T0 1 a ]
+"86
+[v _Speed_Deg_Sec `d ~T0 1 a ]
+[; ;MotionEngine.c: 85: double DestinationAngle;
+[; ;MotionEngine.c: 86: double Speed_Deg_Sec;
+[; ;MotionEngine.c: 88: if (_Speed_Deg_Sec < 0) Speed_Deg_Sec = -_Speed_Deg_Sec;
+"88
+[e $ ! < __Speed_Deg_Sec -> -> 0 `i `d 31  ]
+[e = _Speed_Deg_Sec -U __Speed_Deg_Sec ]
+[e $U 32  ]
+"89
+[e :U 31 ]
+[; ;MotionEngine.c: 89: else Speed_Deg_Sec = _Speed_Deg_Sec;
+[e = _Speed_Deg_Sec __Speed_Deg_Sec ]
+[e :U 32 ]
+[; ;MotionEngine.c: 91: if (_DestinationAngle < 0) {
+"91
+[e $ ! < __DestinationAngle -> -> 0 `i `d 33  ]
+{
+[; ;MotionEngine.c: 92: DestinationAngle = _DestinationAngle;
+"92
+[e = _DestinationAngle __DestinationAngle ]
+[; ;MotionEngine.c: 93: while (DestinationAngle<-360) DestinationAngle += 360;
+"93
+[e $U 34  ]
+[e :U 35 ]
+[e =+ _DestinationAngle -> -> 360 `i `d ]
+[e :U 34 ]
+[e $ < _DestinationAngle -> -U -> 360 `i `d 35  ]
+[e :U 36 ]
+[; ;MotionEngine.c: 94: DestinationAngle += 360;
+"94
+[e =+ _DestinationAngle -> -> 360 `i `d ]
+"95
+}
+[; ;MotionEngine.c: 95: } else {
+[e $U 37  ]
+[e :U 33 ]
+{
+[; ;MotionEngine.c: 96: DestinationAngle = _DestinationAngle;
+"96
+[e = _DestinationAngle __DestinationAngle ]
+[; ;MotionEngine.c: 97: while (DestinationAngle > 360) DestinationAngle -= 360;
+"97
+[e $U 38  ]
+[e :U 39 ]
+[e =- _DestinationAngle -> -> 360 `i `d ]
+[e :U 38 ]
+[e $ > _DestinationAngle -> -> 360 `i `d 39  ]
+[e :U 40 ]
+"98
+}
+[e :U 37 ]
+"101
+[v _CurrentAngle `d ~T0 1 a ]
+[; ;MotionEngine.c: 98: }
+[; ;MotionEngine.c: 101: double CurrentAngle;
+[; ;MotionEngine.c: 102: CurrentAngle = GetCurrentAngle();
+"102
+[e = _CurrentAngle ( _GetCurrentAngle ..  ]
+"104
+[v _CW_Distance `d ~T0 1 a ]
+"105
+[v _CCW_Distance `d ~T0 1 a ]
+[; ;MotionEngine.c: 104: double CW_Distance;
+[; ;MotionEngine.c: 105: double CCW_Distance;
+[; ;MotionEngine.c: 107: if (DestinationAngle > CurrentAngle) {
+"107
+[e $ ! > _DestinationAngle _CurrentAngle 41  ]
+{
+[; ;MotionEngine.c: 108: CW_Distance = DestinationAngle - CurrentAngle;
+"108
+[e = _CW_Distance - _DestinationAngle _CurrentAngle ]
+[; ;MotionEngine.c: 109: CCW_Distance = CurrentAngle + (360 - DestinationAngle);
+"109
+[e = _CCW_Distance + _CurrentAngle - -> -> 360 `i `d _DestinationAngle ]
+"110
+}
+[; ;MotionEngine.c: 110: } else {
+[e $U 42  ]
+[e :U 41 ]
+{
+[; ;MotionEngine.c: 111: CW_Distance = (360 - CurrentAngle) + DestinationAngle;
+"111
+[e = _CW_Distance + - -> -> 360 `i `d _CurrentAngle _DestinationAngle ]
+[; ;MotionEngine.c: 112: CCW_Distance = CurrentAngle - DestinationAngle;
+"112
+[e = _CCW_Distance - _CurrentAngle _DestinationAngle ]
+"113
+}
+[e :U 42 ]
+[; ;MotionEngine.c: 113: }
+[; ;MotionEngine.c: 115: if (CW_Distance < CCW_Distance)
+"115
+[e $ ! < _CW_Distance _CCW_Distance 43  ]
+[; ;MotionEngine.c: 116: return Move(CW_Distance, Speed_Deg_Sec);
+"116
+[e ) ( _Move (2 , _CW_Distance _Speed_Deg_Sec ]
+[e $UE 30  ]
+[e $U 44  ]
+"117
+[e :U 43 ]
+[; ;MotionEngine.c: 117: else
+[; ;MotionEngine.c: 118: return Move(-CCW_Distance, Speed_Deg_Sec);
+"118
+[e ) ( _Move (2 , -U _CCW_Distance _Speed_Deg_Sec ]
+[e $UE 30  ]
+[e :U 44 ]
+[; ;MotionEngine.c: 119: }
+"119
+[e :UE 30 ]
+}
+"121
+[v _Move `(uc ~T0 1 ef2`d`d ]
+{
+[; ;MotionEngine.c: 121: char Move(double Distance_deg, double _Speed_Deg_Sec){
+[e :U _Move ]
+[v _Distance_deg `d ~T0 1 r1 ]
+[v __Speed_Deg_Sec `d ~T0 1 r2 ]
+[f ]
+[; ;MotionEngine.c: 122: return MoveAdvanced(Distance_deg, _Speed_Deg_Sec, Config.SystemAcceleration);
+"122
+[e ) ( _MoveAdvanced (3 , , _Distance_deg __Speed_Deg_Sec . _Config 9 ]
+[e $UE 45  ]
+[; ;MotionEngine.c: 123: }
+"123
+[e :UE 45 ]
+}
+"125
+[v _MoveAdvanced `(uc ~T0 1 ef3`d`d`d ]
+{
+[; ;MotionEngine.c: 125: char MoveAdvanced(double Distance_deg, double _Speed_Deg_Sec, double _Acceleration_Deg_Sec_Sec) {
+[e :U _MoveAdvanced ]
+[v _Distance_deg `d ~T0 1 r1 ]
+[v __Speed_Deg_Sec `d ~T0 1 r2 ]
+[v __Acceleration_Deg_Sec_Sec `d ~T0 1 r3 ]
+[f ]
+[; ;MotionEngine.c: 126: if (bMove_InProgress) return -1;
+"126
+[e $ ! _bMove_InProgress 47  ]
+[e ) -> -U -> 1 `i `uc ]
+[e $UE 46  ]
+[e :U 47 ]
+"128
+[v _CurrentPosition_counts `l ~T0 1 a ]
+"129
+[v _Speed_Deg_Sec `d ~T0 1 a ]
+"130
+[v _Accel_Deg_Sec_Sec `d ~T0 1 a ]
+[; ;MotionEngine.c: 128: signed long CurrentPosition_counts;
+[; ;MotionEngine.c: 129: double Speed_Deg_Sec;
+[; ;MotionEngine.c: 130: double Accel_Deg_Sec_Sec;
+[; ;MotionEngine.c: 132: if (_Speed_Deg_Sec < 0) Speed_Deg_Sec = -_Speed_Deg_Sec;
+"132
+[e $ ! < __Speed_Deg_Sec -> -> 0 `i `d 48  ]
+[e = _Speed_Deg_Sec -U __Speed_Deg_Sec ]
+[e $U 49  ]
+"133
+[e :U 48 ]
+[; ;MotionEngine.c: 133: else Speed_Deg_Sec = _Speed_Deg_Sec;
+[e = _Speed_Deg_Sec __Speed_Deg_Sec ]
+[e :U 49 ]
+[; ;MotionEngine.c: 135: if (_Acceleration_Deg_Sec_Sec < 0) Accel_Deg_Sec_Sec = -_Acceleration_Deg_Sec_Sec;
+"135
+[e $ ! < __Acceleration_Deg_Sec_Sec -> -> 0 `i `d 50  ]
+[e = _Accel_Deg_Sec_Sec -U __Acceleration_Deg_Sec_Sec ]
+[e $U 51  ]
+"136
+[e :U 50 ]
+[; ;MotionEngine.c: 136: else Accel_Deg_Sec_Sec = _Acceleration_Deg_Sec_Sec;
+[e = _Accel_Deg_Sec_Sec __Acceleration_Deg_Sec_Sec ]
+[e :U 51 ]
+"138
+[v _Distance_counts `l ~T0 1 a ]
+[; ;MotionEngine.c: 138: signed long Distance_counts = (signed long) (Distance_deg * Config.Counts_Per_Degree);
+[e = _Distance_counts -> * _Distance_deg . _Config 14 `l ]
+[; ;MotionEngine.c: 139: if (Distance_counts == 0) return 0;
+"139
+[e $ ! == _Distance_counts -> -> 0 `i `l 52  ]
+[e ) -> -> 0 `i `uc ]
+[e $UE 46  ]
+[e :U 52 ]
+[; ;MotionEngine.c: 141: bLock_Motor_Position = 1;
+"141
+[e = _bLock_Motor_Position -> -> 1 `i `b ]
+[; ;MotionEngine.c: 142: CurrentPosition_counts = Motor_Position;
+"142
+[e = _CurrentPosition_counts _Motor_Position ]
+[; ;MotionEngine.c: 143: bLock_Motor_Position = 0;
+"143
+[e = _bLock_Motor_Position -> -> 0 `i `b ]
+[; ;MotionEngine.c: 145: Move_FinalPosition = CurrentPosition_counts + Distance_counts;
+"145
+[e = _Move_FinalPosition + _CurrentPosition_counts _Distance_counts ]
+[; ;MotionEngine.c: 146: Move_Origin = CurrentPosition_counts;
+"146
+[e = _Move_Origin _CurrentPosition_counts ]
+"148
+[v _DD `d ~T0 1 a ]
+[; ;MotionEngine.c: 148: double DD;
+[; ;MotionEngine.c: 149: if (Distance_deg < 0) {
+"149
+[e $ ! < _Distance_deg -> -> 0 `i `d 53  ]
+{
+[; ;MotionEngine.c: 150: DD = -Distance_deg;
+"150
+[e = _DD -U _Distance_deg ]
+[; ;MotionEngine.c: 151: bMove_Neg = 1;
+"151
+[e = _bMove_Neg -> -> 1 `i `b ]
+"152
+}
+[; ;MotionEngine.c: 152: } else {
+[e $U 54  ]
+[e :U 53 ]
+{
+[; ;MotionEngine.c: 153: DD = Distance_deg;
+"153
+[e = _DD _Distance_deg ]
+[; ;MotionEngine.c: 154: bMove_Neg = 0;
+"154
+[e = _bMove_Neg -> -> 0 `i `b ]
+"155
+}
+[e :U 54 ]
+"157
+[v _AccelTime `d ~T0 1 a ]
+[; ;MotionEngine.c: 155: }
+[; ;MotionEngine.c: 157: double AccelTime = Speed_Deg_Sec / Accel_Deg_Sec_Sec;
+[e = _AccelTime / _Speed_Deg_Sec _Accel_Deg_Sec_Sec ]
+"158
+[v _AccelDist `d ~T0 1 a ]
+[; ;MotionEngine.c: 158: double AccelDist = (0.5 * Accel_Deg_Sec_Sec * AccelTime * AccelTime);
+[e = _AccelDist * * * .0.5 _Accel_Deg_Sec_Sec _AccelTime _AccelTime ]
+[; ;MotionEngine.c: 160: if ((AccelDist * 2) > DD) {
+"160
+[e $ ! > * _AccelDist -> -> 2 `i `d _DD 55  ]
+{
+[; ;MotionEngine.c: 161: AccelDist = DD / 2;
+"161
+[e = _AccelDist / _DD -> -> 2 `i `d ]
+"162
+}
+[e :U 55 ]
+"164
+[v _DP `d ~T0 1 a ]
+[; ;MotionEngine.c: 162: }
+[; ;MotionEngine.c: 164: double DP = (DD - AccelDist) * Config.Counts_Per_Degree;
+[e = _DP * - _DD _AccelDist . _Config 14 ]
+[; ;MotionEngine.c: 165: Move_DecelPosition = (unsigned long) DP;
+"165
+[e = _Move_DecelPosition -> _DP `ul ]
+"167
+[v _AV `d ~T0 1 a ]
+[; ;MotionEngine.c: 167: double AV = Accel_Deg_Sec_Sec * Config.Counts_Per_Degree * 67.1088640;
+[e = _AV * * _Accel_Deg_Sec_Sec . _Config 14 .67.1088640 ]
+[; ;MotionEngine.c: 168: Move_AccelValueQ24 = (unsigned long) AV;
+"168
+[e = _Move_AccelValueQ24 -> _AV `ul ]
+"170
+[v _CS `d ~T0 1 a ]
+[; ;MotionEngine.c: 170: double CS = Speed_Deg_Sec * Config.Counts_Per_Degree * 33554.4320;
+[e = _CS * * _Speed_Deg_Sec . _Config 14 .33554.4320 ]
+[; ;MotionEngine.c: 171: Move_CoastSpeedQ24 = (unsigned long) CS;
+"171
+[e = _Move_CoastSpeedQ24 -> _CS `ul ]
+[; ;MotionEngine.c: 173: Move_shifted_position.ul = 0;
+"173
+[e = . _Move_shifted_position 4 -> -> -> 0 `i `l `ul ]
+[; ;MotionEngine.c: 174: Move_speedQ24 = 0;
+"174
+[e = _Move_speedQ24 -> -> -> 0 `i `l `ul ]
+[; ;MotionEngine.c: 175: Move_position[0].ul = 0;
+"175
+[e = . *U + &U _Move_position * -> -> -> 0 `i `ui `ux -> -> # *U &U _Move_position `ui `ux 4 -> -> -> 0 `i `l `ul ]
+[; ;MotionEngine.c: 176: Move_position[1].ul = 0;
+"176
+[e = . *U + &U _Move_position * -> -> -> 1 `i `ui `ux -> -> # *U &U _Move_position `ui `ux 4 -> -> -> 0 `i `l `ul ]
+[; ;MotionEngine.c: 178: bMove_InProgress = 1;
+"178
+[e = _bMove_InProgress -> -> 1 `i `b ]
+[; ;MotionEngine.c: 179: return 0;
+"179
+[e ) -> -> 0 `i `uc ]
+[e $UE 46  ]
+[; ;MotionEngine.c: 180: }
+"180
+[e :UE 46 ]
+}

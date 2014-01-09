@@ -1,0 +1,1958 @@
+Version 3.2 HI-TECH Software Intermediate Code
+[u S1 `uc -> 4 `i `c -> 4 `i `ui -> 2 `i `i -> 2 `i `ul 1 `l 1 ]
+[n S1 LONG ub b ui i ul l ]
+[s S3 `uc 1 `ui 1 `ui 1 `uc 1 `uc 1 `d 1 `d 1 `uc 1 `ui 1 `d 1 `d 1 `i 1 `ui 1 `ui 1 `d 1 `d 1 ]
+[n S3 . Version BatteryLowVoltageLevel Battery12V_Q8 PowerResponseLimiter_Slope PowerResponseLimiter_Intercept Counts_per_Volt Volts_per_Count BacklightPWM_Duty BacklightIdleTimeout SystemAcceleration MaxSpeed PID_MaxError PID_Kp PID_Kd Counts_Per_Degree Degrees_Per_Count ]
+[s S5 `uc 1 `ui 1 `uc 1 `uc 1 `ui 1 `i -> 18 `i `ui -> 18 `i `ui -> 19 `i ]
+[n S5 . Type Origin_deg PointCount Bounce LoopCount Distances_deg TravelTimes_sec DwellTimes_sec ]
+[s S4 `uc 1 `ui 1 `uc 1 `uc 1 `d 1 `d 1 `d 1 `d 1 `uc 1 ]
+[n S4 . Type Origin_deg EndMode IsClockWise ProgramRunTime_sec CycleCount_rev CycleTime_sec Speed_deg_sec SpeedMode ]
+"6 Z:\CineFlux\Dropbox\Orbit\LCD.h
+[v _LCD_ClearDisplay `(v ~T0 0 ef ]
+"1
+[v _LCD_PrintString `(v ~T0 0 ef1`*Cuc ]
+"9
+[v _LCD_SetPosition `(v ~T0 0 ef2`uc`uc ]
+"5 Z:\CineFlux\Dropbox\Orbit\UserInterface.h
+[v _GetClick `(c ~T0 0 ef ]
+"42 Z:\CineFlux\Dropbox\Orbit\Main.h
+[v _GetCurrentAngle `(d ~T0 0 ef ]
+"41
+[v _GetCurrentLinearPosition `(d ~T0 0 ef ]
+"14 Z:\CineFlux\Dropbox\Orbit\UserInterface.h
+[v _GetTime `(c ~T0 0 ef5`*Cuc`*d`d`d`uc ]
+"40 Z:\CineFlux\Dropbox\Orbit\Main.h
+[v _Idle `(v ~T0 0 ef ]
+"3 Z:\CineFlux\Dropbox\Orbit\LCD.h
+[v _LCD_PrintLong `(v ~T0 0 ef3`l`uc`uc ]
+"1 Z:\CineFlux\Dropbox\Orbit\MotionEngine.h
+[v _Move `(uc ~T0 0 ef2`d`d ]
+"6
+[v _MinTimeToMove `(d ~T0 0 ef1`d ]
+"6 Z:\CineFlux\Dropbox\Orbit\UserInterface.h
+[v _GetYesNo `(c ~T0 0 ef2`*Cuc`c ]
+"11
+[v _DisplayChoices `(c ~T0 0 ef4`**Cuc`uc`*Cuc`uc ]
+"7
+[v _GetFloat `(c ~T0 0 ef6`*Cuc`*Cuc`*d`d`d`d ]
+"2 Z:\CineFlux\Dropbox\Orbit\WaypointProgram.h
+[v _RunWaypointProgram `(c ~T0 0 ef ]
+"12 Z:\CineFlux\Dropbox\Orbit\UserInterface.h
+[v _GetPresetNumber `(c ~T0 0 ef ]
+"60 Z:\CineFlux\Dropbox\Orbit\Settings.h
+[v _SavePreset `(v ~T0 0 ef2`uc`*uc ]
+"4 Z:\CineFlux\Dropbox\Orbit\MotionEngine.h
+[v _MoveToAngle `(uc ~T0 0 ef2`d`d ]
+"9 Z:\CineFlux\Dropbox\Orbit\UserInterface.h
+[v _GetInput_nonblocking `(c ~T0 0 ef ]
+"3 Z:\CineFlux\Dropbox\Orbit\Timings.h
+[v _Wait_seconds_nonblocking `(v ~T0 0 ef1`ui ]
+"5 Z:\CineFlux\Dropbox\Orbit\MotionEngine.h
+[v _SpeedRequiredToMoveInTime `(d ~T0 0 ef2`d`d ]
+"2 Z:\CineFlux\Dropbox\Orbit\Timings.h
+[v _Wait_ms `(v ~T0 0 ef1`ui ]
+[; ;LCD.h: 1: void LCD_PrintString(const unsigned char *dat);
+[; ;LCD.h: 2: void LCD_PrintChar(char dat);
+[; ;LCD.h: 3: void LCD_PrintLong(long dat, char places, char sign);
+[; ;LCD.h: 4: void LCD_PrintFloat(double dat, char whole, char fract, char sign);
+[; ;LCD.h: 6: void LCD_ClearDisplay(void);
+[; ;LCD.h: 7: void LCD_PowerUp(void);
+[; ;LCD.h: 9: void LCD_SetPosition(char Row, char Col);
+[; ;LCD.h: 10: void LCD_FunctionSet(char EightBit, char DualLine, char FiveByTenDots);
+[; ;LCD.h: 11: void LCD_CursorShift(char ShiftDisplay, char ShiftRight);
+[; ;LCD.h: 12: void LCD_DisplayOnOff(char DisplayOn, char CursorOn, char BlinkOn);
+[; ;LCD.h: 13: void LCD_EntryModeSet(char Increment, char ShiftOn);
+[; ;LCD.h: 14: void LCD_ReturnHome(void);
+[; ;LCD.h: 16: void putc(unsigned char dat);
+"18 Z:\CineFlux\Dropbox\Orbit\LCD.h
+[v _LCD_Line1 `uc ~T0 -> 20 `i e ]
+[; ;LCD.h: 18: unsigned char LCD_Line1[20];
+"19
+[v _LCD_Line2 `uc ~T0 -> 20 `i e ]
+[; ;LCD.h: 19: unsigned char LCD_Line2[20];
+"20
+[v _LCD_Row `uc ~T0 1 e ]
+[i _LCD_Row
+-> -> 0 `i `uc
+]
+[; ;LCD.h: 20: unsigned char LCD_Row=0;
+"21
+[v _LCD_Col `uc ~T0 1 e ]
+[i _LCD_Col
+-> -> 0 `i `uc
+]
+[; ;LCD.h: 21: unsigned char LCD_Col=0;
+[; ;WaypointProgram.h: 1: signed char CreateWaypointProgram();
+[; ;WaypointProgram.h: 2: signed char RunWaypointProgram();
+[; ;Main.h: 7: typedef union LONG {
+[; ;Main.h: 8: unsigned char ub[4];
+[; ;Main.h: 9: signed char b[4];
+[; ;Main.h: 10: unsigned int ui[2];
+[; ;Main.h: 11: signed int i[2];
+[; ;Main.h: 12: unsigned long ul;
+[; ;Main.h: 13: signed long l;
+[; ;Main.h: 14: };
+[; ;Main.h: 16: typedef union {
+[; ;Main.h: 17: unsigned char ub[4];
+[; ;Main.h: 18: signed char b[4];
+[; ;Main.h: 19: unsigned int ui[2];
+[; ;Main.h: 20: signed int i[2];
+[; ;Main.h: 21: unsigned long ul;
+[; ;Main.h: 22: signed long l;
+[; ;Main.h: 23: float fl;
+[; ;Main.h: 24: double dbl;
+[; ;Main.h: 25: } MULTI;
+[; ;Main.h: 29: void main(void);
+[; ;Main.h: 30: void AckCmd(unsigned char CmdID);
+[; ;Main.h: 31: void NackCmd(unsigned char CmdID, unsigned char Reason);
+[; ;Main.h: 32: void MessageStream_WriteMULTI(MULTI dat, unsigned char CmdID);
+[; ;Main.h: 33: void MessageStream_WriteByte(unsigned char dat);
+[; ;Main.h: 34: unsigned char MessageStream_ReadByte();
+[; ;Main.h: 35: void GoToSleep();
+[; ;Main.h: 36: void SetupIO();
+[; ;Main.h: 37: void interrupt FastTick(void);
+[; ;Main.h: 38: void interrupt low_priority SlowTick();
+[; ;Main.h: 39: void SetupHardware();
+[; ;Main.h: 40: void Idle(void);
+[; ;Main.h: 41: double GetCurrentLinearPosition();
+[; ;Main.h: 42: double GetCurrentAngle();
+"44 Z:\CineFlux\Dropbox\Orbit\Main.h
+[v _enc_states `Cc ~T0 -> 0 `x e ]
+[i _enc_states
+:U ..
+-> -> 0 `i `c
+-> -U -> 1 `i `c
+-> -> 1 `i `c
+-> -> 0 `i `c
+-> -> 1 `i `c
+-> -> 0 `i `c
+-> -> 0 `i `c
+-> -U -> 1 `i `c
+-> -U -> 1 `i `c
+-> -> 0 `i `c
+-> -> 0 `i `c
+-> -> 1 `i `c
+-> -> 0 `i `c
+-> -> 1 `i `c
+-> -U -> 1 `i `c
+-> -> 0 `i `c
+..
+]
+[; ;Main.h: 44: const signed char enc_states[] = {0, -1, 1, 0, 1, 0, 0, -1, -1, 0, 0, 1, 0, 1, -1, 0};
+"49
+[v _ReadIdx `uc ~T0 1 e ]
+[i _ReadIdx
+-> -> 0 `i `uc
+]
+[; ;Main.h: 49: unsigned char ReadIdx = 0;
+"50
+[v _TX_Idx `Vuc ~T0 1 e ]
+[i _TX_Idx
+-> -> 0 `i `uc
+]
+[; ;Main.h: 50: volatile unsigned char TX_Idx = 0;
+"51
+[v _TX_bCount `Vuc ~T0 1 e ]
+[i _TX_bCount
+-> -> 0 `i `uc
+]
+[; ;Main.h: 51: volatile unsigned char TX_bCount = 0;
+"52
+[v _TXBuffer `Vuc ~T0 -> 255 `i e ]
+[; ;Main.h: 52: volatile unsigned char TXBuffer[255];
+"53
+[v _RX_MsgComplete `Vb ~T0 1 e ]
+[; ;Main.h: 53: volatile bit RX_MsgComplete;
+"54
+[v _RX_InProgress `Vb ~T0 1 e ]
+[; ;Main.h: 54: volatile bit RX_InProgress;
+"55
+[v _RX_Idx `Vuc ~T0 1 e ]
+[i _RX_Idx
+-> -> 0 `i `uc
+]
+[; ;Main.h: 55: volatile unsigned char RX_Idx = 0;
+"56
+[v _RXBuffer `Vuc ~T0 -> 255 `i e ]
+[; ;Main.h: 56: volatile unsigned char RXBuffer[255];
+"57
+[v _MyID `Vuc ~T0 1 e ]
+[i _MyID
+-> -> 170 `i `uc
+]
+[; ;Main.h: 57: volatile unsigned char MyID = 0xAA;
+"58
+[v _isPendingExternalUIEvent `Vb ~T0 1 e ]
+[; ;Main.h: 58: volatile bit isPendingExternalUIEvent;
+"59
+[v _PendingExternalUIEvent `Vuc ~T0 1 e ]
+[; ;Main.h: 59: volatile char PendingExternalUIEvent;
+"60
+[v _ExtModeActive `Vb ~T0 1 e ]
+[; ;Main.h: 60: volatile bit ExtModeActive;
+"65
+[v _ClearUI_Event `Vb ~T0 1 e ]
+[i _ClearUI_Event
+-> 0 `i
+]
+[; ;Main.h: 65: volatile bit ClearUI_Event = 0;
+"66
+[v _bLock_RotaryDetentIntervals `Vb ~T0 1 e ]
+[i _bLock_RotaryDetentIntervals
+-> 0 `i
+]
+[; ;Main.h: 66: volatile bit bLock_RotaryDetentIntervals = 0;
+"67
+[v _RotaryDetentIntervals `uc ~T0 -> 16 `i e ]
+[; ;Main.h: 67: unsigned char RotaryDetentIntervals[16];
+"68
+[v _ZeroRotaryDetentIntervals `Vb ~T0 1 e ]
+[i _ZeroRotaryDetentIntervals
+-> 0 `i
+]
+[; ;Main.h: 68: volatile bit ZeroRotaryDetentIntervals = 0;
+"69
+[v _bLock_UI_Event `Vb ~T0 1 e ]
+[i _bLock_UI_Event
+-> 0 `i
+]
+[; ;Main.h: 69: volatile bit bLock_UI_Event = 0;
+"70
+[v _UI_Event `Vuc ~T0 1 e ]
+[; ;Main.h: 70: volatile char UI_Event;
+"83
+[v _bLock_BatteryVoltage `Vb ~T0 1 e ]
+[i _bLock_BatteryVoltage
+-> 0 `i
+]
+[; ;Main.h: 83: volatile bit bLock_BatteryVoltage = 0;
+"84
+[v _BatteryVoltage `ui ~T0 1 e ]
+[i _BatteryVoltage
+-> -> 0 `i `ui
+]
+[; ;Main.h: 84: unsigned int BatteryVoltage = 0;
+"85
+[v _bLowVoltageTrip `Vb ~T0 1 e ]
+[i _bLowVoltageTrip
+-> 0 `i
+]
+[; ;Main.h: 85: volatile bit bLowVoltageTrip = 0;
+"88
+[v _LCD_BacklightEnabled `Vb ~T0 1 e ]
+[; ;Main.h: 88: volatile bit LCD_BacklightEnabled;
+"91
+[v _bFollowMode `Vb ~T0 1 e ]
+[i _bFollowMode
+-> 0 `i
+]
+[; ;Main.h: 91: volatile bit bFollowMode = 0;
+"92
+[v _bMove_InProgress `Vb ~T0 1 e ]
+[i _bMove_InProgress
+-> 0 `i
+]
+[; ;Main.h: 92: volatile bit bMove_InProgress = 0;
+"93
+[v _Move_speedQ24 `ul ~T0 1 e ]
+[i _Move_speedQ24
+-> -> -> 0 `i `l `ul
+]
+[; ;Main.h: 93: unsigned long Move_speedQ24 = 0;
+"94
+[v _Move_shifted_position `S1 ~T0 1 e ]
+[; ;Main.h: 94: union LONG Move_shifted_position;
+"95
+[v _Move_position `S1 ~T0 -> 2 `i e ]
+[; ;Main.h: 95: union LONG Move_position[2];
+"96
+[v _Move_AccelValueQ24 `ul ~T0 1 e ]
+[i _Move_AccelValueQ24
+-> -> -> 0 `i `l `ul
+]
+[; ;Main.h: 96: unsigned long Move_AccelValueQ24 = 0;
+"97
+[v _Move_CoastSpeedQ24 `ul ~T0 1 e ]
+[i _Move_CoastSpeedQ24
+-> -> -> 0 `i `l `ul
+]
+[; ;Main.h: 97: unsigned long Move_CoastSpeedQ24 = 0;
+"98
+[v _Move_DecelPosition `ul ~T0 1 e ]
+[i _Move_DecelPosition
+-> -> -> 0 `i `l `ul
+]
+[; ;Main.h: 98: unsigned long Move_DecelPosition = 0;
+"99
+[v _Move_FinalPosition `l ~T0 1 e ]
+[i _Move_FinalPosition
+-> -> 0 `i `l
+]
+[; ;Main.h: 99: signed long Move_FinalPosition = 0;
+"100
+[v _Move_Origin `l ~T0 1 e ]
+[i _Move_Origin
+-> -> 0 `i `l
+]
+[; ;Main.h: 100: signed long Move_Origin = 0;
+"101
+[v _bMove_Neg `Vb ~T0 1 e ]
+[i _bMove_Neg
+-> 0 `i
+]
+[; ;Main.h: 101: volatile bit bMove_Neg = 0;
+"105
+[v _bSpeedMode `Vb ~T0 1 e ]
+[i _bSpeedMode
+-> 0 `i
+]
+[; ;Main.h: 105: volatile bit bSpeedMode = 0;
+"106
+[v _Speed_SetToThis `ul ~T0 1 e ]
+[; ;Main.h: 106: unsigned long Speed_SetToThis;
+"107
+[v _Speed_SetPending `Vb ~T0 1 e ]
+[; ;Main.h: 107: volatile bit Speed_SetPending;
+"108
+[v _Speed_IsAccelerating `Vb ~T0 1 e ]
+[; ;Main.h: 108: volatile bit Speed_IsAccelerating;
+"112
+[v _bClear_MotorPosition `Vb ~T0 1 e ]
+[i _bClear_MotorPosition
+-> 0 `i
+]
+[; ;Main.h: 112: volatile bit bClear_MotorPosition = 0;
+"113
+[v _Motor_Position `l ~T0 1 e ]
+[i _Motor_Position
+-> -> 0 `i `l
+]
+[; ;Main.h: 113: signed long Motor_Position = 0;
+"114
+[v _bLock_Motor_Position `Vb ~T0 1 e ]
+[i _bLock_Motor_Position
+-> 0 `i
+]
+[; ;Main.h: 114: volatile bit bLock_Motor_Position = 0;
+"117
+[v _bIncrement_PID_Setpoint `Vb ~T0 1 e ]
+[i _bIncrement_PID_Setpoint
+-> 0 `i
+]
+[; ;Main.h: 117: volatile bit bIncrement_PID_Setpoint = 0;
+"118
+[v _bDecrement_PID_Setpoint `Vb ~T0 1 e ]
+[i _bDecrement_PID_Setpoint
+-> 0 `i
+]
+[; ;Main.h: 118: volatile bit bDecrement_PID_Setpoint = 0;
+"119
+[v _bLock_PID_SetPoint `Vb ~T0 1 e ]
+[i _bLock_PID_SetPoint
+-> 0 `i
+]
+[; ;Main.h: 119: volatile bit bLock_PID_SetPoint = 0;
+"121
+[v _bMotionError `Vb ~T0 1 e ]
+[i _bMotionError
+-> 0 `i
+]
+[; ;Main.h: 121: volatile bit bMotionError = 0;
+"122
+[v _bPowerOff `Vb ~T0 1 e ]
+[i _bPowerOff
+-> 0 `i
+]
+[; ;Main.h: 122: volatile bit bPowerOff = 0;
+"181
+[v _ASCII_HEX_TO_BINARY `Cuc ~T0 -> 128 `i e ]
+[i _ASCII_HEX_TO_BINARY
+:U ..
+-> -> 0 `i `uc
+-> -> 0 `i `uc
+-> -> 0 `i `uc
+-> -> 0 `i `uc
+-> -> 0 `i `uc
+-> -> 0 `i `uc
+-> -> 0 `i `uc
+-> -> 0 `i `uc
+-> -> 0 `i `uc
+-> -> 0 `i `uc
+-> -> 0 `i `uc
+-> -> 0 `i `uc
+-> -> 0 `i `uc
+-> -> 0 `i `uc
+-> -> 0 `i `uc
+-> -> 0 `i `uc
+"182
+-> -> 0 `i `uc
+-> -> 0 `i `uc
+-> -> 0 `i `uc
+-> -> 0 `i `uc
+-> -> 0 `i `uc
+-> -> 0 `i `uc
+-> -> 0 `i `uc
+-> -> 0 `i `uc
+-> -> 0 `i `uc
+-> -> 0 `i `uc
+-> -> 0 `i `uc
+-> -> 0 `i `uc
+-> -> 0 `i `uc
+-> -> 0 `i `uc
+-> -> 0 `i `uc
+-> -> 0 `i `uc
+"183
+-> -> 0 `i `uc
+-> -> 0 `i `uc
+-> -> 0 `i `uc
+-> -> 0 `i `uc
+-> -> 0 `i `uc
+-> -> 0 `i `uc
+-> -> 0 `i `uc
+-> -> 0 `i `uc
+-> -> 0 `i `uc
+-> -> 0 `i `uc
+-> -> 0 `i `uc
+-> -> 0 `i `uc
+-> -> 0 `i `uc
+-> -> 0 `i `uc
+-> -> 0 `i `uc
+-> -> 0 `i `uc
+"184
+-> -> 0 `i `uc
+-> -> 1 `i `uc
+-> -> 2 `i `uc
+-> -> 3 `i `uc
+-> -> 4 `i `uc
+-> -> 5 `i `uc
+-> -> 6 `i `uc
+-> -> 7 `i `uc
+-> -> 8 `i `uc
+-> -> 9 `i `uc
+-> -> 0 `i `uc
+-> -> 0 `i `uc
+-> -> 0 `i `uc
+-> -> 0 `i `uc
+-> -> 0 `i `uc
+-> -> 0 `i `uc
+"185
+-> -> 0 `i `uc
+-> -> 10 `i `uc
+-> -> 11 `i `uc
+-> -> 12 `i `uc
+-> -> 13 `i `uc
+-> -> 14 `i `uc
+-> -> 15 `i `uc
+-> -> 0 `i `uc
+-> -> 0 `i `uc
+-> -> 0 `i `uc
+-> -> 0 `i `uc
+-> -> 0 `i `uc
+-> -> 0 `i `uc
+-> -> 0 `i `uc
+-> -> 0 `i `uc
+-> -> 0 `i `uc
+"186
+-> -> 0 `i `uc
+-> -> 10 `i `uc
+-> -> 11 `i `uc
+-> -> 12 `i `uc
+-> -> 13 `i `uc
+-> -> 14 `i `uc
+-> -> 15 `i `uc
+-> -> 0 `i `uc
+-> -> 0 `i `uc
+-> -> 0 `i `uc
+-> -> 0 `i `uc
+-> -> 0 `i `uc
+-> -> 0 `i `uc
+-> -> 0 `i `uc
+-> -> 0 `i `uc
+-> -> 0 `i `uc
+..
+]
+[; ;Main.h: 181: const unsigned char ASCII_HEX_TO_BINARY[128] ={0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+[; ;Main.h: 182: 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+[; ;Main.h: 183: 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+[; ;Main.h: 184: 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 0, 0, 0, 0, 0, 0,
+[; ;Main.h: 185: 0, 10, 11, 12, 13, 14, 15, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+[; ;Main.h: 186: 0, 10, 11, 12, 13, 14, 15, 0, 0, 0, 0, 0, 0, 0, 0, 0};
+"188
+[v _BINARY_TO_ASCII_HEX `Cuc ~T0 -> 16 `i e ]
+[i _BINARY_TO_ASCII_HEX
+:U ..
+-> -> 48 `ui `uc
+-> -> 49 `ui `uc
+-> -> 50 `ui `uc
+-> -> 51 `ui `uc
+-> -> 52 `ui `uc
+-> -> 53 `ui `uc
+-> -> 54 `ui `uc
+-> -> 55 `ui `uc
+-> -> 56 `ui `uc
+-> -> 57 `ui `uc
+-> -> 65 `ui `uc
+-> -> 66 `ui `uc
+-> -> 67 `ui `uc
+-> -> 68 `ui `uc
+-> -> 69 `ui `uc
+-> -> 70 `ui `uc
+..
+]
+[; ;Main.h: 188: const unsigned char BINARY_TO_ASCII_HEX[16] = {'0', '1', '2', '3', '4', '5', '6', '7', '8', '9', 'A', 'B', 'C', 'D', 'E', 'F'};
+[; ;UserInterface.h: 4: void ShowVoltage();
+[; ;UserInterface.h: 5: signed char GetClick(void);
+[; ;UserInterface.h: 6: signed char GetYesNo(const char *prompt, signed char Initial);
+[; ;UserInterface.h: 7: signed char GetFloat(const char *prompt, const char *unit, double* Value, double Min, double Max, double Precision);
+[; ;UserInterface.h: 8: signed char GetInput(void);
+[; ;UserInterface.h: 9: signed char GetInput_nonblocking(void);
+[; ;UserInterface.h: 10: signed char DisplayMenu(const char *Menu[], char ItemCount, char Initial);
+[; ;UserInterface.h: 11: signed char DisplayChoices(const char *Menu[], char ItemCount, const char *Prompt, char Initial);
+[; ;UserInterface.h: 12: signed char GetPresetNumber();
+[; ;UserInterface.h: 14: signed char GetTime(const char *prompt, double *Time, double Min, double Max, char Precision);
+[; ;UserInterface.h: 15: void PrintTime(double dat, unsigned char precision, unsigned char EditChevron);
+[; ;UserInterface.h: 16: void ConvertTimeToDiscrete(double Time, char *Hours, char *Minutes, char *Seconds, int *Milliseconds);
+[; ;UserInterface.h: 17: double ConvertTimeFromDiscrete(char Hours, char Minutes, char Seconds, int Milliseconds);
+[; ;UserInterface.h: 18: double RoundTimeUp(double Time,unsigned char precision);
+[; ;UserInterface.h: 19: double RoundTimeDown(double Time,unsigned char precision);
+[; ;UserInterface.h: 21: unsigned char GetRotaryMultiplier();
+[; ;Timings.h: 1: void Wait_seconds(unsigned int time);
+[; ;Timings.h: 2: void Wait_ms(unsigned int time);
+[; ;Timings.h: 3: void Wait_seconds_nonblocking(unsigned int time);
+[; ;Timings.h: 4: void Wait_ms_nonblocking(unsigned int time);
+[; ;Timings.h: 5: void Wait_ticks(unsigned char time);
+[; ;Timings.h: 6: void Wait_us(unsigned int time);
+[; ;Timings.h: 7: double Now();
+"10 Z:\CineFlux\Dropbox\Orbit\Timings.h
+[v _bWaiting `Vb ~T0 1 e ]
+[i _bWaiting
+-> 0 `i
+]
+[; ;Timings.h: 10: volatile bit bWaiting=0;
+"11
+[v _WaitUntil_Tick500Hz `Vul ~T0 1 e ]
+[i _WaitUntil_Tick500Hz
+-> -> -> 0 `i `l `ul
+]
+[; ;Timings.h: 11: volatile unsigned long WaitUntil_Tick500Hz=0;
+"12
+[v _bTick40Khz `Vb ~T0 1 e ]
+[i _bTick40Khz
+-> 0 `i
+]
+[; ;Timings.h: 12: volatile bit bTick40Khz=0;
+"13
+[v _bLock_Tick500Hz `Vb ~T0 1 e ]
+[i _bLock_Tick500Hz
+-> 0 `i
+]
+[; ;Timings.h: 13: volatile bit bLock_Tick500Hz=0;
+"14
+[v _Tick500Hz `Vul ~T0 1 e ]
+[i _Tick500Hz
+-> -> -> 0 `i `l `ul
+]
+[; ;Timings.h: 14: volatile unsigned long Tick500Hz=0;
+[; ;Settings.h: 2: typedef struct {
+[; ;Settings.h: 3: unsigned char Version;
+[; ;Settings.h: 4: unsigned int BatteryLowVoltageLevel;
+[; ;Settings.h: 5: unsigned int Battery12V_Q8;
+[; ;Settings.h: 6: unsigned char PowerResponseLimiter_Slope;
+[; ;Settings.h: 7: unsigned char PowerResponseLimiter_Intercept;
+[; ;Settings.h: 8: double Counts_per_Volt;
+[; ;Settings.h: 9: double Volts_per_Count;
+[; ;Settings.h: 10: unsigned char BacklightPWM_Duty;
+[; ;Settings.h: 11: unsigned int BacklightIdleTimeout;
+[; ;Settings.h: 12: double SystemAcceleration;
+[; ;Settings.h: 13: double MaxSpeed;
+[; ;Settings.h: 14: signed int PID_MaxError;
+[; ;Settings.h: 15: unsigned int PID_Kp;
+[; ;Settings.h: 16: unsigned int PID_Kd;
+[; ;Settings.h: 17: double Counts_Per_Degree;
+[; ;Settings.h: 18: double Degrees_Per_Count;
+[; ;Settings.h: 19: } ConfigStruct;
+[; ;Settings.h: 21: typedef struct {
+[; ;Settings.h: 22: char Type;
+[; ;Settings.h: 23: unsigned int Origin_deg;
+[; ;Settings.h: 24: char EndMode;
+[; ;Settings.h: 25: char IsClockWise;
+[; ;Settings.h: 26: double ProgramRunTime_sec;
+[; ;Settings.h: 27: double CycleCount_rev;
+[; ;Settings.h: 28: double CycleTime_sec;
+[; ;Settings.h: 29: double Speed_deg_sec;
+[; ;Settings.h: 30: char SpeedMode;
+[; ;Settings.h: 31: } OrbitProgramStruct;
+[; ;Settings.h: 33: typedef struct {
+[; ;Settings.h: 34: char Type;
+[; ;Settings.h: 35: unsigned int Origin_deg;
+[; ;Settings.h: 36: unsigned char PointCount;
+[; ;Settings.h: 37: unsigned char Bounce;
+[; ;Settings.h: 38: unsigned int LoopCount;
+[; ;Settings.h: 39: signed int Distances_deg[18];
+[; ;Settings.h: 40: unsigned int TravelTimes_sec[18];
+[; ;Settings.h: 41: unsigned int DwellTimes_sec[19];
+[; ;Settings.h: 42: } WaypointProgramStruct;
+[; ;Settings.h: 44: typedef union {
+[; ;Settings.h: 45: unsigned char ub[120];
+[; ;Settings.h: 46: WaypointProgramStruct WayPoint;
+[; ;Settings.h: 47: OrbitProgramStruct Orbit;
+[; ;Settings.h: 48: } PRESET;
+"50 Z:\CineFlux\Dropbox\Orbit\Settings.h
+[v _Config `S3 ~T0 1 e ]
+[; ;Settings.h: 50: ConfigStruct Config;
+"51
+[v _CurrentPath `S5 ~T0 1 e ]
+[; ;Settings.h: 51: WaypointProgramStruct CurrentPath;
+"52
+[v _CurrentOrbitProgram `S4 ~T0 1 e ]
+[; ;Settings.h: 52: OrbitProgramStruct CurrentOrbitProgram;
+[; ;Settings.h: 54: void FactoryDefault();
+[; ;Settings.h: 55: void SaveSettings();
+[; ;Settings.h: 56: void LoadSettings();
+[; ;Settings.h: 57: void EEprom_write(unsigned int *addr, unsigned char *dat, unsigned char bCount);
+[; ;Settings.h: 58: void EEprom_read(unsigned int *addr, unsigned char *dat, unsigned char bCount);
+[; ;Settings.h: 59: unsigned char GetPresetType(char pnum);
+[; ;Settings.h: 60: void SavePreset(char pnum, unsigned char *dat);
+[; ;Settings.h: 61: void LoadPreset(char pnum, unsigned char *dat);
+[; ;MotionEngine.h: 1: char Move(double Distance_deg, double Speed_deg_sec);
+[; ;MotionEngine.h: 2: char MoveAdvanced(double Distance_deg, double _Speed_Deg_Sec, double _Acceleration_Deg_Sec_Sec);
+[; ;MotionEngine.h: 3: char MoveToLinear(double DestinationPostion, double Speed_Deg_Sec);
+[; ;MotionEngine.h: 4: char MoveToAngle(double DestinationAngle, double Speed_Deg_Sec);
+[; ;MotionEngine.h: 5: double SpeedRequiredToMoveInTime(double Distance, double Time);
+[; ;MotionEngine.h: 6: double MinTimeToMove(double Distance);
+"9 Z:\CineFlux\Dropbox\Orbit\WaypointProgram.c
+[v _CreateWaypointProgram `(c ~T0 1 ef ]
+{
+[; ;WaypointProgram.c: 9: signed char CreateWaypointProgram() {
+[e :U _CreateWaypointProgram ]
+[f ]
+"10
+[v _ret `c ~T0 1 a ]
+[; ;WaypointProgram.c: 10: signed char ret = 0;
+[e = _ret -> -> 0 `i `c ]
+"11
+[v _LastPos `d ~T0 1 a ]
+[; ;WaypointProgram.c: 11: double LastPos = 0;
+[e = _LastPos -> -> 0 `i `d ]
+"12
+[v _CurrentPos `d ~T0 1 a ]
+[; ;WaypointProgram.c: 12: double CurrentPos = 0;
+[e = _CurrentPos -> -> 0 `i `d ]
+"13
+[v _DeltaDistance `d ~T0 1 a ]
+[; ;WaypointProgram.c: 13: double DeltaDistance = 0;
+[e = _DeltaDistance -> -> 0 `i `d ]
+"14
+[v _intDistance `i ~T0 1 a ]
+[; ;WaypointProgram.c: 14: signed int intDistance = 0;
+[e = _intDistance -> 0 `i ]
+"15
+[v _TravelTime `d ~T0 1 a ]
+[; ;WaypointProgram.c: 15: double TravelTime = 0;
+[e = _TravelTime -> -> 0 `i `d ]
+"16
+[v _MinTravelTime `d ~T0 1 a ]
+[; ;WaypointProgram.c: 16: double MinTravelTime = 0;
+[e = _MinTravelTime -> -> 0 `i `d ]
+"17
+[v _intTravelTime `ui ~T0 1 a ]
+[; ;WaypointProgram.c: 17: unsigned int intTravelTime = 0;
+[e = _intTravelTime -> -> 0 `i `ui ]
+"18
+[v _DwellTime `d ~T0 1 a ]
+[; ;WaypointProgram.c: 18: double DwellTime = 0;
+[e = _DwellTime -> -> 0 `i `d ]
+"19
+[v _CycleCount `d ~T0 1 a ]
+[; ;WaypointProgram.c: 19: double CycleCount = 0;
+[e = _CycleCount -> -> 0 `i `d ]
+"21
+[v _Done `uc ~T0 1 a ]
+[; ;WaypointProgram.c: 21: char Done = 0;
+[e = _Done -> -> 0 `i `uc ]
+"22
+[v _idx `c ~T0 1 a ]
+[; ;WaypointProgram.c: 22: signed char idx = 0;
+[e = _idx -> -> 0 `i `c ]
+[; ;WaypointProgram.c: 23: CurrentPath.PointCount = 0;
+"23
+[e = . _CurrentPath 2 -> -> 0 `i `uc ]
+"25
+[v _DIRECTION_0 `*Cuc ~T0 1 a ]
+[; ;WaypointProgram.c: 25: const char *DIRECTION_0 = "ONE-WAY\0";
+[e = _DIRECTION_0 :s 1C ]
+"26
+[v _DIRECTION_1 `*Cuc ~T0 1 a ]
+[; ;WaypointProgram.c: 26: const char *DIRECTION_1 = "BOUNCE\0";
+[e = _DIRECTION_1 :s 2C ]
+"27
+[v _DirectionMenu `*Cuc ~T0 -> 2 `i a ]
+[; ;WaypointProgram.c: 27: const char*DirectionMenu[2];
+[; ;WaypointProgram.c: 28: DirectionMenu[0] = DIRECTION_0;
+"28
+[e = *U + &U _DirectionMenu * -> -> -> 0 `i `ui `ux -> -> # *U &U _DirectionMenu `ui `ux _DIRECTION_0 ]
+[; ;WaypointProgram.c: 29: DirectionMenu[1] = DIRECTION_1;
+"29
+[e = *U + &U _DirectionMenu * -> -> -> 1 `i `ui `ux -> -> # *U &U _DirectionMenu `ui `ux _DIRECTION_1 ]
+"31
+[v _COMMAND_0 `*Cuc ~T0 1 a ]
+[; ;WaypointProgram.c: 31: const char *COMMAND_0 = "RUN PROGRAM\0";
+[e = _COMMAND_0 :s 3C ]
+"32
+[v _COMMAND_1 `*Cuc ~T0 1 a ]
+[; ;WaypointProgram.c: 32: const char *COMMAND_1 = "SAVE PRESET\0";
+[e = _COMMAND_1 :s 4C ]
+"33
+[v _CommandMenu `*Cuc ~T0 -> 2 `i a ]
+[; ;WaypointProgram.c: 33: const char*CommandMenu[2];
+[; ;WaypointProgram.c: 34: CommandMenu[0] = COMMAND_0;
+"34
+[e = *U + &U _CommandMenu * -> -> -> 0 `i `ui `ux -> -> # *U &U _CommandMenu `ui `ux _COMMAND_0 ]
+[; ;WaypointProgram.c: 35: CommandMenu[1] = COMMAND_1;
+"35
+[e = *U + &U _CommandMenu * -> -> -> 1 `i `ui `ux -> -> # *U &U _CommandMenu `ui `ux _COMMAND_1 ]
+[; ;WaypointProgram.c: 37: labelSetOrigin:
+"37
+[e :U 8 ]
+[; ;WaypointProgram.c: 38: TravelTime = 0;
+"38
+[e = _TravelTime -> -> 0 `i `d ]
+[; ;WaypointProgram.c: 39: MinTravelTime = 0;
+"39
+[e = _MinTravelTime -> -> 0 `i `d ]
+[; ;WaypointProgram.c: 40: intDistance = 0;
+"40
+[e = _intDistance -> 0 `i ]
+[; ;WaypointProgram.c: 41: DeltaDistance = 0;
+"41
+[e = _DeltaDistance -> -> 0 `i `d ]
+[; ;WaypointProgram.c: 43: CurrentPos = 0;
+"43
+[e = _CurrentPos -> -> 0 `i `d ]
+[; ;WaypointProgram.c: 44: LastPos = 0;
+"44
+[e = _LastPos -> -> 0 `i `d ]
+[; ;WaypointProgram.c: 45: ret = 0;
+"45
+[e = _ret -> -> 0 `i `c ]
+[; ;WaypointProgram.c: 46: DwellTime = 0;
+"46
+[e = _DwellTime -> -> 0 `i `d ]
+[; ;WaypointProgram.c: 48: idx = 0;
+"48
+[e = _idx -> -> 0 `i `c ]
+[; ;WaypointProgram.c: 50: LCD_ClearDisplay();
+"50
+[e ( _LCD_ClearDisplay ..  ]
+[; ;WaypointProgram.c: 51: LCD_PrintString("MOVE TO START...\0");
+"51
+[e ( _LCD_PrintString (1 :s 5C ]
+[; ;WaypointProgram.c: 52: LCD_SetPosition(1, 0);
+"52
+[e ( _LCD_SetPosition (2 , -> -> 1 `i `uc -> -> 0 `i `uc ]
+[; ;WaypointProgram.c: 53: LCD_PrintString("THEN CLICK.\0");
+"53
+[e ( _LCD_PrintString (1 :s 6C ]
+[; ;WaypointProgram.c: 54: bFollowMode = 1;
+"54
+[e = _bFollowMode -> -> 1 `i `b ]
+[; ;WaypointProgram.c: 55: ret = GetClick();
+"55
+[e = _ret ( _GetClick ..  ]
+[; ;WaypointProgram.c: 56: if (ret < 0) return ret;
+"56
+[e $ ! < -> _ret `i -> 0 `i 9  ]
+[e ) _ret ]
+[e $UE 7  ]
+[e :U 9 ]
+[; ;WaypointProgram.c: 57: bFollowMode = 0;
+"57
+[e = _bFollowMode -> -> 0 `i `b ]
+[; ;WaypointProgram.c: 58: CurrentPath.Origin_deg = (unsigned int) GetCurrentAngle();
+"58
+[e = . _CurrentPath 1 -> ( _GetCurrentAngle ..  `ui ]
+[; ;WaypointProgram.c: 60: LastPos = GetCurrentLinearPosition();
+"60
+[e = _LastPos ( _GetCurrentLinearPosition ..  ]
+[; ;WaypointProgram.c: 62: ret = GetTime("DWELL TIME:\0", &DwellTime, 0, 65535, 0b1110);
+"62
+[e = _ret ( _GetTime (4 , , , , :s 7C &U _DwellTime -> -> 0 `i `d -> -> 65535 `l `d -> -> 14 `i `uc ]
+[; ;WaypointProgram.c: 63: if (ret == -2) return -2;
+"63
+[e $ ! == -> _ret `i -U -> 2 `i 10  ]
+[e ) -> -U -> 2 `i `c ]
+[e $UE 7  ]
+[e :U 10 ]
+[; ;WaypointProgram.c: 64: if (ret == -1) goto labelSetOrigin;
+"64
+[e $ ! == -> _ret `i -U -> 1 `i 11  ]
+[e $U 8  ]
+[e :U 11 ]
+[; ;WaypointProgram.c: 65: CurrentPath.DwellTimes_sec[idx] = (unsigned int) (DwellTime);
+"65
+[e = *U + &U . _CurrentPath 7 * -> -> _idx `uc `ux -> -> # *U &U . _CurrentPath 7 `ui `ux -> _DwellTime `ui ]
+[; ;WaypointProgram.c: 67: while (!Done) {
+"67
+[e $U 12  ]
+[e :U 13 ]
+{
+[; ;WaypointProgram.c: 68: labelInputWaypoint1:
+"68
+[e :U 15 ]
+[; ;WaypointProgram.c: 69: LCD_ClearDisplay();
+"69
+[e ( _LCD_ClearDisplay ..  ]
+[; ;WaypointProgram.c: 70: LCD_PrintString("MOVE TO NEXT POINT\0");
+"70
+[e ( _LCD_PrintString (1 :s 8C ]
+[; ;WaypointProgram.c: 71: LCD_SetPosition(1, 0);
+"71
+[e ( _LCD_SetPosition (2 , -> -> 1 `i `uc -> -> 0 `i `uc ]
+[; ;WaypointProgram.c: 72: LCD_PrintString("+XXXX\xDF THEN CLICK\0");
+"72
+[e ( _LCD_PrintString (1 :s 9C ]
+[; ;WaypointProgram.c: 74: bFollowMode = 1;
+"74
+[e = _bFollowMode -> -> 1 `i `b ]
+[; ;WaypointProgram.c: 76: ClearUI_Event = 1;
+"76
+[e = _ClearUI_Event -> -> 1 `i `b ]
+[; ;WaypointProgram.c: 77: while (ClearUI_Event) Idle();
+"77
+[e $U 16  ]
+[e :U 17 ]
+[e ( _Idle ..  ]
+[e :U 16 ]
+[e $ _ClearUI_Event 17  ]
+[e :U 18 ]
+[; ;WaypointProgram.c: 78: ret = 0;
+"78
+[e = _ret -> -> 0 `i `c ]
+[; ;WaypointProgram.c: 79: while (!(ret == 1)) {
+"79
+[e $U 19  ]
+[e :U 20 ]
+{
+[; ;WaypointProgram.c: 80: Idle();
+"80
+[e ( _Idle ..  ]
+[; ;WaypointProgram.c: 81: CurrentPos = GetCurrentLinearPosition();
+"81
+[e = _CurrentPos ( _GetCurrentLinearPosition ..  ]
+[; ;WaypointProgram.c: 82: DeltaDistance = CurrentPos - LastPos;
+"82
+[e = _DeltaDistance - _CurrentPos _LastPos ]
+[; ;WaypointProgram.c: 83: intDistance = (signed int) (DeltaDistance);
+"83
+[e = _intDistance -> _DeltaDistance `i ]
+[; ;WaypointProgram.c: 84: LCD_SetPosition(1, 0);
+"84
+[e ( _LCD_SetPosition (2 , -> -> 1 `i `uc -> -> 0 `i `uc ]
+[; ;WaypointProgram.c: 85: LCD_PrintLong(intDistance, 4, 1);
+"85
+[e ( _LCD_PrintLong (3 , , -> _intDistance `l -> -> 4 `i `uc -> -> 1 `i `uc ]
+[; ;WaypointProgram.c: 87: bLock_UI_Event = 1;
+"87
+[e = _bLock_UI_Event -> -> 1 `i `b ]
+[; ;WaypointProgram.c: 88: ret = UI_Event;
+"88
+[e = _ret -> _UI_Event `c ]
+[; ;WaypointProgram.c: 89: bLock_UI_Event = 0;
+"89
+[e = _bLock_UI_Event -> -> 0 `i `b ]
+[; ;WaypointProgram.c: 91: if (ret == 3) {
+"91
+[e $ ! == -> _ret `i -> 3 `i 22  ]
+{
+[; ;WaypointProgram.c: 92: bFollowMode = 0;
+"92
+[e = _bFollowMode -> -> 0 `i `b ]
+[; ;WaypointProgram.c: 93: return -2;
+"93
+[e ) -> -U -> 2 `i `c ]
+[e $UE 7  ]
+"94
+}
+[e :U 22 ]
+[; ;WaypointProgram.c: 94: }
+[; ;WaypointProgram.c: 96: if (ret == 2) {
+"96
+[e $ ! == -> _ret `i -> 2 `i 23  ]
+{
+[; ;WaypointProgram.c: 97: bFollowMode = 0;
+"97
+[e = _bFollowMode -> -> 0 `i `b ]
+[; ;WaypointProgram.c: 98: if (idx == 0) {
+"98
+[e $ ! == -> _idx `i -> 0 `i 24  ]
+{
+[; ;WaypointProgram.c: 99: goto labelSetOrigin;
+"99
+[e $U 8  ]
+"100
+}
+[; ;WaypointProgram.c: 100: } else {
+[e $U 25  ]
+[e :U 24 ]
+{
+[; ;WaypointProgram.c: 101: idx--;
+"101
+[e -- _idx -> -> 1 `i `c ]
+[; ;WaypointProgram.c: 102: goto labelInputWaypoint1;
+"102
+[e $U 15  ]
+"103
+}
+[e :U 25 ]
+"104
+}
+[e :U 23 ]
+[; ;WaypointProgram.c: 103: }
+[; ;WaypointProgram.c: 104: }
+[; ;WaypointProgram.c: 106: if (ret == 5) {
+"106
+[e $ ! == -> _ret `i -> 5 `i 26  ]
+{
+[; ;WaypointProgram.c: 107: ClearUI_Event = 1;
+"107
+[e = _ClearUI_Event -> -> 1 `i `b ]
+[; ;WaypointProgram.c: 108: bFollowMode = 0;
+"108
+[e = _bFollowMode -> -> 0 `i `b ]
+[; ;WaypointProgram.c: 109: Move(-1, 90);
+"109
+[e ( _Move (2 , -> -U -> 1 `i `d -> -> 90 `i `d ]
+[; ;WaypointProgram.c: 110: while (bMove_InProgress) Idle();
+"110
+[e $U 27  ]
+[e :U 28 ]
+[e ( _Idle ..  ]
+[e :U 27 ]
+[e $ _bMove_InProgress 28  ]
+[e :U 29 ]
+[; ;WaypointProgram.c: 111: bFollowMode = 1;
+"111
+[e = _bFollowMode -> -> 1 `i `b ]
+[; ;WaypointProgram.c: 112: while (ClearUI_Event) Idle();
+"112
+[e $U 30  ]
+[e :U 31 ]
+[e ( _Idle ..  ]
+[e :U 30 ]
+[e $ _ClearUI_Event 31  ]
+[e :U 32 ]
+"113
+}
+[e :U 26 ]
+[; ;WaypointProgram.c: 113: }
+[; ;WaypointProgram.c: 115: if (ret == 4) {
+"115
+[e $ ! == -> _ret `i -> 4 `i 33  ]
+{
+[; ;WaypointProgram.c: 116: ClearUI_Event = 1;
+"116
+[e = _ClearUI_Event -> -> 1 `i `b ]
+[; ;WaypointProgram.c: 117: bFollowMode = 0;
+"117
+[e = _bFollowMode -> -> 0 `i `b ]
+[; ;WaypointProgram.c: 118: Move(1, 90);
+"118
+[e ( _Move (2 , -> -> 1 `i `d -> -> 90 `i `d ]
+[; ;WaypointProgram.c: 119: while (bMove_InProgress) Idle();
+"119
+[e $U 34  ]
+[e :U 35 ]
+[e ( _Idle ..  ]
+[e :U 34 ]
+[e $ _bMove_InProgress 35  ]
+[e :U 36 ]
+[; ;WaypointProgram.c: 120: bFollowMode = 1;
+"120
+[e = _bFollowMode -> -> 1 `i `b ]
+[; ;WaypointProgram.c: 121: while (ClearUI_Event) Idle();
+"121
+[e $U 37  ]
+[e :U 38 ]
+[e ( _Idle ..  ]
+[e :U 37 ]
+[e $ _ClearUI_Event 38  ]
+[e :U 39 ]
+"122
+}
+[e :U 33 ]
+"123
+}
+[e :U 19 ]
+"79
+[e $ ! == -> _ret `i -> 1 `i 20  ]
+[e :U 21 ]
+[; ;WaypointProgram.c: 122: }
+[; ;WaypointProgram.c: 123: }
+[; ;WaypointProgram.c: 124: bFollowMode = 0;
+"124
+[e = _bFollowMode -> -> 0 `i `b ]
+[; ;WaypointProgram.c: 127: CurrentPath.Distances_deg[idx] = intDistance;
+"127
+[e = *U + &U . _CurrentPath 5 * -> -> _idx `uc `ux -> -> # *U &U . _CurrentPath 5 `ui `ux _intDistance ]
+[; ;WaypointProgram.c: 128: MinTravelTime = MinTimeToMove(DeltaDistance);
+"128
+[e = _MinTravelTime ( _MinTimeToMove (1 _DeltaDistance ]
+[; ;WaypointProgram.c: 129: intTravelTime = (unsigned int) MinTravelTime;
+"129
+[e = _intTravelTime -> _MinTravelTime `ui ]
+[; ;WaypointProgram.c: 130: MinTravelTime -= intTravelTime;
+"130
+[e =- _MinTravelTime -> _intTravelTime `d ]
+[; ;WaypointProgram.c: 131: if (MinTravelTime > 0) MinTravelTime = intTravelTime + 1;
+"131
+[e $ ! > _MinTravelTime -> -> 0 `i `d 40  ]
+[e = _MinTravelTime -> + _intTravelTime -> -> 1 `i `ui `d ]
+[e $U 41  ]
+"132
+[e :U 40 ]
+[; ;WaypointProgram.c: 132: else MinTravelTime = intTravelTime;
+[e = _MinTravelTime -> _intTravelTime `d ]
+[e :U 41 ]
+[; ;WaypointProgram.c: 135: labelInputWaypoint2:
+"135
+[e :U 42 ]
+[; ;WaypointProgram.c: 136: ret = GetTime("TRAVEL TIME:\0", &TravelTime, MinTravelTime, 65535, 0b1110);
+"136
+[e = _ret ( _GetTime (4 , , , , :s 10C &U _TravelTime _MinTravelTime -> -> 65535 `l `d -> -> 14 `i `uc ]
+[; ;WaypointProgram.c: 137: if (ret == -2) return -2;
+"137
+[e $ ! == -> _ret `i -U -> 2 `i 43  ]
+[e ) -> -U -> 2 `i `c ]
+[e $UE 7  ]
+[e :U 43 ]
+[; ;WaypointProgram.c: 138: if (ret == -1) goto labelInputWaypoint1;
+"138
+[e $ ! == -> _ret `i -U -> 1 `i 44  ]
+[e $U 15  ]
+[e :U 44 ]
+[; ;WaypointProgram.c: 139: CurrentPath.TravelTimes_sec[idx] = (unsigned int) (TravelTime);
+"139
+[e = *U + &U . _CurrentPath 6 * -> -> _idx `uc `ux -> -> # *U &U . _CurrentPath 6 `ui `ux -> _TravelTime `ui ]
+[; ;WaypointProgram.c: 141: labelInputWaypoint3:
+"141
+[e :U 45 ]
+[; ;WaypointProgram.c: 142: ret = GetTime("DWELL TIME:\0", &DwellTime, 0, 65535, 0b1110);
+"142
+[e = _ret ( _GetTime (4 , , , , :s 11C &U _DwellTime -> -> 0 `i `d -> -> 65535 `l `d -> -> 14 `i `uc ]
+[; ;WaypointProgram.c: 143: if (ret == -2) return -2;
+"143
+[e $ ! == -> _ret `i -U -> 2 `i 46  ]
+[e ) -> -U -> 2 `i `c ]
+[e $UE 7  ]
+[e :U 46 ]
+[; ;WaypointProgram.c: 144: if (ret == -1) goto labelInputWaypoint2;
+"144
+[e $ ! == -> _ret `i -U -> 1 `i 47  ]
+[e $U 42  ]
+[e :U 47 ]
+[; ;WaypointProgram.c: 145: CurrentPath.DwellTimes_sec[idx + 1] = (unsigned int) (DwellTime);
+"145
+[e = *U + &U . _CurrentPath 7 * -> -> + -> _idx `i -> 1 `i `ui `ux -> -> # *U &U . _CurrentPath 7 `ui `ux -> _DwellTime `ui ]
+[; ;WaypointProgram.c: 147: if (idx < 17) {
+"147
+[e $ ! < -> _idx `i -> 17 `i 48  ]
+{
+[; ;WaypointProgram.c: 148: ret = GetYesNo("ADD ANOTHER POINT?", 1);
+"148
+[e = _ret ( _GetYesNo (2 , :s 12C -> -> 1 `i `c ]
+[; ;WaypointProgram.c: 149: if (ret == -2) return -2;
+"149
+[e $ ! == -> _ret `i -U -> 2 `i 49  ]
+[e ) -> -U -> 2 `i `c ]
+[e $UE 7  ]
+[e :U 49 ]
+[; ;WaypointProgram.c: 150: if (ret == -1) goto labelInputWaypoint3;
+"150
+[e $ ! == -> _ret `i -U -> 1 `i 50  ]
+[e $U 45  ]
+[e :U 50 ]
+[; ;WaypointProgram.c: 151: if (ret == 0) Done = 1;
+"151
+[e $ ! == -> _ret `i -> 0 `i 51  ]
+[e = _Done -> -> 1 `i `uc ]
+[e :U 51 ]
+[; ;WaypointProgram.c: 152: if (ret == 1) {
+"152
+[e $ ! == -> _ret `i -> 1 `i 52  ]
+{
+[; ;WaypointProgram.c: 153: idx++;
+"153
+[e ++ _idx -> -> 1 `i `c ]
+[; ;WaypointProgram.c: 154: LastPos = CurrentPos;
+"154
+[e = _LastPos _CurrentPos ]
+[; ;WaypointProgram.c: 155: goto labelInputWaypoint1;
+"155
+[e $U 15  ]
+"156
+}
+[e :U 52 ]
+"157
+}
+[; ;WaypointProgram.c: 156: }
+[; ;WaypointProgram.c: 157: } else {
+[e $U 53  ]
+[e :U 48 ]
+{
+[; ;WaypointProgram.c: 158: LCD_ClearDisplay();
+"158
+[e ( _LCD_ClearDisplay ..  ]
+[; ;WaypointProgram.c: 159: LCD_PrintString("MAX WAYPOINTS HAVE\0");
+"159
+[e ( _LCD_PrintString (1 :s 13C ]
+[; ;WaypointProgram.c: 160: LCD_SetPosition(1, 0);
+"160
+[e ( _LCD_SetPosition (2 , -> -> 1 `i `uc -> -> 0 `i `uc ]
+[; ;WaypointProgram.c: 161: LCD_PrintString("BEEN ADDED\0");
+"161
+[e ( _LCD_PrintString (1 :s 14C ]
+[; ;WaypointProgram.c: 162: ret = GetClick();
+"162
+[e = _ret ( _GetClick ..  ]
+[; ;WaypointProgram.c: 163: if (ret == -2) return -2;
+"163
+[e $ ! == -> _ret `i -U -> 2 `i 54  ]
+[e ) -> -U -> 2 `i `c ]
+[e $UE 7  ]
+[e :U 54 ]
+[; ;WaypointProgram.c: 164: if (ret == -1) goto labelInputWaypoint3;
+"164
+[e $ ! == -> _ret `i -U -> 1 `i 55  ]
+[e $U 45  ]
+[e :U 55 ]
+[; ;WaypointProgram.c: 165: Done = 1;
+"165
+[e = _Done -> -> 1 `i `uc ]
+"166
+}
+[e :U 53 ]
+"167
+}
+[e :U 12 ]
+"67
+[e $ ! != -> _Done `i -> -> -> 0 `i `uc `i 13  ]
+[e :U 14 ]
+[; ;WaypointProgram.c: 166: }
+[; ;WaypointProgram.c: 167: }
+[; ;WaypointProgram.c: 169: CurrentPath.PointCount = idx;
+"169
+[e = . _CurrentPath 2 -> _idx `uc ]
+[; ;WaypointProgram.c: 170: labelDirection:
+"170
+[e :U 56 ]
+[; ;WaypointProgram.c: 171: ret = DisplayChoices(DirectionMenu, 1, "LOOP MODE?\0", CurrentPath.Bounce);
+"171
+[e = _ret ( _DisplayChoices (4 , , , &U _DirectionMenu -> -> 1 `i `uc :s 15C . _CurrentPath 3 ]
+[; ;WaypointProgram.c: 172: if (ret == -1) goto labelInputWaypoint3;
+"172
+[e $ ! == -> _ret `i -U -> 1 `i 57  ]
+[e $U 45  ]
+[e :U 57 ]
+[; ;WaypointProgram.c: 173: if (ret == -2) return (-2);
+"173
+[e $ ! == -> _ret `i -U -> 2 `i 58  ]
+[e ) -> -U -> 2 `i `c ]
+[e $UE 7  ]
+[e :U 58 ]
+[; ;WaypointProgram.c: 174: CurrentPath.Bounce = ret;
+"174
+[e = . _CurrentPath 3 -> _ret `uc ]
+[; ;WaypointProgram.c: 176: labelCycleCount:
+"176
+[e :U 59 ]
+[; ;WaypointProgram.c: 177: ret = GetFloat("CYCLE COUNT:0=INF.\0", " CYCLES\0", &CycleCount, 0, 999, 1.0);
+"177
+[e = _ret ( _GetFloat (4 , , , , , :s 16C :s 17C &U _CycleCount -> -> 0 `i `d -> -> 999 `i `d .1.0 ]
+[; ;WaypointProgram.c: 178: if (ret == -1) goto labelDirection;
+"178
+[e $ ! == -> _ret `i -U -> 1 `i 60  ]
+[e $U 56  ]
+[e :U 60 ]
+[; ;WaypointProgram.c: 179: if (ret == -2) return (-2);
+"179
+[e $ ! == -> _ret `i -U -> 2 `i 61  ]
+[e ) -> -U -> 2 `i `c ]
+[e $UE 7  ]
+[e :U 61 ]
+[; ;WaypointProgram.c: 180: CurrentPath.LoopCount = (unsigned int) (CycleCount);
+"180
+[e = . _CurrentPath 4 -> _CycleCount `ui ]
+[; ;WaypointProgram.c: 182: labelActions:
+"182
+[e :U 62 ]
+[; ;WaypointProgram.c: 183: ret = DisplayChoices(CommandMenu, 1, "ACTION:\0", 0);
+"183
+[e = _ret ( _DisplayChoices (4 , , , &U _CommandMenu -> -> 1 `i `uc :s 18C -> -> 0 `i `uc ]
+[; ;WaypointProgram.c: 184: if (ret == -1) goto labelCycleCount;
+"184
+[e $ ! == -> _ret `i -U -> 1 `i 63  ]
+[e $U 59  ]
+[e :U 63 ]
+[; ;WaypointProgram.c: 185: if (ret == -2) return (-2);
+"185
+[e $ ! == -> _ret `i -U -> 2 `i 64  ]
+[e ) -> -U -> 2 `i `c ]
+[e $UE 7  ]
+[e :U 64 ]
+[; ;WaypointProgram.c: 187: if (ret == 0) {
+"187
+[e $ ! == -> _ret `i -> 0 `i 65  ]
+{
+[; ;WaypointProgram.c: 188: return RunWaypointProgram();
+"188
+[e ) ( _RunWaypointProgram ..  ]
+[e $UE 7  ]
+"189
+}
+[e :U 65 ]
+[; ;WaypointProgram.c: 189: }
+[; ;WaypointProgram.c: 191: ret = GetPresetNumber();
+"191
+[e = _ret ( _GetPresetNumber ..  ]
+[; ;WaypointProgram.c: 192: if (ret == -1) goto labelActions;
+"192
+[e $ ! == -> _ret `i -U -> 1 `i 66  ]
+[e $U 62  ]
+[e :U 66 ]
+[; ;WaypointProgram.c: 193: if (ret == -2) return (-2);
+"193
+[e $ ! == -> _ret `i -U -> 2 `i 67  ]
+[e ) -> -U -> 2 `i `c ]
+[e $UE 7  ]
+[e :U 67 ]
+[; ;WaypointProgram.c: 195: CurrentPath.Type = 1;
+"195
+[e = . _CurrentPath 0 -> -> 1 `i `uc ]
+[; ;WaypointProgram.c: 196: SavePreset(ret, (unsigned char *) &CurrentPath);
+"196
+[e ( _SavePreset (2 , -> _ret `uc -> &U _CurrentPath `*uc ]
+[; ;WaypointProgram.c: 198: goto labelActions;
+"198
+[e $U 62  ]
+[; ;WaypointProgram.c: 200: }
+"200
+[e :UE 7 ]
+}
+"202
+[v _RunWaypointProgram `(c ~T0 1 ef ]
+{
+[; ;WaypointProgram.c: 202: signed char RunWaypointProgram() {
+[e :U _RunWaypointProgram ]
+[f ]
+"203
+[v _EarlyExit `uc ~T0 1 a ]
+[; ;WaypointProgram.c: 203: char EarlyExit = 0;
+[e = _EarlyExit -> -> 0 `i `uc ]
+"204
+[v _ret `c ~T0 1 a ]
+"205
+[v _D `d ~T0 1 a ]
+"206
+[v _T `d ~T0 1 a ]
+"207
+[v _S `d ~T0 1 a ]
+"208
+[v _PingPong `uc ~T0 1 a ]
+[; ;WaypointProgram.c: 204: signed char ret;
+[; ;WaypointProgram.c: 205: double D;
+[; ;WaypointProgram.c: 206: double T;
+[; ;WaypointProgram.c: 207: double S;
+[; ;WaypointProgram.c: 208: char PingPong = 0;
+[e = _PingPong -> -> 0 `i `uc ]
+"209
+[v _idx `c ~T0 1 a ]
+"210
+[v _CycleIndex `ui ~T0 1 a ]
+[; ;WaypointProgram.c: 209: signed char idx;
+[; ;WaypointProgram.c: 210: unsigned int CycleIndex = 1;
+[e = _CycleIndex -> -> 1 `i `ui ]
+[; ;WaypointProgram.c: 212: LCD_ClearDisplay();
+"212
+[e ( _LCD_ClearDisplay ..  ]
+[; ;WaypointProgram.c: 213: LCD_PrintString("MOVING TO START\0");
+"213
+[e ( _LCD_PrintString (1 :s 19C ]
+[; ;WaypointProgram.c: 214: MoveToAngle(CurrentPath.Origin_deg, 90);
+"214
+[e ( _MoveToAngle (2 , -> . _CurrentPath 1 `d -> -> 90 `i `d ]
+[; ;WaypointProgram.c: 215: while (bMove_InProgress) {
+"215
+[e $U 69  ]
+[e :U 70 ]
+{
+[; ;WaypointProgram.c: 216: Idle();
+"216
+[e ( _Idle ..  ]
+[; ;WaypointProgram.c: 217: ret = GetInput_nonblocking();
+"217
+[e = _ret ( _GetInput_nonblocking ..  ]
+[; ;WaypointProgram.c: 218: if (ret == 3) {
+"218
+[e $ ! == -> _ret `i -> 3 `i 72  ]
+{
+[; ;WaypointProgram.c: 219: EarlyExit = 1;
+"219
+[e = _EarlyExit -> -> 1 `i `uc ]
+[; ;WaypointProgram.c: 220: goto labelFinished;
+"220
+[e $U 73  ]
+"221
+}
+[e :U 72 ]
+"222
+}
+[e :U 69 ]
+"215
+[e $ _bMove_InProgress 70  ]
+[e :U 71 ]
+[; ;WaypointProgram.c: 221: }
+[; ;WaypointProgram.c: 222: }
+[; ;WaypointProgram.c: 224: LCD_ClearDisplay();
+"224
+[e ( _LCD_ClearDisplay ..  ]
+[; ;WaypointProgram.c: 225: LCD_PrintString("DWELL ON START\0");
+"225
+[e ( _LCD_PrintString (1 :s 20C ]
+[; ;WaypointProgram.c: 226: Wait_seconds_nonblocking(CurrentPath.DwellTimes_sec[0]);
+"226
+[e ( _Wait_seconds_nonblocking (1 *U + &U . _CurrentPath 7 * -> -> -> 0 `i `ui `ux -> -> # *U &U . _CurrentPath 7 `ui `ux ]
+[; ;WaypointProgram.c: 227: while (bWaiting) {
+"227
+[e $U 74  ]
+[e :U 75 ]
+{
+[; ;WaypointProgram.c: 228: Idle();
+"228
+[e ( _Idle ..  ]
+[; ;WaypointProgram.c: 229: ret = GetInput_nonblocking();
+"229
+[e = _ret ( _GetInput_nonblocking ..  ]
+[; ;WaypointProgram.c: 230: if (ret == 3) {
+"230
+[e $ ! == -> _ret `i -> 3 `i 77  ]
+{
+[; ;WaypointProgram.c: 231: EarlyExit = 1;
+"231
+[e = _EarlyExit -> -> 1 `i `uc ]
+[; ;WaypointProgram.c: 232: goto labelFinished;
+"232
+[e $U 73  ]
+"233
+}
+[e :U 77 ]
+"234
+}
+[e :U 74 ]
+"227
+[e $ _bWaiting 75  ]
+[e :U 76 ]
+[; ;WaypointProgram.c: 233: }
+[; ;WaypointProgram.c: 234: }
+[; ;WaypointProgram.c: 236: while (1) {
+"236
+[e :U 79 ]
+{
+[; ;WaypointProgram.c: 237: if (PingPong) idx = CurrentPath.PointCount;
+"237
+[e $ ! != -> _PingPong `i -> -> -> 0 `i `uc `i 81  ]
+[e = _idx -> . _CurrentPath 2 `c ]
+[e $U 82  ]
+"238
+[e :U 81 ]
+[; ;WaypointProgram.c: 238: else idx = 0;
+[e = _idx -> -> 0 `i `c ]
+[e :U 82 ]
+[; ;WaypointProgram.c: 240: while ((idx >= 0) && (idx <= CurrentPath.PointCount)) {
+"240
+[e $U 83  ]
+[e :U 84 ]
+{
+[; ;WaypointProgram.c: 241: D = CurrentPath.Distances_deg[idx];
+"241
+[e = _D -> *U + &U . _CurrentPath 5 * -> -> _idx `uc `ux -> -> # *U &U . _CurrentPath 5 `ui `ux `d ]
+[; ;WaypointProgram.c: 242: T = CurrentPath.TravelTimes_sec[idx];
+"242
+[e = _T -> *U + &U . _CurrentPath 6 * -> -> _idx `uc `ux -> -> # *U &U . _CurrentPath 6 `ui `ux `d ]
+[; ;WaypointProgram.c: 243: S = SpeedRequiredToMoveInTime(D, T);
+"243
+[e = _S ( _SpeedRequiredToMoveInTime (2 , _D _T ]
+[; ;WaypointProgram.c: 244: if (PingPong) {
+"244
+[e $ ! != -> _PingPong `i -> -> -> 0 `i `uc `i 86  ]
+{
+[; ;WaypointProgram.c: 245: LCD_ClearDisplay();
+"245
+[e ( _LCD_ClearDisplay ..  ]
+[; ;WaypointProgram.c: 246: LCD_PrintString("MOVING TO POINT #\0");
+"246
+[e ( _LCD_PrintString (1 :s 21C ]
+[; ;WaypointProgram.c: 247: LCD_PrintLong(idx, 2, 0);
+"247
+[e ( _LCD_PrintLong (3 , , -> _idx `l -> -> 2 `i `uc -> -> 0 `i `uc ]
+[; ;WaypointProgram.c: 248: LCD_SetPosition(1, 0);
+"248
+[e ( _LCD_SetPosition (2 , -> -> 1 `i `uc -> -> 0 `i `uc ]
+[; ;WaypointProgram.c: 249: if (CurrentPath.LoopCount == 0) LCD_PrintString("INFINITE CYCLES\0");
+"249
+[e $ ! == . _CurrentPath 4 -> -> 0 `i `ui 87  ]
+[e ( _LCD_PrintString (1 :s 22C ]
+[e $U 88  ]
+"250
+[e :U 87 ]
+[; ;WaypointProgram.c: 250: else {
+{
+[; ;WaypointProgram.c: 251: LCD_PrintString("CYCLE \0");
+"251
+[e ( _LCD_PrintString (1 :s 23C ]
+[; ;WaypointProgram.c: 252: LCD_PrintLong(CycleIndex, 3, 0);
+"252
+[e ( _LCD_PrintLong (3 , , -> _CycleIndex `l -> -> 3 `i `uc -> -> 0 `i `uc ]
+[; ;WaypointProgram.c: 253: LCD_PrintString(" OF \0");
+"253
+[e ( _LCD_PrintString (1 :s 24C ]
+[; ;WaypointProgram.c: 254: LCD_PrintLong(CurrentPath.LoopCount, 3, 0);
+"254
+[e ( _LCD_PrintLong (3 , , -> . _CurrentPath 4 `l -> -> 3 `i `uc -> -> 0 `i `uc ]
+"255
+}
+[e :U 88 ]
+[; ;WaypointProgram.c: 255: }
+[; ;WaypointProgram.c: 257: Move(-D, S);
+"257
+[e ( _Move (2 , -U _D _S ]
+[; ;WaypointProgram.c: 258: while (bMove_InProgress) {
+"258
+[e $U 89  ]
+[e :U 90 ]
+{
+[; ;WaypointProgram.c: 259: Idle();
+"259
+[e ( _Idle ..  ]
+[; ;WaypointProgram.c: 260: ret = GetInput_nonblocking();
+"260
+[e = _ret ( _GetInput_nonblocking ..  ]
+[; ;WaypointProgram.c: 261: if (ret == 3) {
+"261
+[e $ ! == -> _ret `i -> 3 `i 92  ]
+{
+[; ;WaypointProgram.c: 262: EarlyExit = 1;
+"262
+[e = _EarlyExit -> -> 1 `i `uc ]
+[; ;WaypointProgram.c: 263: goto labelFinished;
+"263
+[e $U 73  ]
+"264
+}
+[e :U 92 ]
+"265
+}
+[e :U 89 ]
+"258
+[e $ _bMove_InProgress 90  ]
+[e :U 91 ]
+[; ;WaypointProgram.c: 264: }
+[; ;WaypointProgram.c: 265: }
+[; ;WaypointProgram.c: 267: LCD_ClearDisplay();
+"267
+[e ( _LCD_ClearDisplay ..  ]
+[; ;WaypointProgram.c: 268: LCD_PrintString("DWELL ON POINT #\0");
+"268
+[e ( _LCD_PrintString (1 :s 25C ]
+[; ;WaypointProgram.c: 269: LCD_PrintLong(idx, 2, 0);
+"269
+[e ( _LCD_PrintLong (3 , , -> _idx `l -> -> 2 `i `uc -> -> 0 `i `uc ]
+[; ;WaypointProgram.c: 270: LCD_SetPosition(1, 0);
+"270
+[e ( _LCD_SetPosition (2 , -> -> 1 `i `uc -> -> 0 `i `uc ]
+[; ;WaypointProgram.c: 271: if (CurrentPath.LoopCount == 0) LCD_PrintString("INFINITE CYCLES\0");
+"271
+[e $ ! == . _CurrentPath 4 -> -> 0 `i `ui 93  ]
+[e ( _LCD_PrintString (1 :s 26C ]
+[e $U 94  ]
+"272
+[e :U 93 ]
+[; ;WaypointProgram.c: 272: else {
+{
+[; ;WaypointProgram.c: 273: LCD_PrintString("CYCLE \0");
+"273
+[e ( _LCD_PrintString (1 :s 27C ]
+[; ;WaypointProgram.c: 274: LCD_PrintLong(CycleIndex, 3, 0);
+"274
+[e ( _LCD_PrintLong (3 , , -> _CycleIndex `l -> -> 3 `i `uc -> -> 0 `i `uc ]
+[; ;WaypointProgram.c: 275: LCD_PrintString(" OF \0");
+"275
+[e ( _LCD_PrintString (1 :s 28C ]
+[; ;WaypointProgram.c: 276: LCD_PrintLong(CurrentPath.LoopCount, 3, 0);
+"276
+[e ( _LCD_PrintLong (3 , , -> . _CurrentPath 4 `l -> -> 3 `i `uc -> -> 0 `i `uc ]
+"277
+}
+[e :U 94 ]
+[; ;WaypointProgram.c: 277: }
+[; ;WaypointProgram.c: 279: Wait_seconds_nonblocking(CurrentPath.DwellTimes_sec[idx]);
+"279
+[e ( _Wait_seconds_nonblocking (1 *U + &U . _CurrentPath 7 * -> -> _idx `uc `ux -> -> # *U &U . _CurrentPath 7 `ui `ux ]
+[; ;WaypointProgram.c: 280: while (bWaiting) {
+"280
+[e $U 95  ]
+[e :U 96 ]
+{
+[; ;WaypointProgram.c: 281: Idle();
+"281
+[e ( _Idle ..  ]
+[; ;WaypointProgram.c: 282: ret = GetInput_nonblocking();
+"282
+[e = _ret ( _GetInput_nonblocking ..  ]
+[; ;WaypointProgram.c: 283: if (ret == 3) {
+"283
+[e $ ! == -> _ret `i -> 3 `i 98  ]
+{
+[; ;WaypointProgram.c: 284: EarlyExit = 1;
+"284
+[e = _EarlyExit -> -> 1 `i `uc ]
+[; ;WaypointProgram.c: 285: goto labelFinished;
+"285
+[e $U 73  ]
+"286
+}
+[e :U 98 ]
+"287
+}
+[e :U 95 ]
+"280
+[e $ _bWaiting 96  ]
+[e :U 97 ]
+[; ;WaypointProgram.c: 286: }
+[; ;WaypointProgram.c: 287: }
+[; ;WaypointProgram.c: 288: idx--;
+"288
+[e -- _idx -> -> 1 `i `c ]
+"289
+}
+[; ;WaypointProgram.c: 289: } else {
+[e $U 99  ]
+[e :U 86 ]
+{
+[; ;WaypointProgram.c: 291: LCD_ClearDisplay();
+"291
+[e ( _LCD_ClearDisplay ..  ]
+[; ;WaypointProgram.c: 292: LCD_PrintString("MOVING TO POINT #\0");
+"292
+[e ( _LCD_PrintString (1 :s 29C ]
+[; ;WaypointProgram.c: 293: LCD_PrintLong(idx + 1, 2, 0);
+"293
+[e ( _LCD_PrintLong (3 , , -> + -> _idx `i -> 1 `i `l -> -> 2 `i `uc -> -> 0 `i `uc ]
+[; ;WaypointProgram.c: 294: LCD_SetPosition(1, 0);
+"294
+[e ( _LCD_SetPosition (2 , -> -> 1 `i `uc -> -> 0 `i `uc ]
+[; ;WaypointProgram.c: 295: if (CurrentPath.LoopCount == 0) LCD_PrintString("INFINITE CYCLES\0");
+"295
+[e $ ! == . _CurrentPath 4 -> -> 0 `i `ui 100  ]
+[e ( _LCD_PrintString (1 :s 30C ]
+[e $U 101  ]
+"296
+[e :U 100 ]
+[; ;WaypointProgram.c: 296: else {
+{
+[; ;WaypointProgram.c: 297: LCD_PrintString("CYCLE \0");
+"297
+[e ( _LCD_PrintString (1 :s 31C ]
+[; ;WaypointProgram.c: 298: LCD_PrintLong(CycleIndex, 3, 0);
+"298
+[e ( _LCD_PrintLong (3 , , -> _CycleIndex `l -> -> 3 `i `uc -> -> 0 `i `uc ]
+[; ;WaypointProgram.c: 299: LCD_PrintString(" OF \0");
+"299
+[e ( _LCD_PrintString (1 :s 32C ]
+[; ;WaypointProgram.c: 300: LCD_PrintLong(CurrentPath.LoopCount, 3, 0);
+"300
+[e ( _LCD_PrintLong (3 , , -> . _CurrentPath 4 `l -> -> 3 `i `uc -> -> 0 `i `uc ]
+"301
+}
+[e :U 101 ]
+[; ;WaypointProgram.c: 301: }
+[; ;WaypointProgram.c: 303: Move(D, S);
+"303
+[e ( _Move (2 , _D _S ]
+[; ;WaypointProgram.c: 304: while (bMove_InProgress) {
+"304
+[e $U 102  ]
+[e :U 103 ]
+{
+[; ;WaypointProgram.c: 305: Idle();
+"305
+[e ( _Idle ..  ]
+[; ;WaypointProgram.c: 306: ret = GetInput_nonblocking();
+"306
+[e = _ret ( _GetInput_nonblocking ..  ]
+[; ;WaypointProgram.c: 307: if (ret == 3) {
+"307
+[e $ ! == -> _ret `i -> 3 `i 105  ]
+{
+[; ;WaypointProgram.c: 308: EarlyExit = 1;
+"308
+[e = _EarlyExit -> -> 1 `i `uc ]
+[; ;WaypointProgram.c: 309: goto labelFinished;
+"309
+[e $U 73  ]
+"310
+}
+[e :U 105 ]
+"311
+}
+[e :U 102 ]
+"304
+[e $ _bMove_InProgress 103  ]
+[e :U 104 ]
+[; ;WaypointProgram.c: 310: }
+[; ;WaypointProgram.c: 311: }
+[; ;WaypointProgram.c: 313: LCD_ClearDisplay();
+"313
+[e ( _LCD_ClearDisplay ..  ]
+[; ;WaypointProgram.c: 314: LCD_PrintString("DWELL ON POINT #\0");
+"314
+[e ( _LCD_PrintString (1 :s 33C ]
+[; ;WaypointProgram.c: 315: LCD_PrintLong(idx + 1, 2, 0);
+"315
+[e ( _LCD_PrintLong (3 , , -> + -> _idx `i -> 1 `i `l -> -> 2 `i `uc -> -> 0 `i `uc ]
+[; ;WaypointProgram.c: 316: LCD_SetPosition(1, 0);
+"316
+[e ( _LCD_SetPosition (2 , -> -> 1 `i `uc -> -> 0 `i `uc ]
+[; ;WaypointProgram.c: 317: if (CurrentPath.LoopCount == 0) LCD_PrintString("INFINITE CYCLES\0");
+"317
+[e $ ! == . _CurrentPath 4 -> -> 0 `i `ui 106  ]
+[e ( _LCD_PrintString (1 :s 34C ]
+[e $U 107  ]
+"318
+[e :U 106 ]
+[; ;WaypointProgram.c: 318: else {
+{
+[; ;WaypointProgram.c: 319: LCD_PrintString("CYCLE \0");
+"319
+[e ( _LCD_PrintString (1 :s 35C ]
+[; ;WaypointProgram.c: 320: LCD_PrintLong(CycleIndex, 3, 0);
+"320
+[e ( _LCD_PrintLong (3 , , -> _CycleIndex `l -> -> 3 `i `uc -> -> 0 `i `uc ]
+[; ;WaypointProgram.c: 321: LCD_PrintString(" OF \0");
+"321
+[e ( _LCD_PrintString (1 :s 36C ]
+[; ;WaypointProgram.c: 322: LCD_PrintLong(CurrentPath.LoopCount, 3, 0);
+"322
+[e ( _LCD_PrintLong (3 , , -> . _CurrentPath 4 `l -> -> 3 `i `uc -> -> 0 `i `uc ]
+"323
+}
+[e :U 107 ]
+[; ;WaypointProgram.c: 323: }
+[; ;WaypointProgram.c: 325: Wait_seconds_nonblocking(CurrentPath.DwellTimes_sec[idx + 1]);
+"325
+[e ( _Wait_seconds_nonblocking (1 *U + &U . _CurrentPath 7 * -> -> + -> _idx `i -> 1 `i `ui `ux -> -> # *U &U . _CurrentPath 7 `ui `ux ]
+[; ;WaypointProgram.c: 326: while (bWaiting) {
+"326
+[e $U 108  ]
+[e :U 109 ]
+{
+[; ;WaypointProgram.c: 327: Idle();
+"327
+[e ( _Idle ..  ]
+[; ;WaypointProgram.c: 328: ret = GetInput_nonblocking();
+"328
+[e = _ret ( _GetInput_nonblocking ..  ]
+[; ;WaypointProgram.c: 329: if (ret == 3) {
+"329
+[e $ ! == -> _ret `i -> 3 `i 111  ]
+{
+[; ;WaypointProgram.c: 330: EarlyExit = 1;
+"330
+[e = _EarlyExit -> -> 1 `i `uc ]
+[; ;WaypointProgram.c: 331: goto labelFinished;
+"331
+[e $U 73  ]
+"332
+}
+[e :U 111 ]
+"333
+}
+[e :U 108 ]
+"326
+[e $ _bWaiting 109  ]
+[e :U 110 ]
+[; ;WaypointProgram.c: 332: }
+[; ;WaypointProgram.c: 333: }
+[; ;WaypointProgram.c: 334: idx++;
+"334
+[e ++ _idx -> -> 1 `i `c ]
+"335
+}
+[e :U 99 ]
+"336
+}
+[e :U 83 ]
+"240
+[e $ && >= -> _idx `i -> 0 `i <= -> _idx `i -> . _CurrentPath 2 `i 84  ]
+[e :U 85 ]
+[; ;WaypointProgram.c: 335: }
+[; ;WaypointProgram.c: 336: }
+[; ;WaypointProgram.c: 338: if (CurrentPath.Bounce) PingPong = !PingPong;
+"338
+[e $ ! != -> . _CurrentPath 3 `i -> -> -> 0 `i `uc `i 112  ]
+[e = _PingPong -> -> ! != -> _PingPong `i -> -> -> 0 `i `uc `i `i `uc ]
+[e $U 113  ]
+"339
+[e :U 112 ]
+[; ;WaypointProgram.c: 339: else {
+{
+[; ;WaypointProgram.c: 340: PingPong = 0;
+"340
+[e = _PingPong -> -> 0 `i `uc ]
+[; ;WaypointProgram.c: 341: LCD_ClearDisplay();
+"341
+[e ( _LCD_ClearDisplay ..  ]
+[; ;WaypointProgram.c: 342: LCD_PrintString("MOVING TO ORIGIN\0");
+"342
+[e ( _LCD_PrintString (1 :s 37C ]
+[; ;WaypointProgram.c: 343: LCD_SetPosition(1, 0);
+"343
+[e ( _LCD_SetPosition (2 , -> -> 1 `i `uc -> -> 0 `i `uc ]
+[; ;WaypointProgram.c: 344: if (CurrentPath.LoopCount == 0) LCD_PrintString("INFINITE CYCLES\0");
+"344
+[e $ ! == . _CurrentPath 4 -> -> 0 `i `ui 114  ]
+[e ( _LCD_PrintString (1 :s 38C ]
+[e $U 115  ]
+"345
+[e :U 114 ]
+[; ;WaypointProgram.c: 345: else {
+{
+[; ;WaypointProgram.c: 346: LCD_PrintString("CYCLE \0");
+"346
+[e ( _LCD_PrintString (1 :s 39C ]
+[; ;WaypointProgram.c: 347: LCD_PrintLong(CycleIndex, 3, 0);
+"347
+[e ( _LCD_PrintLong (3 , , -> _CycleIndex `l -> -> 3 `i `uc -> -> 0 `i `uc ]
+[; ;WaypointProgram.c: 348: LCD_PrintString(" OF \0");
+"348
+[e ( _LCD_PrintString (1 :s 40C ]
+[; ;WaypointProgram.c: 349: LCD_PrintLong(CurrentPath.LoopCount, 3, 0);
+"349
+[e ( _LCD_PrintLong (3 , , -> . _CurrentPath 4 `l -> -> 3 `i `uc -> -> 0 `i `uc ]
+"350
+}
+[e :U 115 ]
+[; ;WaypointProgram.c: 350: }
+[; ;WaypointProgram.c: 352: MoveToAngle(CurrentPath.Origin_deg, 90);
+"352
+[e ( _MoveToAngle (2 , -> . _CurrentPath 1 `d -> -> 90 `i `d ]
+[; ;WaypointProgram.c: 353: while (bMove_InProgress) {
+"353
+[e $U 116  ]
+[e :U 117 ]
+{
+[; ;WaypointProgram.c: 354: Idle();
+"354
+[e ( _Idle ..  ]
+[; ;WaypointProgram.c: 355: ret = GetInput_nonblocking();
+"355
+[e = _ret ( _GetInput_nonblocking ..  ]
+[; ;WaypointProgram.c: 356: if (ret == 3) {
+"356
+[e $ ! == -> _ret `i -> 3 `i 119  ]
+{
+[; ;WaypointProgram.c: 357: EarlyExit = 1;
+"357
+[e = _EarlyExit -> -> 1 `i `uc ]
+[; ;WaypointProgram.c: 358: goto labelFinished;
+"358
+[e $U 73  ]
+"359
+}
+[e :U 119 ]
+"360
+}
+[e :U 116 ]
+"353
+[e $ _bMove_InProgress 117  ]
+[e :U 118 ]
+[; ;WaypointProgram.c: 359: }
+[; ;WaypointProgram.c: 360: }
+[; ;WaypointProgram.c: 362: LCD_ClearDisplay();
+"362
+[e ( _LCD_ClearDisplay ..  ]
+[; ;WaypointProgram.c: 363: LCD_PrintString("DWELL ON POINT #00\0");
+"363
+[e ( _LCD_PrintString (1 :s 41C ]
+[; ;WaypointProgram.c: 364: LCD_SetPosition(1, 0);
+"364
+[e ( _LCD_SetPosition (2 , -> -> 1 `i `uc -> -> 0 `i `uc ]
+[; ;WaypointProgram.c: 365: if (CurrentPath.LoopCount == 0) LCD_PrintString("INFINITE CYCLES\0");
+"365
+[e $ ! == . _CurrentPath 4 -> -> 0 `i `ui 120  ]
+[e ( _LCD_PrintString (1 :s 42C ]
+[e $U 121  ]
+"366
+[e :U 120 ]
+[; ;WaypointProgram.c: 366: else {
+{
+[; ;WaypointProgram.c: 367: LCD_PrintString("CYCLE \0");
+"367
+[e ( _LCD_PrintString (1 :s 43C ]
+[; ;WaypointProgram.c: 368: LCD_PrintLong(CycleIndex, 3, 0);
+"368
+[e ( _LCD_PrintLong (3 , , -> _CycleIndex `l -> -> 3 `i `uc -> -> 0 `i `uc ]
+[; ;WaypointProgram.c: 369: LCD_PrintString(" OF \0");
+"369
+[e ( _LCD_PrintString (1 :s 44C ]
+[; ;WaypointProgram.c: 370: LCD_PrintLong(CurrentPath.LoopCount, 3, 0);
+"370
+[e ( _LCD_PrintLong (3 , , -> . _CurrentPath 4 `l -> -> 3 `i `uc -> -> 0 `i `uc ]
+"371
+}
+[e :U 121 ]
+[; ;WaypointProgram.c: 371: }
+[; ;WaypointProgram.c: 372: Wait_seconds_nonblocking(CurrentPath.DwellTimes_sec[0]);
+"372
+[e ( _Wait_seconds_nonblocking (1 *U + &U . _CurrentPath 7 * -> -> -> 0 `i `ui `ux -> -> # *U &U . _CurrentPath 7 `ui `ux ]
+[; ;WaypointProgram.c: 373: while (bWaiting) {
+"373
+[e $U 122  ]
+[e :U 123 ]
+{
+[; ;WaypointProgram.c: 374: Idle();
+"374
+[e ( _Idle ..  ]
+[; ;WaypointProgram.c: 375: ret = GetInput_nonblocking();
+"375
+[e = _ret ( _GetInput_nonblocking ..  ]
+[; ;WaypointProgram.c: 376: if (ret == 3) {
+"376
+[e $ ! == -> _ret `i -> 3 `i 125  ]
+{
+[; ;WaypointProgram.c: 377: EarlyExit = 1;
+"377
+[e = _EarlyExit -> -> 1 `i `uc ]
+[; ;WaypointProgram.c: 378: goto labelFinished;
+"378
+[e $U 73  ]
+"379
+}
+[e :U 125 ]
+"380
+}
+[e :U 122 ]
+"373
+[e $ _bWaiting 123  ]
+[e :U 124 ]
+"381
+}
+[e :U 113 ]
+[; ;WaypointProgram.c: 379: }
+[; ;WaypointProgram.c: 380: }
+[; ;WaypointProgram.c: 381: }
+[; ;WaypointProgram.c: 383: if (CurrentPath.LoopCount) {
+"383
+[e $ ! != . _CurrentPath 4 -> -> 0 `i `ui 126  ]
+{
+[; ;WaypointProgram.c: 384: CycleIndex++;
+"384
+[e ++ _CycleIndex -> -> 1 `i `ui ]
+[; ;WaypointProgram.c: 385: if (CycleIndex > CurrentPath.LoopCount) goto labelFinished;
+"385
+[e $ ! > _CycleIndex . _CurrentPath 4 127  ]
+[e $U 73  ]
+[e :U 127 ]
+"386
+}
+[e :U 126 ]
+"387
+}
+[e :U 78 ]
+"236
+[e $U 79  ]
+[e :U 80 ]
+[; ;WaypointProgram.c: 386: }
+[; ;WaypointProgram.c: 387: }
+[; ;WaypointProgram.c: 389: labelFinished:
+"389
+[e :U 73 ]
+[; ;WaypointProgram.c: 390: bMove_InProgress = 0;
+"390
+[e = _bMove_InProgress -> -> 0 `i `b ]
+[; ;WaypointProgram.c: 391: bFollowMode = 1;
+"391
+[e = _bFollowMode -> -> 1 `i `b ]
+[; ;WaypointProgram.c: 392: LCD_ClearDisplay();
+"392
+[e ( _LCD_ClearDisplay ..  ]
+[; ;WaypointProgram.c: 393: LCD_PrintString("STOPPING...\0");
+"393
+[e ( _LCD_PrintString (1 :s 45C ]
+[; ;WaypointProgram.c: 394: Idle();
+"394
+[e ( _Idle ..  ]
+[; ;WaypointProgram.c: 395: bMove_InProgress = 0;
+"395
+[e = _bMove_InProgress -> -> 0 `i `b ]
+[; ;WaypointProgram.c: 396: bFollowMode = 1;
+"396
+[e = _bFollowMode -> -> 1 `i `b ]
+[; ;WaypointProgram.c: 397: Wait_ms(500);
+"397
+[e ( _Wait_ms (1 -> -> 500 `i `ui ]
+[; ;WaypointProgram.c: 398: bFollowMode = 0;
+"398
+[e = _bFollowMode -> -> 0 `i `b ]
+[; ;WaypointProgram.c: 399: return EarlyExit;
+"399
+[e ) -> _EarlyExit `c ]
+[e $UE 68  ]
+[; ;WaypointProgram.c: 400: }
+"400
+[e :UE 68 ]
+}
+[a 12C 65 68 68 32 65 78 79 84 72 69 82 32 80 79 73 78 84 63 0 ]
+[a 1C 79 78 69 45 87 65 89 0 0 ]
+[a 19C 77 79 86 73 78 71 32 84 79 32 83 84 65 82 84 0 0 ]
+[a 20C 68 87 69 76 76 32 79 78 32 83 84 65 82 84 0 0 ]
+[a 8C 77 79 86 69 32 84 79 32 78 69 88 84 32 80 79 73 78 84 0 0 ]
+[a 4C 83 65 86 69 32 80 82 69 83 69 84 0 0 ]
+[a 22C 73 78 70 73 78 73 84 69 32 67 89 67 76 69 83 0 0 ]
+[a 26C 73 78 70 73 78 73 84 69 32 67 89 67 76 69 83 0 0 ]
+[a 30C 73 78 70 73 78 73 84 69 32 67 89 67 76 69 83 0 0 ]
+[a 34C 73 78 70 73 78 73 84 69 32 67 89 67 76 69 83 0 0 ]
+[a 38C 73 78 70 73 78 73 84 69 32 67 89 67 76 69 83 0 0 ]
+[a 42C 73 78 70 73 78 73 84 69 32 67 89 67 76 69 83 0 0 ]
+[a 17C 32 67 89 67 76 69 83 0 0 ]
+[a 37C 77 79 86 73 78 71 32 84 79 32 79 82 73 71 73 78 0 0 ]
+[a 3C 82 85 78 32 80 82 79 71 82 65 77 0 0 ]
+[a 9C 43 88 88 88 88 223 32 84 72 69 78 32 67 76 73 67 75 0 0 ]
+[a 13C 77 65 88 32 87 65 89 80 79 73 78 84 83 32 72 65 86 69 0 0 ]
+[a 2C 66 79 85 78 67 69 0 0 ]
+[a 14C 66 69 69 78 32 65 68 68 69 68 0 0 ]
+[a 15C 76 79 79 80 32 77 79 68 69 63 0 0 ]
+[a 18C 65 67 84 73 79 78 58 0 0 ]
+[a 7C 68 87 69 76 76 32 84 73 77 69 58 0 0 ]
+[a 11C 68 87 69 76 76 32 84 73 77 69 58 0 0 ]
+[a 10C 84 82 65 86 69 76 32 84 73 77 69 58 0 0 ]
+[a 41C 68 87 69 76 76 32 79 78 32 80 79 73 78 84 32 35 48 48 0 0 ]
+[a 6C 84 72 69 78 32 67 76 73 67 75 46 0 0 ]
+[a 16C 67 89 67 76 69 32 67 79 85 78 84 58 48 61 73 78 70 46 0 0 ]
+[a 5C 77 79 86 69 32 84 79 32 83 84 65 82 84 46 46 46 0 0 ]
+[a 45C 83 84 79 80 80 73 78 71 46 46 46 0 0 ]
+[a 21C 77 79 86 73 78 71 32 84 79 32 80 79 73 78 84 32 35 0 0 ]
+[a 29C 77 79 86 73 78 71 32 84 79 32 80 79 73 78 84 32 35 0 0 ]
+[a 25C 68 87 69 76 76 32 79 78 32 80 79 73 78 84 32 35 0 0 ]
+[a 33C 68 87 69 76 76 32 79 78 32 80 79 73 78 84 32 35 0 0 ]
+[a 24C 32 79 70 32 0 0 ]
+[a 28C 32 79 70 32 0 0 ]
+[a 32C 32 79 70 32 0 0 ]
+[a 36C 32 79 70 32 0 0 ]
+[a 40C 32 79 70 32 0 0 ]
+[a 44C 32 79 70 32 0 0 ]
+[a 23C 67 89 67 76 69 32 0 0 ]
+[a 27C 67 89 67 76 69 32 0 0 ]
+[a 31C 67 89 67 76 69 32 0 0 ]
+[a 35C 67 89 67 76 69 32 0 0 ]
+[a 39C 67 89 67 76 69 32 0 0 ]
+[a 43C 67 89 67 76 69 32 0 0 ]

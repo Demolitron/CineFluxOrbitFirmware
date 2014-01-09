@@ -1,0 +1,469 @@
+
+# 1 "Z:\CineFlux\Dropbox\Orbit\ExtMode.c"
+
+# 7 "Z:\CineFlux\Dropbox\Orbit\Main.h"
+typedef union LONG {
+unsigned char ub[4];
+signed char b[4];
+unsigned int ui[2];
+signed int i[2];
+unsigned long ul;
+signed long l;
+};
+
+typedef union {
+unsigned char ub[4];
+signed char b[4];
+unsigned int ui[2];
+signed int i[2];
+unsigned long ul;
+signed long l;
+float fl;
+double dbl;
+} MULTI;
+
+
+
+void main(void);
+void AckCmd(unsigned char CmdID);
+void NackCmd(unsigned char CmdID, unsigned char Reason);
+void MessageStream_WriteMULTI(MULTI dat, unsigned char CmdID);
+void MessageStream_WriteByte(unsigned char dat);
+unsigned char MessageStream_ReadByte();
+void GoToSleep();
+void SetupIO();
+void interrupt FastTick(void);
+void interrupt low_priority SlowTick();
+void SetupHardware();
+void Idle(void);
+double GetCurrentLinearPosition();
+double GetCurrentAngle();
+
+const signed char enc_states[] = {0, -1, 1, 0, 1, 0, 0, -1, -1, 0, 0, 1, 0, 1, -1, 0};
+
+
+
+
+unsigned char ReadIdx = 0;
+volatile unsigned char TX_Idx = 0;
+volatile unsigned char TX_bCount = 0;
+volatile unsigned char TXBuffer[255];
+volatile bit RX_MsgComplete;
+volatile bit RX_InProgress;
+volatile unsigned char RX_Idx = 0;
+volatile unsigned char RXBuffer[255];
+volatile unsigned char MyID = 0xAA;
+volatile bit isPendingExternalUIEvent;
+volatile char PendingExternalUIEvent;
+volatile bit ExtModeActive;
+
+
+
+
+volatile bit ClearUI_Event = 0;
+volatile bit bLock_RotaryDetentIntervals = 0;
+unsigned char RotaryDetentIntervals[16];
+volatile bit ZeroRotaryDetentIntervals = 0;
+volatile bit bLock_UI_Event = 0;
+volatile char UI_Event;
+
+# 83
+volatile bit bLock_BatteryVoltage = 0;
+unsigned int BatteryVoltage = 0;
+volatile bit bLowVoltageTrip = 0;
+
+
+volatile bit LCD_BacklightEnabled;
+
+
+volatile bit bFollowMode = 0;
+volatile bit bMove_InProgress = 0;
+unsigned long Move_speedQ24 = 0;
+union LONG Move_shifted_position;
+union LONG Move_position[2];
+unsigned long Move_AccelValueQ24 = 0;
+unsigned long Move_CoastSpeedQ24 = 0;
+unsigned long Move_DecelPosition = 0;
+signed long Move_FinalPosition = 0;
+signed long Move_Origin = 0;
+volatile bit bMove_Neg = 0;
+
+
+
+volatile bit bSpeedMode = 0;
+unsigned long Speed_SetToThis;
+volatile bit Speed_SetPending;
+volatile bit Speed_IsAccelerating;
+
+
+
+volatile bit bClear_MotorPosition = 0;
+signed long Motor_Position = 0;
+volatile bit bLock_Motor_Position = 0;
+
+
+volatile bit bIncrement_PID_Setpoint = 0;
+volatile bit bDecrement_PID_Setpoint = 0;
+volatile bit bLock_PID_SetPoint = 0;
+
+volatile bit bMotionError = 0;
+volatile bit bPowerOff = 0;
+
+# 181
+const unsigned char ASCII_HEX_TO_BINARY[128] ={0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 0, 0, 0, 0, 0, 0,
+0, 10, 11, 12, 13, 14, 15, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+0, 10, 11, 12, 13, 14, 15, 0, 0, 0, 0, 0, 0, 0, 0, 0};
+
+const unsigned char BINARY_TO_ASCII_HEX[16] = {'0', '1', '2', '3', '4', '5', '6', '7', '8', '9', 'A', 'B', 'C', 'D', 'E', 'F'};
+
+# 1 "Z:\CineFlux\Dropbox\Orbit\Timings.h"
+void Wait_seconds(unsigned int time);
+void Wait_ms(unsigned int time);
+void Wait_seconds_nonblocking(unsigned int time);
+void Wait_ms_nonblocking(unsigned int time);
+void Wait_ticks(unsigned char time);
+void Wait_us(unsigned int time);
+double Now();
+
+
+volatile bit bWaiting=0;
+volatile unsigned long WaitUntil_Tick500Hz=0;
+volatile bit bTick40Khz=0;
+volatile bit bLock_Tick500Hz=0;
+volatile unsigned long Tick500Hz=0;
+
+# 1 "Z:\CineFlux\Dropbox\Orbit\MotionEngine.h"
+char Move(double Distance_deg, double Speed_deg_sec);
+char MoveAdvanced(double Distance_deg, double _Speed_Deg_Sec, double _Acceleration_Deg_Sec_Sec);
+char MoveToLinear(double DestinationPostion, double Speed_Deg_Sec);
+char MoveToAngle(double DestinationAngle, double Speed_Deg_Sec);
+double SpeedRequiredToMoveInTime(double Distance, double Time);
+double MinTimeToMove(double Distance);
+
+# 2 "Z:\CineFlux\Dropbox\Orbit\Settings.h"
+typedef struct {
+unsigned char Version;
+unsigned int BatteryLowVoltageLevel;
+unsigned int Battery12V_Q8;
+unsigned char PowerResponseLimiter_Slope;
+unsigned char PowerResponseLimiter_Intercept;
+double Counts_per_Volt;
+double Volts_per_Count;
+unsigned char BacklightPWM_Duty;
+unsigned int BacklightIdleTimeout;
+double SystemAcceleration;
+double MaxSpeed;
+signed int PID_MaxError;
+unsigned int PID_Kp;
+unsigned int PID_Kd;
+double Counts_Per_Degree;
+double Degrees_Per_Count;
+} ConfigStruct;
+
+typedef struct {
+char Type;
+unsigned int Origin_deg;
+char EndMode;
+char IsClockWise;
+double ProgramRunTime_sec;
+double CycleCount_rev;
+double CycleTime_sec;
+double Speed_deg_sec;
+char SpeedMode;
+} OrbitProgramStruct;
+
+typedef struct {
+char Type;
+unsigned int Origin_deg;
+unsigned char PointCount;
+unsigned char Bounce;
+unsigned int LoopCount;
+signed int Distances_deg[18];
+unsigned int TravelTimes_sec[18];
+unsigned int DwellTimes_sec[19];
+} WaypointProgramStruct;
+
+typedef union {
+unsigned char ub[120];
+WaypointProgramStruct WayPoint;
+OrbitProgramStruct Orbit;
+} PRESET;
+
+ConfigStruct Config;
+WaypointProgramStruct CurrentPath;
+OrbitProgramStruct CurrentOrbitProgram;
+
+void FactoryDefault();
+void SaveSettings();
+void LoadSettings();
+void EEprom_write(unsigned int *addr, unsigned char *dat, unsigned char bCount);
+void EEprom_read(unsigned int *addr, unsigned char *dat, unsigned char bCount);
+unsigned char GetPresetType(char pnum);
+void SavePreset(char pnum, unsigned char *dat);
+void LoadPreset(char pnum, unsigned char *dat);
+
+# 1 "Z:\CineFlux\Dropbox\Orbit\lcd.h"
+void LCD_PrintString(const unsigned char *dat);
+void LCD_PrintChar(char dat);
+void LCD_PrintLong(long dat, char places, char sign);
+void LCD_PrintFloat(double dat, char whole, char fract, char sign);
+
+void LCD_ClearDisplay(void);
+void LCD_PowerUp(void);
+
+void LCD_SetPosition(char Row, char Col);
+void LCD_FunctionSet(char EightBit, char DualLine, char FiveByTenDots);
+void LCD_CursorShift(char ShiftDisplay, char ShiftRight);
+void LCD_DisplayOnOff(char DisplayOn, char CursorOn, char BlinkOn);
+void LCD_EntryModeSet(char Increment, char ShiftOn);
+void LCD_ReturnHome(void);
+
+void putc(unsigned char dat);
+
+unsigned char LCD_Line1[20];
+unsigned char LCD_Line2[20];
+unsigned char LCD_Row=0;
+unsigned char LCD_Col=0;
+
+# 4 "Z:\CineFlux\Dropbox\Orbit\userInterface.h"
+void ShowVoltage();
+signed char GetClick(void);
+signed char GetYesNo(const char *prompt, signed char Initial);
+signed char GetFloat(const char *prompt, const char *unit, double* Value, double Min, double Max, double Precision);
+signed char GetInput(void);
+signed char GetInput_nonblocking(void);
+signed char DisplayMenu(const char *Menu[], char ItemCount, char Initial);
+signed char DisplayChoices(const char *Menu[], char ItemCount, const char *Prompt, char Initial);
+signed char GetPresetNumber();
+
+signed char GetTime(const char *prompt, double *Time, double Min, double Max, char Precision);
+void PrintTime(double dat, unsigned char precision, unsigned char EditChevron);
+void ConvertTimeToDiscrete(double Time, char *Hours, char *Minutes, char *Seconds, int *Milliseconds);
+double ConvertTimeFromDiscrete(char Hours, char Minutes, char Seconds, int Milliseconds);
+double RoundTimeUp(double Time,unsigned char precision);
+double RoundTimeDown(double Time,unsigned char precision);
+
+unsigned char GetRotaryMultiplier();
+
+# 8 "Z:\CineFlux\Dropbox\Orbit\ExtMode.c"
+unsigned char ExtMode() {
+unsigned char PathIdx = 0;
+unsigned char PathCount = 0;
+signed int PathDistances[100];
+unsigned int PathTravelTimes[100];
+unsigned int PathDwellTimes[100];
+
+ExtModeActive = 1;
+signed char ret;
+unsigned char CmdID;
+
+unsigned char idx;
+unsigned char State = 0;
+MULTI mTemp;
+
+char PrepMove_Ready = 0;
+double PrepMove_Distance, PrepMove_Speed, PrepMove_Acceleration;
+double S, D, T;
+
+LCD_ClearDisplay();
+LCD_PrintString("EXTERNAL MODE");
+
+while (1) {
+ret = GetInput_nonblocking();
+if (ret == 3) {
+ExtModeActive = 0;
+return (-2);
+}
+switch (State) {
+case 0:
+bMove_InProgress = 0;
+bFollowMode = 0;
+bSpeedMode = 0;
+break;
+case 1:
+bSpeedMode = 1;
+Speed_SetToThis = 0;
+Speed_SetPending = 1;
+if (!Speed_IsAccelerating) State = 0;
+case 2:
+if (!bMove_InProgress) State = 1;
+case 3:
+if (!bMove_InProgress) {
+Wait_seconds_nonblocking(PathDwellTimes[PathIdx]);
+PathIdx += 1;
+State = 4;
+}
+break;
+case 4:
+if (!bWaiting) {
+if (PathIdx == PathCount) {
+State = 1;
+} else {
+D = PathDistances[PathIdx];
+T = PathTravelTimes[PathIdx];
+S = SpeedRequiredToMoveInTime(D, T);
+Move(D, S);
+State = 3;
+}
+}
+break;
+}
+
+if (RX_MsgComplete) {
+ReadIdx = 1;
+RX_MsgComplete = 0;
+if (MessageStream_ReadByte() == MyID) {
+CmdID = MessageStream_ReadByte();
+switch (CmdID) {
+case 0x60:
+mTemp.ub[3] = MessageStream_ReadByte();
+mTemp.ub[2] = MessageStream_ReadByte();
+mTemp.ub[1] = MessageStream_ReadByte();
+mTemp.ub[0] = MessageStream_ReadByte();
+PrepMove_Distance = mTemp.dbl;
+
+mTemp.ub[3] = MessageStream_ReadByte();
+mTemp.ub[2] = MessageStream_ReadByte();
+mTemp.ub[1] = MessageStream_ReadByte();
+mTemp.ub[0] = MessageStream_ReadByte();
+PrepMove_Speed = mTemp.dbl;
+
+mTemp.ub[3] = MessageStream_ReadByte();
+mTemp.ub[2] = MessageStream_ReadByte();
+mTemp.ub[1] = MessageStream_ReadByte();
+mTemp.ub[0] = MessageStream_ReadByte();
+PrepMove_Acceleration = mTemp.dbl;
+PrepMove_Ready = 1;
+
+AckCmd(CmdID);
+
+break;
+case 0x61:
+if (!PrepMove_Ready) {
+NackCmd(CmdID, 1);
+break;
+}
+if (State) {
+NackCmd(CmdID, 2);
+break;
+}
+MoveAdvanced(PrepMove_Distance, PrepMove_Speed, PrepMove_Acceleration);
+PrepMove_Ready = 0;
+State = 2;
+AckCmd(CmdID);
+
+break;
+case 0x62:
+if (!State == 0) State = 1;
+AckCmd(CmdID);
+break;
+case 0x63:
+TX_Idx = 0;
+TXBuffer[TX_Idx++] = '$';
+MessageStream_WriteByte(CmdID);
+
+MessageStream_WriteByte(State);
+MessageStream_WriteByte(PrepMove_Ready);
+
+bLock_Motor_Position = 1;
+mTemp.dbl = Motor_Position;
+bLock_Motor_Position = 0;
+mTemp.dbl *= Config.Degrees_Per_Count;
+MessageStream_WriteByte(mTemp.ub[3]);
+MessageStream_WriteByte(mTemp.ub[2]);
+MessageStream_WriteByte(mTemp.ub[1]);
+MessageStream_WriteByte(mTemp.ub[0]);
+
+mTemp.dbl = 0;
+while (!(mTemp.dbl == Move_speedQ24)) mTemp.dbl = Move_speedQ24;
+mTemp.dbl *= 0.0000298023224;
+mTemp.dbl *= Config.Degrees_Per_Count;
+MessageStream_WriteByte(mTemp.ub[3]);
+MessageStream_WriteByte(mTemp.ub[2]);
+MessageStream_WriteByte(mTemp.ub[1]);
+MessageStream_WriteByte(mTemp.ub[0]);
+
+bLock_Tick500Hz = 1;
+mTemp.dbl = Tick500Hz;
+bLock_Tick500Hz = 0;
+mTemp.dbl *= 0.002;
+MessageStream_WriteByte(mTemp.ub[3]);
+MessageStream_WriteByte(mTemp.ub[2]);
+MessageStream_WriteByte(mTemp.ub[1]);
+MessageStream_WriteByte(mTemp.ub[0]);
+
+bLock_BatteryVoltage = 1;
+mTemp.dbl = BatteryVoltage;
+bLock_BatteryVoltage = 0;
+mTemp.dbl *= Config.Volts_per_Count;
+MessageStream_WriteByte(mTemp.ub[3]);
+MessageStream_WriteByte(mTemp.ub[2]);
+MessageStream_WriteByte(mTemp.ub[1]);
+MessageStream_WriteByte(mTemp.ub[0]);
+
+TXBuffer[TX_Idx++] = '#';
+idx = TX_Idx;
+TX_Idx = 0;
+TX_bCount = idx;
+break;
+case 0x64:
+if ((State == 3) || (State == 4)) {
+NackCmd(CmdID, 1);
+break;
+}
+PathIdx = 0;
+PathCount = 0;
+AckCmd(CmdID);
+break;
+case 0x65:
+if ((State == 3) || (State == 4)) {
+NackCmd(CmdID, 1);
+break;
+}
+
+if (PathCount > 99) {
+NackCmd(CmdID, 2);
+break;
+}
+
+mTemp.ub[1] = MessageStream_ReadByte();
+mTemp.ub[0] = MessageStream_ReadByte();
+PathDistances[PathCount] = mTemp.i[0];
+
+mTemp.ub[1] = MessageStream_ReadByte();
+mTemp.ub[0] = MessageStream_ReadByte();
+PathTravelTimes[PathCount] = mTemp.ui[0];
+
+mTemp.ub[1] = MessageStream_ReadByte();
+mTemp.ub[0] = MessageStream_ReadByte();
+PathDwellTimes[PathCount] = mTemp.ui[0];
+AckCmd(CmdID);
+PathCount++;
+
+break;
+case 0x66:
+if (!(State == 0)) {
+NackCmd(CmdID, 1);
+break;
+}
+PathIdx = 0;
+D = PathDistances[PathIdx];
+T = PathTravelTimes[PathIdx];
+S = SpeedRequiredToMoveInTime(D, T);
+Move(D, S);
+State = 3;
+AckCmd(CmdID);
+break;
+default:
+NackCmd(CmdID, 0xFE);
+break;
+}
+}
+
+}
+}
+return 0;
+}

@@ -1,0 +1,1922 @@
+[p PRO_MODE GLOBOPT AUTOSTATIC LFSROK SPACEOPT ]
+[d version 1.1 ]
+[d edition pro ]
+[d chip 18F67K22 ]
+"225 Z:\CineFlux\Dropbox\Orbit\ExtMode.c
+"3 Z:\CineFlux\Dropbox\Orbit\lcd.h
+"6
+"6 Z:\CineFlux\Dropbox\Orbit\timings.h
+"272 Z:\CineFlux\Dropbox\Orbit\LCD.c
+"36 Z:\CineFlux\Dropbox\Orbit\main.h
+"3788 C:\Program Files (x86)\HI-TECH Software\PICC-18\9.80\include\pic18f67k22.h
+"9389
+"4728
+"3188
+"6119
+"6116
+"5079
+"8021
+"33 Z:\CineFlux\Dropbox\Orbit\main.h
+"37
+[v F9571 `(v  1 t 0 ]
+"38
+[v F9573 `(v  1 t 0 ]
+"966 Z:\CineFlux\Dropbox\Orbit\Main.c
+"180 Z:\CineFlux\Dropbox\Orbit\MotionEngine.c
+"261 Z:\CineFlux\Dropbox\Orbit\OrbitProgram.c
+"134 Z:\CineFlux\Dropbox\Orbit\RealtimeMode.c
+"60 Z:\CineFlux\Dropbox\Orbit\Settings.h
+"96 Z:\CineFlux\Dropbox\Orbit\Settings.c
+"64 Z:\CineFlux\Dropbox\Orbit\Timings.c
+"568 Z:\CineFlux\Dropbox\Orbit\UserInterface.c
+"400 Z:\CineFlux\Dropbox\Orbit\WaypointProgram.c
+"2058 /Users/alanham/hitech/products/compilers/pic18/pro/9.80/dist/osx/include/pic18f67k22.h
+"2046
+"3124
+"5 C:\Program Files (x86)\HI-TECH Software\PICC-18\9.80\sources\abdiv.c
+[v ___abdiv `(c  1 e 1 0 ]
+"5 C:\Program Files (x86)\HI-TECH Software\PICC-18\9.80\sources\abmod.c
+[v ___abmod `(c  1 e 1 0 ]
+"32 C:\Program Files (x86)\HI-TECH Software\PICC-18\9.80\sources\abtofl.c
+[v ___abtofl `(d  1 e 3 0 ]
+"34 C:\Program Files (x86)\HI-TECH Software\PICC-18\9.80\sources\abtoft.c
+[v ___abtoft `(f  1 e 3 0 ]
+"10 C:\Program Files (x86)\HI-TECH Software\PICC-18\9.80\sources\aldiv.c
+[v ___aldiv `(l  1 e 4 0 ]
+"10 C:\Program Files (x86)\HI-TECH Software\PICC-18\9.80\sources\almod.c
+[v ___almod `(l  1 e 4 0 ]
+"37 C:\Program Files (x86)\HI-TECH Software\PICC-18\9.80\sources\altofl.c
+[v ___altofl `(d  1 e 3 0 ]
+"43 C:\Program Files (x86)\HI-TECH Software\PICC-18\9.80\sources\altoft.c
+[v ___altoft `(f  1 e 3 0 ]
+"5 C:\Program Files (x86)\HI-TECH Software\PICC-18\9.80\sources\asfladd.c
+[v ___asfladd `(d  1 e 3 0 ]
+"5 C:\Program Files (x86)\HI-TECH Software\PICC-18\9.80\sources\asfldiv.c
+[v ___asfldiv `(d  1 e 3 0 ]
+"5 C:\Program Files (x86)\HI-TECH Software\PICC-18\9.80\sources\asflmul.c
+[v ___asflmul `(d  1 e 3 0 ]
+"5 C:\Program Files (x86)\HI-TECH Software\PICC-18\9.80\sources\asflsub.c
+[v ___asflsub `(d  1 e 3 0 ]
+"5 C:\Program Files (x86)\HI-TECH Software\PICC-18\9.80\sources\asftadd.c
+[v ___asftadd `(f  1 e 3 0 ]
+"5 C:\Program Files (x86)\HI-TECH Software\PICC-18\9.80\sources\asftdiv.c
+[v ___asftdiv `(f  1 e 3 0 ]
+"5 C:\Program Files (x86)\HI-TECH Software\PICC-18\9.80\sources\asftmul.c
+[v ___asftmul `(f  1 e 3 0 ]
+"5 C:\Program Files (x86)\HI-TECH Software\PICC-18\9.80\sources\asftsub.c
+[v ___asftsub `(f  1 e 3 0 ]
+"5 C:\Program Files (x86)\HI-TECH Software\PICC-18\9.80\sources\aslmul.c
+[v ___aslmul `(ul  1 e 4 0 ]
+"10 C:\Program Files (x86)\HI-TECH Software\PICC-18\9.80\sources\atdiv.c
+[v ___atdiv `(m  1 e 3 0 ]
+"10 C:\Program Files (x86)\HI-TECH Software\PICC-18\9.80\sources\atmod.c
+[v ___atmod `(m  1 e 3 0 ]
+"38 C:\Program Files (x86)\HI-TECH Software\PICC-18\9.80\sources\attofl.c
+[v ___attofl `(d  1 e 3 0 ]
+"38 C:\Program Files (x86)\HI-TECH Software\PICC-18\9.80\sources\attoft.c
+[v ___attoft `(f  1 e 3 0 ]
+"10 C:\Program Files (x86)\HI-TECH Software\PICC-18\9.80\sources\awdiv.c
+[v ___awdiv `(i  1 e 2 0 ]
+"10 C:\Program Files (x86)\HI-TECH Software\PICC-18\9.80\sources\awmod.c
+[v ___awmod `(i  1 e 2 0 ]
+"32 C:\Program Files (x86)\HI-TECH Software\PICC-18\9.80\sources\awtofl.c
+[v ___awtofl `(d  1 e 3 0 ]
+"33 C:\Program Files (x86)\HI-TECH Software\PICC-18\9.80\sources\awtoft.c
+[v ___awtoft `(f  1 e 3 0 ]
+"3 C:\Program Files (x86)\HI-TECH Software\PICC-18\9.80\sources\bmul.c
+[v ___bmul `(uc  1 e 1 0 ]
+"64 C:\Program Files (x86)\HI-TECH Software\PICC-18\9.80\sources\double.c
+[v ___flpack `(d  1 e 3 0 ]
+"89 C:\Program Files (x86)\HI-TECH Software\PICC-18\9.80\sources\fladd.c
+[v ___fladd `(d  1 e 3 0 ]
+"50 C:\Program Files (x86)\HI-TECH Software\PICC-18\9.80\sources\fldiv.c
+[v ___fldiv `(d  1 e 3 0 ]
+"5 C:\Program Files (x86)\HI-TECH Software\PICC-18\9.80\sources\flge.c
+[v ___flge `(b  1 e 0 0 ]
+"51 C:\Program Files (x86)\HI-TECH Software\PICC-18\9.80\sources\flmul.c
+[v ___flmul `(d  1 e 3 0 ]
+"16 C:\Program Files (x86)\HI-TECH Software\PICC-18\9.80\sources\flneg.c
+[v ___flneg `(d  1 e 3 0 ]
+"63 C:\Program Files (x86)\HI-TECH Software\PICC-18\9.80\sources\float.c
+[v ___ftpack `(f  1 e 3 0 ]
+"22 C:\Program Files (x86)\HI-TECH Software\PICC-18\9.80\sources\flsub.c
+[v ___flsub `(d  1 e 3 0 ]
+"44 C:\Program Files (x86)\HI-TECH Software\PICC-18\9.80\sources\fltol.c
+[v ___fltol `(l  1 e 4 0 ]
+"87 C:\Program Files (x86)\HI-TECH Software\PICC-18\9.80\sources\ftadd.c
+[v ___ftadd `(f  1 e 3 0 ]
+"50 C:\Program Files (x86)\HI-TECH Software\PICC-18\9.80\sources\ftdiv.c
+[v ___ftdiv `(f  1 e 3 0 ]
+"5 C:\Program Files (x86)\HI-TECH Software\PICC-18\9.80\sources\ftge.c
+[v ___ftge `(b  1 e 0 0 ]
+"52 C:\Program Files (x86)\HI-TECH Software\PICC-18\9.80\sources\ftmul.c
+[v ___ftmul `(f  1 e 3 0 ]
+"16 C:\Program Files (x86)\HI-TECH Software\PICC-18\9.80\sources\ftneg.c
+[v ___ftneg `(f  1 e 3 0 ]
+"22 C:\Program Files (x86)\HI-TECH Software\PICC-18\9.80\sources\ftsub.c
+[v ___ftsub `(f  1 e 3 0 ]
+"45 C:\Program Files (x86)\HI-TECH Software\PICC-18\9.80\sources\fttol.c
+[v ___fttol `(l  1 e 4 0 ]
+"5 C:\Program Files (x86)\HI-TECH Software\PICC-18\9.80\sources\lbdiv.c
+[v ___lbdiv `(uc  1 e 1 0 ]
+"5 C:\Program Files (x86)\HI-TECH Software\PICC-18\9.80\sources\lbmod.c
+[v ___lbmod `(uc  1 e 1 0 ]
+"28 C:\Program Files (x86)\HI-TECH Software\PICC-18\9.80\sources\lbtofl.c
+[v ___lbtofl `(d  1 e 3 0 ]
+"28 C:\Program Files (x86)\HI-TECH Software\PICC-18\9.80\sources\lbtoft.c
+[v ___lbtoft `(f  1 e 3 0 ]
+"10 C:\Program Files (x86)\HI-TECH Software\PICC-18\9.80\sources\lldiv.c
+[v ___lldiv `(ul  1 e 4 0 ]
+"10 C:\Program Files (x86)\HI-TECH Software\PICC-18\9.80\sources\llmod.c
+[v ___llmod `(ul  1 e 4 0 ]
+"31 C:\Program Files (x86)\HI-TECH Software\PICC-18\9.80\sources\lltofl.c
+[v ___lltofl `(d  1 e 3 0 ]
+"36 C:\Program Files (x86)\HI-TECH Software\PICC-18\9.80\sources\lltoft.c
+[v ___lltoft `(f  1 e 3 0 ]
+"3 C:\Program Files (x86)\HI-TECH Software\PICC-18\9.80\sources\lmul.c
+[v ___lmul `(ul  1 e 4 0 ]
+"10 C:\Program Files (x86)\HI-TECH Software\PICC-18\9.80\sources\ltdiv.c
+[v ___ltdiv `(um  1 e 3 0 ]
+"10 C:\Program Files (x86)\HI-TECH Software\PICC-18\9.80\sources\ltmod.c
+[v ___ltmod `(um  1 e 3 0 ]
+"31 C:\Program Files (x86)\HI-TECH Software\PICC-18\9.80\sources\lttofl.c
+[v ___lttofl `(d  1 e 3 0 ]
+"31 C:\Program Files (x86)\HI-TECH Software\PICC-18\9.80\sources\lttoft.c
+[v ___lttoft `(f  1 e 3 0 ]
+"10 C:\Program Files (x86)\HI-TECH Software\PICC-18\9.80\sources\lwdiv.c
+[v ___lwdiv `(ui  1 e 2 0 ]
+[v i1___lwdiv `(ui  1 e 2 0 ]
+[v i1___lwdiv `(ui  1 e 2 0 ]
+"10 C:\Program Files (x86)\HI-TECH Software\PICC-18\9.80\sources\lwmod.c
+[v ___lwmod `(ui  1 e 2 0 ]
+"29 C:\Program Files (x86)\HI-TECH Software\PICC-18\9.80\sources\lwtofl.c
+[v ___lwtofl `(d  1 e 3 0 ]
+"29 C:\Program Files (x86)\HI-TECH Software\PICC-18\9.80\sources\lwtoft.c
+[v ___lwtoft `(f  1 e 3 0 ]
+"14 C:\Program Files (x86)\HI-TECH Software\PICC-18\9.80\sources\sqrt.c
+[v _sqrt `(d  1 e 3 0 ]
+"3 C:\Program Files (x86)\HI-TECH Software\PICC-18\9.80\sources\tmul.c
+[v ___tmul `(um  1 e 3 0 ]
+"3 C:\Program Files (x86)\HI-TECH Software\PICC-18\9.80\sources\wmul.c
+[v ___wmul `(ui  1 e 2 0 ]
+[v i1___wmul `(ui  1 e 2 0 ]
+[v i1___wmul `(ui  1 e 2 0 ]
+"13 plib/EEP/busy_eep.c
+[v _Busy_eep `(v  1 e 0 0 ]
+"36 plib/EEP/read_B.c
+[v _Read_b_eep `(uc  1 e 1 0 ]
+"46 plib/EEP/write_B.c
+[v _Write_b_eep `(v  1 e 0 0 ]
+"8 Z:\CineFlux\Dropbox\Orbit\ExtMode.c
+[v _ExtMode `(uc  1 e 1 0 ]
+"6 Z:\CineFlux\Dropbox\Orbit\LCD.c
+[v _LCD_PrintFloat `(v  1 e 0 0 ]
+"44
+[v _LCD_PrintLong `(v  1 e 0 0 ]
+"104
+[v _LCD_PowerUp `(v  1 e 0 0 ]
+"135
+[v _LCD_ClearDisplay `(v  1 e 0 0 ]
+"153
+[v _LCD_ReturnHome `(v  1 e 0 0 ]
+"165
+[v _LCD_EntryModeSet `(v  1 e 0 0 ]
+"181
+[v _LCD_DisplayOnOff `(v  1 e 0 0 ]
+"197
+[v _LCD_CursorShift `(v  1 e 0 0 ]
+"212
+[v _LCD_FunctionSet `(v  1 e 0 0 ]
+"228
+[v _LCD_SetPosition `(v  1 e 0 0 ]
+"245
+[v _LCD_PrintChar `(v  1 e 0 0 ]
+"260
+[v _LCD_PrintString `(v  1 e 0 0 ]
+"269
+[v _putc `(v  1 e 0 0 ]
+"16 Z:\CineFlux\Dropbox\Orbit\Main.c
+[v _main `(v  1 e 0 0 ]
+"138
+[v _FastTick `I(v  1 e 0 0 ]
+"217
+[v _SlowTick `IL(v  1 e 0 0 ]
+"540
+[v _SetupHardware `(v  1 e 0 0 ]
+"637
+[v _SetupIO `(v  1 e 0 0 ]
+"735
+[v _AckCmd `(v  1 e 0 0 ]
+"744
+[v _NackCmd `(v  1 e 0 0 ]
+"754
+[v _Idle `(v  1 e 0 0 ]
+"883
+[v _MessageStream_WriteMULTI `(v  1 e 0 0 ]
+"898
+[v _MessageStream_WriteByte `(v  1 e 0 0 ]
+"906
+[v _MessageStream_ReadByte `(uc  1 e 1 0 ]
+"913
+[v _GoToSleep `(v  1 e 0 0 ]
+"6 Z:\CineFlux\Dropbox\Orbit\MotionEngine.c
+[v _MinTimeToMove `(d  1 e 3 0 ]
+"28
+[v _SpeedRequiredToMoveInTime `(d  1 e 3 0 ]
+"49
+[v _GetCurrentLinearPosition `(d  1 e 3 0 ]
+"60
+[v _GetCurrentAngle `(d  1 e 3 0 ]
+"78
+[v _MoveToLinear `(uc  1 e 1 0 ]
+"84
+[v _MoveToAngle `(uc  1 e 1 0 ]
+"121
+[v _Move `(uc  1 e 1 0 ]
+"125
+[v _MoveAdvanced `(uc  1 e 1 0 ]
+"10 Z:\CineFlux\Dropbox\Orbit\OrbitProgram.c
+[v _CreateOrbitProgram `(c  1 e 1 0 ]
+"174
+[v _RunOrbitProgram `(c  1 e 1 0 ]
+"7 Z:\CineFlux\Dropbox\Orbit\RealtimeMode.c
+[v _RealtimeMode `(v  1 e 0 0 ]
+"9 Z:\CineFlux\Dropbox\Orbit\Settings.c
+[v _FactoryDefault `(v  1 e 0 0 ]
+"40
+[v _SaveSettings `(v  1 e 0 0 ]
+"47
+[v _LoadSettings `(v  1 e 0 0 ]
+"60
+[v _EEprom_write `(v  1 e 0 0 ]
+"69
+[v _EEprom_read `(v  1 e 0 0 ]
+"78
+[v _GetPresetType `(uc  1 e 1 0 ]
+"86
+[v _SavePreset `(v  1 e 0 0 ]
+"92
+[v _LoadPreset `(v  1 e 0 0 ]
+"5 Z:\CineFlux\Dropbox\Orbit\Timings.c
+[v _Wait_seconds_nonblocking `(v  1 e 0 0 ]
+"10
+[v _Wait_seconds `(v  1 e 0 0 ]
+"15
+[v _Wait_ms_nonblocking `(v  1 e 0 0 ]
+"30
+[v _Wait_ms `(v  1 e 0 0 ]
+"35
+[v _Wait_us `(v  1 e 0 0 ]
+"46
+[v _Wait_ticks `(v  1 e 0 0 ]
+"58
+[v _Now `(d  1 e 3 0 ]
+"9 Z:\CineFlux\Dropbox\Orbit\UserInterface.c
+[v _ShowVoltage `(v  1 e 0 0 ]
+"23
+[v _GetClick `(c  1 e 1 0 ]
+"34
+[v _GetInput `(c  1 e 1 0 ]
+"48
+[v _GetInput_nonblocking `(c  1 e 1 0 ]
+"60
+[v _GetYesNo `(c  1 e 1 0 ]
+"94
+[v _GetFloat `(c  1 e 1 0 ]
+"150
+[v _GetRotaryMultiplier `(uc  1 e 1 0 ]
+"178
+[v _DisplayMenu `(c  1 e 1 0 ]
+"233
+[v _DisplayChoices `(c  1 e 1 0 ]
+"266
+[v _ConvertTimeToDiscrete `(v  1 e 0 0 ]
+"300
+[v _GetTime `(c  1 e 1 0 ]
+"426
+[v _ConvertTimeFromDiscrete `(d  1 e 3 0 ]
+"448
+[v _PrintTime `(v  1 e 0 0 ]
+"486
+[v _RoundTimeUp `(d  1 e 3 0 ]
+"506
+[v _RoundTimeDown `(d  1 e 3 0 ]
+"523
+[v _GetPresetNumber `(c  1 e 1 0 ]
+"9 Z:\CineFlux\Dropbox\Orbit\WaypointProgram.c
+[v _CreateWaypointProgram `(c  1 e 1 0 ]
+"202
+[v _RunWaypointProgram `(c  1 e 1 0 ]
+"2046 /Users/alanham/hitech/products/compilers/pic18/pro/9.80/dist/osx/include/pic18f67k22.h
+[v _EEDATA `Vuc  1 e 1 @3937 ]
+"2058
+[v _EEADR `Vuc  1 e 1 @3938 ]
+"2070
+[v _EEADRH `Vuc  1 e 1 @3939 ]
+"3092
+[v _EECON2 `Vuc  1 e 1 @3966 ]
+[s S2939 . 1 `uc 1 RD 1 0 :1:0 
+`uc 1 WR 1 0 :1:1 
+`uc 1 WREN 1 0 :1:2 
+`uc 1 WRERR 1 0 :1:3 
+`uc 1 FREE 1 0 :1:4 
+`uc 1 . 1 0 :1:5 
+`uc 1 CFGS 1 0 :1:6 
+`uc 1 EEPGD 1 0 :1:7 
+]
+"3124
+[s S2948 . 1 `uc 1 . 1 0 :6:0 
+`uc 1 EEFS 1 0 :1:6 
+]
+[u S2951 . 1 `S2939 1 . 1 0 `S2948 1 . 1 0 ]
+[v _EECON1bits `VS2951  1 e 1 @3967 ]
+"429 C:\Program Files (x86)\HI-TECH Software\PICC-18\9.80\include\pic18f67k22.h
+[v _ANCON2 `Vuc  1 e 1 @3875 ]
+"459
+[v _ANCON1 `Vuc  1 e 1 @3876 ]
+"489
+[v _ANCON0 `Vuc  1 e 1 @3877 ]
+[s S1185 . 1 `uc 1 ABDEN 1 0 :1:0 
+`uc 1 WUE 1 0 :1:1 
+`uc 1 . 1 0 :1:2 
+`uc 1 BRG16 1 0 :1:3 
+`uc 1 TXCKP 1 0 :1:4 
+`uc 1 RXDTP 1 0 :1:5 
+`uc 1 RCIDL 1 0 :1:6 
+`uc 1 ABDOVF 1 0 :1:7 
+]
+"2187
+[s S1194 . 1 `uc 1 . 1 0 :6:0 
+`uc 1 RCMT 1 0 :1:6 
+]
+[s S1197 . 1 `uc 1 ABDEN1 1 0 :1:0 
+]
+[s S1199 . 1 `uc 1 . 1 0 :7:0 
+`uc 1 ABDOVF1 1 0 :1:7 
+]
+[s S1202 . 1 `uc 1 . 1 0 :3:0 
+`uc 1 BRG161 1 0 :1:3 
+]
+[s S1205 . 1 `uc 1 . 1 0 :4:0 
+`uc 1 CKTXP 1 0 :1:4 
+]
+[s S1208 . 1 `uc 1 . 1 0 :5:0 
+`uc 1 DTRXP 1 0 :1:5 
+]
+[s S1211 . 1 `uc 1 . 1 0 :5:0 
+`uc 1 DTRXP1 1 0 :1:5 
+]
+[s S1214 . 1 `uc 1 . 1 0 :6:0 
+`uc 1 RCIDL1 1 0 :1:6 
+]
+[s S1217 . 1 `uc 1 . 1 0 :6:0 
+`uc 1 RCMT1 1 0 :1:6 
+]
+[s S1220 . 1 `uc 1 . 1 0 :5:0 
+`uc 1 RXDTP1 1 0 :1:5 
+]
+[s S1223 . 1 `uc 1 . 1 0 :4:0 
+`uc 1 SCKP 1 0 :1:4 
+]
+[s S1226 . 1 `uc 1 . 1 0 :4:0 
+`uc 1 SCKP1 1 0 :1:4 
+]
+[s S1229 . 1 `uc 1 . 1 0 :4:0 
+`uc 1 TXCKP1 1 0 :1:4 
+]
+[s S1232 . 1 `uc 1 . 1 0 :1:0 
+`uc 1 WUE1 1 0 :1:1 
+]
+[s S1235 . 1 `uc 1 . 1 0 :1:0 
+`uc 1 W4E 1 0 :1:1 
+]
+[s S1238 . 1 `uc 1 . 1 0 :5:0 
+`uc 1 RXCKP 1 0 :1:5 
+]
+[u S1241 . 1 `S1185 1 . 1 0 `S1194 1 . 1 0 `S1197 1 . 1 0 `S1199 1 . 1 0 `S1202 1 . 1 0 `S1205 1 . 1 0 `S1208 1 . 1 0 `S1211 1 . 1 0 `S1214 1 . 1 0 `S1217 1 . 1 0 `S1220 1 . 1 0 `S1223 1 . 1 0 `S1226 1 . 1 0 `S1229 1 . 1 0 `S1232 1 . 1 0 `S1235 1 . 1 0 `S1238 1 . 1 0 ]
+[v _BAUDCON1bits `VS1241  1 e 1 @3941 ]
+"3127
+[v _PORTA `Vuc  1 e 1 @3968 ]
+"3188
+[v _PORTB `Vuc  1 e 1 @3969 ]
+[s S1022 . 1 `uc 1 RB0 1 0 :1:0 
+`uc 1 RB1 1 0 :1:1 
+`uc 1 RB2 1 0 :1:2 
+`uc 1 RB3 1 0 :1:3 
+`uc 1 RB4 1 0 :1:4 
+`uc 1 RB5 1 0 :1:5 
+`uc 1 RB6 1 0 :1:6 
+`uc 1 RB7 1 0 :1:7 
+]
+"3241
+[s S1031 . 1 `uc 1 RB 1 0 :8:0 
+]
+[s S1033 . 1 `uc 1 INT0 1 0 :1:0 
+`uc 1 INT1 1 0 :1:1 
+`uc 1 INT2 1 0 :1:2 
+`uc 1 INT3 1 0 :1:3 
+`uc 1 KBI0 1 0 :1:4 
+`uc 1 KBI1 1 0 :1:5 
+`uc 1 KBI2 1 0 :1:6 
+`uc 1 KBI3 1 0 :1:7 
+]
+[s S1042 . 1 `uc 1 FLT0 1 0 :1:0 
+`uc 1 . 1 0 :1:1 
+`uc 1 CTED1 1 0 :1:2 
+`uc 1 CTED2 1 0 :1:3 
+`uc 1 . 1 0 :1:4 
+`uc 1 T3CKI 1 0 :1:5 
+]
+[s S1049 . 1 `uc 1 . 1 0 :3:0 
+`uc 1 CCP2_P2A 1 0 :1:3 
+`uc 1 . 1 0 :1:4 
+`uc 1 T1G 1 0 :1:5 
+]
+[s S1054 . 1 `uc 1 . 1 0 :5:0 
+`uc 1 PGM 1 0 :1:5 
+`uc 1 PGC 1 0 :1:6 
+`uc 1 PGD 1 0 :1:7 
+]
+[s S1059 . 1 `uc 1 . 1 0 :3:0 
+`uc 1 CCP2_PA2 1 0 :1:3 
+]
+[u S1062 . 1 `S1022 1 . 1 0 `S1031 1 . 1 0 `S1033 1 . 1 0 `S1042 1 . 1 0 `S1049 1 . 1 0 `S1054 1 . 1 0 `S1059 1 . 1 0 ]
+[v _PORTBbits `VS1062  1 e 1 @3969 ]
+"3632
+[v _LATA `Vuc  1 e 1 @3977 ]
+"3685
+[v _LATB `Vuc  1 e 1 @3978 ]
+[s S275 . 1 `uc 1 LATB0 1 0 :1:0 
+`uc 1 LATB1 1 0 :1:1 
+`uc 1 LATB2 1 0 :1:2 
+`uc 1 LATB3 1 0 :1:3 
+`uc 1 LATB4 1 0 :1:4 
+`uc 1 LATB5 1 0 :1:5 
+`uc 1 LATB6 1 0 :1:6 
+`uc 1 LATB7 1 0 :1:7 
+]
+"3735
+[s S284 . 1 `uc 1 LATB 1 0 :8:0 
+]
+[s S286 . 1 `uc 1 LB0 1 0 :1:0 
+]
+[s S288 . 1 `uc 1 . 1 0 :1:0 
+`uc 1 LB1 1 0 :1:1 
+]
+[s S291 . 1 `uc 1 . 1 0 :2:0 
+`uc 1 LB2 1 0 :1:2 
+]
+[s S294 . 1 `uc 1 . 1 0 :3:0 
+`uc 1 LB3 1 0 :1:3 
+]
+[s S297 . 1 `uc 1 . 1 0 :4:0 
+`uc 1 LB4 1 0 :1:4 
+]
+[s S300 . 1 `uc 1 . 1 0 :5:0 
+`uc 1 LB5 1 0 :1:5 
+]
+[s S303 . 1 `uc 1 . 1 0 :6:0 
+`uc 1 LB6 1 0 :1:6 
+]
+[s S306 . 1 `uc 1 . 1 0 :7:0 
+`uc 1 LB7 1 0 :1:7 
+]
+[u S309 . 1 `S275 1 . 1 0 `S284 1 . 1 0 `S286 1 . 1 0 `S288 1 . 1 0 `S291 1 . 1 0 `S294 1 . 1 0 `S297 1 . 1 0 `S300 1 . 1 0 `S303 1 . 1 0 `S306 1 . 1 0 ]
+[v _LATBbits `VS309  1 e 1 @3978 ]
+"3738
+[v _LATC `Vuc  1 e 1 @3979 ]
+"3788
+[v _LATCbits `VS309  1 e 1 @3979 ]
+"3791
+[v _LATD `Vuc  1 e 1 @3980 ]
+"3844
+[v _LATE `Vuc  1 e 1 @3981 ]
+"3894
+[v _LATEbits `VS309  1 e 1 @3981 ]
+"3897
+[v _LATF `Vuc  1 e 1 @3982 ]
+"3950
+[v _LATG `Vuc  1 e 1 @3983 ]
+"3988
+[v _TRISA `Vuc  1 e 1 @3986 ]
+"4010
+[v _TRISB `Vuc  1 e 1 @3987 ]
+"4032
+[v _TRISC `Vuc  1 e 1 @3988 ]
+[s S1157 . 1 `uc 1 TRISC0 1 0 :1:0 
+`uc 1 TRISC1 1 0 :1:1 
+`uc 1 TRISC2 1 0 :1:2 
+`uc 1 TRISC3 1 0 :1:3 
+`uc 1 TRISC4 1 0 :1:4 
+`uc 1 TRISC5 1 0 :1:5 
+`uc 1 TRISC6 1 0 :1:6 
+`uc 1 TRISC7 1 0 :1:7 
+]
+"4051
+[s S1166 . 1 `uc 1 TRISC 1 0 :8:0 
+]
+[u S1168 . 1 `S1157 1 . 1 0 `S1166 1 . 1 0 ]
+[v _TRISCbits `VS1168  1 e 1 @3988 ]
+"4054
+[v _TRISD `Vuc  1 e 1 @3989 ]
+"4076
+[v _TRISE `Vuc  1 e 1 @3990 ]
+"4098
+[v _TRISF `Vuc  1 e 1 @3991 ]
+"4120
+[v _TRISG `Vuc  1 e 1 @3992 ]
+[s S936 . 1 `uc 1 RX9D 1 0 :1:0 
+`uc 1 OERR 1 0 :1:1 
+`uc 1 FERR 1 0 :1:2 
+`uc 1 ADDEN 1 0 :1:3 
+`uc 1 CREN 1 0 :1:4 
+`uc 1 SREN 1 0 :1:5 
+`uc 1 RX9 1 0 :1:6 
+`uc 1 SPEN 1 0 :1:7 
+]
+"4591
+[s S945 . 1 `uc 1 RCD8 1 0 :1:0 
+`uc 1 . 1 0 :2:1 
+`uc 1 ADEN 1 0 :1:3 
+`uc 1 . 1 0 :2:4 
+`uc 1 RC9 1 0 :1:6 
+]
+[s S951 . 1 `uc 1 . 1 0 :6:0 
+`uc 1 NOT_RC8 1 0 :1:6 
+]
+[s S954 . 1 `uc 1 . 1 0 :6:0 
+`uc 1 nRC8 1 0 :1:6 
+]
+[s S957 . 1 `uc 1 . 1 0 :6:0 
+`uc 1 RC8_9 1 0 :1:6 
+]
+[s S960 . 1 `uc 1 RX9D1 1 0 :1:0 
+`uc 1 OERR1 1 0 :1:1 
+`uc 1 FERR1 1 0 :1:2 
+`uc 1 ADDEN1 1 0 :1:3 
+`uc 1 CREN1 1 0 :1:4 
+`uc 1 SREN1 1 0 :1:5 
+`uc 1 RX91 1 0 :1:6 
+`uc 1 SPEN1 1 0 :1:7 
+]
+[s S969 . 1 `uc 1 . 1 0 :5:0 
+`uc 1 SRENA 1 0 :1:5 
+]
+[u S972 . 1 `S936 1 . 1 0 `S945 1 . 1 0 `S951 1 . 1 0 `S954 1 . 1 0 `S957 1 . 1 0 `S960 1 . 1 0 `S969 1 . 1 0 ]
+[v _RCSTA1bits `VS972  1 e 1 @4011 ]
+[s S461 . 1 `uc 1 TX9D 1 0 :1:0 
+`uc 1 TRMT 1 0 :1:1 
+`uc 1 BRGH 1 0 :1:2 
+`uc 1 SENDB 1 0 :1:3 
+`uc 1 SYNC 1 0 :1:4 
+`uc 1 TXEN 1 0 :1:5 
+`uc 1 TX9 1 0 :1:6 
+`uc 1 CSRC 1 0 :1:7 
+]
+"4684
+[s S470 . 1 `uc 1 TXD8 1 0 :1:0 
+`uc 1 . 1 0 :5:1 
+`uc 1 TX8_9 1 0 :1:6 
+]
+[s S474 . 1 `uc 1 . 1 0 :6:0 
+`uc 1 NOT_TX8 1 0 :1:6 
+]
+[s S477 . 1 `uc 1 . 1 0 :6:0 
+`uc 1 nTX8 1 0 :1:6 
+]
+[s S480 . 1 `uc 1 TX9D1 1 0 :1:0 
+`uc 1 TRMT1 1 0 :1:1 
+`uc 1 BRGH1 1 0 :1:2 
+`uc 1 SENDB1 1 0 :1:3 
+`uc 1 SYNC1 1 0 :1:4 
+`uc 1 TXEN1 1 0 :1:5 
+`uc 1 TX91 1 0 :1:6 
+`uc 1 CSRC1 1 0 :1:7 
+]
+[u S489 . 1 `S461 1 . 1 0 `S470 1 . 1 0 `S474 1 . 1 0 `S477 1 . 1 0 `S480 1 . 1 0 ]
+[v _TXSTA1bits `VS489  1 e 1 @4012 ]
+"4728
+[v _TXREG `Vuc  1 e 1 @4013 ]
+"4751
+[v _RCREG `Vuc  1 e 1 @4014 ]
+"4769
+[v _SPBRG1 `Vuc  1 e 1 @4015 ]
+"5079
+[v _CCP1CON `Vuc  1 e 1 @4027 ]
+"5148
+[v _CCPR1L `Vuc  1 e 1 @4028 ]
+"5239
+[v _ADCON2 `Vuc  1 e 1 @4032 ]
+"5299
+[v _ADCON0 `Vuc  1 e 1 @4034 ]
+"5358
+[v _ADRESL `Vuc  1 e 1 @4035 ]
+"5370
+[v _ADRESH `Vuc  1 e 1 @4036 ]
+[s S1129 . 1 `uc 1 T2CKPS 1 0 :2:0 
+`uc 1 TMR2ON 1 0 :1:2 
+`uc 1 T2OUTPS 1 0 :4:3 
+]
+"6116
+[s S1133 . 1 `uc 1 T2CKPS0 1 0 :1:0 
+`uc 1 T2CKPS1 1 0 :1:1 
+`uc 1 . 1 0 :1:2 
+`uc 1 T2OUTPS0 1 0 :1:3 
+`uc 1 T2OUTPS1 1 0 :1:4 
+`uc 1 T2OUTPS2 1 0 :1:5 
+`uc 1 T2OUTPS3 1 0 :1:6 
+]
+[u S1141 . 1 `S1129 1 . 1 0 `S1133 1 . 1 0 ]
+[v _T2CONbits `VS1141  1 e 1 @4042 ]
+"6119
+[v _PR2 `Vuc  1 e 1 @4043 ]
+"6142
+[v _TMR2 `Vuc  1 e 1 @4044 ]
+"6202
+[v _TMR1L `Vuc  1 e 1 @4046 ]
+"6214
+[v _TMR1H `Vuc  1 e 1 @4047 ]
+"6332
+[v _OSCCON `Vuc  1 e 1 @4051 ]
+"6356
+[v _SPBRGH1 `Vuc  1 e 1 @4052 ]
+"6402
+[v _TMR0L `Vuc  1 e 1 @4054 ]
+"6414
+[v _TMR0H `Vuc  1 e 1 @4055 ]
+[s S1323 . 1 `uc 1 RBIF 1 0 :1:0 
+`uc 1 INT0IF 1 0 :1:1 
+`uc 1 TMR0IF 1 0 :1:2 
+`uc 1 RBIE 1 0 :1:3 
+`uc 1 INT0IE 1 0 :1:4 
+`uc 1 TMR0IE 1 0 :1:5 
+`uc 1 PEIE_GIEL 1 0 :1:6 
+`uc 1 GIE_GIEH 1 0 :1:7 
+]
+"6874
+[s S1332 . 1 `uc 1 . 1 0 :1:0 
+`uc 1 INT0F 1 0 :1:1 
+`uc 1 T0IF 1 0 :1:2 
+`uc 1 . 1 0 :1:3 
+`uc 1 INT0E 1 0 :1:4 
+`uc 1 T0IE 1 0 :1:5 
+`uc 1 PEIE 1 0 :1:6 
+`uc 1 GIE 1 0 :1:7 
+]
+[s S1341 . 1 `uc 1 . 1 0 :6:0 
+`uc 1 GIEL 1 0 :1:6 
+`uc 1 GIEH 1 0 :1:7 
+]
+[u S1358 . 1 `S1323 1 . 1 0 `S1332 1 . 1 0 `S1341 1 . 1 0 `S1332 1 . 1 0 `S1341 1 . 1 0 ]
+[v _INTCONbits `VS1358  1 e 1 @4082 ]
+"7209
+[v _ADON `Vb  1 e 0 @32272 ]
+"8021
+[v _GIEL `Vb  1 e 0 @32662 ]
+"8025
+[v _GO `Vb  1 e 0 @32273 ]
+"8135
+[v _IPEN `Vb  1 e 0 @32391 ]
+"8657
+[v _PEIE `Vb  1 e 0 @32662 ]
+"8671
+[v _PLLEN `Vb  1 e 0 @31966 ]
+"8675
+[v _PSA `Vb  1 e 0 @32427 ]
+"8765
+[v _RBPU `Vb  1 e 0 @32655 ]
+"8771
+[v _RC1IE `Vb  1 e 0 @31981 ]
+"8773
+[v _RC1IF `Vb  1 e 0 @31989 ]
+"9183
+[v _T08BIT `Vb  1 e 0 @32430 ]
+"9187
+[v _T0CS `Vb  1 e 0 @32429 ]
+"9387
+[v _TMR0IE `Vb  1 e 0 @32661 ]
+"9389
+[v _TMR0IF `Vb  1 e 0 @32658 ]
+"9391
+[v _TMR0IP `Vb  1 e 0 @32650 ]
+"9393
+[v _TMR0ON `Vb  1 e 0 @32431 ]
+"9427
+[v _TMR1IE `Vb  1 e 0 @31976 ]
+"9429
+[v _TMR1IF `Vb  1 e 0 @31984 ]
+"9431
+[v _TMR1IP `Vb  1 e 0 @31992 ]
+"9445
+[v _TMR2ON `Vb  1 e 0 @32338 ]
+"9671
+[v _TX1IE `Vb  1 e 0 @31980 ]
+"18 Z:\CineFlux\Dropbox\Orbit\LCD.h
+[v _LCD_Line1 `[20]uc  1 e 20 0 ]
+"19
+[v _LCD_Line2 `[20]uc  1 e 20 0 ]
+"20
+[v _LCD_Row `uc  1 e 1 0 ]
+"21
+[v _LCD_Col `uc  1 e 1 0 ]
+"44 Z:\CineFlux\Dropbox\Orbit\Main.h
+[v _enc_states `C[16]c  1 e 16 0 ]
+"49
+[v _ReadIdx `uc  1 e 1 0 ]
+"50
+[v _TX_Idx `Vuc  1 e 1 0 ]
+"51
+[v _TX_bCount `Vuc  1 e 1 0 ]
+"52
+[v _TXBuffer `V[255]uc  1 e 255 0 ]
+"53
+[v _RX_MsgComplete `Vb  1 e 0 0 ]
+"54
+[v _RX_InProgress `Vb  1 e 0 0 ]
+"55
+[v _RX_Idx `Vuc  1 e 1 0 ]
+"56
+[v _RXBuffer `V[255]uc  1 e 255 0 ]
+"57
+[v _MyID `Vuc  1 e 1 0 ]
+"58
+[v _isPendingExternalUIEvent `Vb  1 e 0 0 ]
+"59
+[v _PendingExternalUIEvent `Vuc  1 e 1 0 ]
+"60
+[v _ExtModeActive `Vb  1 e 0 0 ]
+"65
+[v _ClearUI_Event `Vb  1 e 0 0 ]
+"66
+[v _bLock_RotaryDetentIntervals `Vb  1 e 0 0 ]
+"67
+[v _RotaryDetentIntervals `[16]uc  1 e 16 0 ]
+"68
+[v _ZeroRotaryDetentIntervals `Vb  1 e 0 0 ]
+"69
+[v _bLock_UI_Event `Vb  1 e 0 0 ]
+"70
+[v _UI_Event `Vuc  1 e 1 0 ]
+"83
+[v _bLock_BatteryVoltage `Vb  1 e 0 0 ]
+"84
+[v _BatteryVoltage `ui  1 e 2 0 ]
+"85
+[v _bLowVoltageTrip `Vb  1 e 0 0 ]
+"88
+[v _LCD_BacklightEnabled `Vb  1 e 0 0 ]
+"91
+[v _bFollowMode `Vb  1 e 0 0 ]
+"92
+[v _bMove_InProgress `Vb  1 e 0 0 ]
+"93
+[v _Move_speedQ24 `ul  1 e 4 0 ]
+[u S21 LONG 4 `[4]uc 1 ub 4 0 `[4]c 1 b 4 0 `[2]ui 1 ui 4 0 `[2]i 1 i 4 0 `ul 1 ul 4 0 `l 1 l 4 0 ]
+"94
+[v _Move_shifted_position `S21  1 e 4 0 ]
+"95
+[v _Move_position `[2]S21  1 e 8 0 ]
+"96
+[v _Move_AccelValueQ24 `ul  1 e 4 0 ]
+"97
+[v _Move_CoastSpeedQ24 `ul  1 e 4 0 ]
+"98
+[v _Move_DecelPosition `ul  1 e 4 0 ]
+"99
+[v _Move_FinalPosition `l  1 e 4 0 ]
+"100
+[v _Move_Origin `l  1 e 4 0 ]
+"101
+[v _bMove_Neg `Vb  1 e 0 0 ]
+"105
+[v _bSpeedMode `Vb  1 e 0 0 ]
+"106
+[v _Speed_SetToThis `ul  1 e 4 0 ]
+"107
+[v _Speed_SetPending `Vb  1 e 0 0 ]
+"108
+[v _Speed_IsAccelerating `Vb  1 e 0 0 ]
+"112
+[v _bClear_MotorPosition `Vb  1 e 0 0 ]
+"113
+[v _Motor_Position `l  1 e 4 0 ]
+"114
+[v _bLock_Motor_Position `Vb  1 e 0 0 ]
+"117
+[v _bIncrement_PID_Setpoint `Vb  1 e 0 0 ]
+"118
+[v _bDecrement_PID_Setpoint `Vb  1 e 0 0 ]
+"119
+[v _bLock_PID_SetPoint `Vb  1 e 0 0 ]
+"121
+[v _bMotionError `Vb  1 e 0 0 ]
+"122
+[v _bPowerOff `Vb  1 e 0 0 ]
+"181
+[v _ASCII_HEX_TO_BINARY `C[128]uc  1 e 128 0 ]
+"188
+[v _BINARY_TO_ASCII_HEX `C[16]uc  1 e 16 0 ]
+[s S28 . 34 `uc 1 Version 1 0 `ui 1 BatteryLowVoltageLevel 2 1 `ui 1 Battery12V_Q8 2 3 `uc 1 PowerResponseLimiter_Slope 1 5 `uc 1 PowerResponseLimiter_Intercept 1 6 `d 1 Counts_per_Volt 3 7 `d 1 Volts_per_Count 3 10 `uc 1 BacklightPWM_Duty 1 13 `ui 1 BacklightIdleTimeout 2 14 `d 1 SystemAcceleration 3 16 `d 1 MaxSpeed 3 19 `i 1 PID_MaxError 2 22 `ui 1 PID_Kp 2 24 `ui 1 PID_Kd 2 26 `d 1 Counts_Per_Degree 3 28 `d 1 Degrees_Per_Count 3 31 ]
+"50 Z:\CineFlux\Dropbox\Orbit\Settings.h
+[v _Config `S28  1 e 34 0 ]
+[s S45 . 117 `uc 1 Type 1 0 `ui 1 Origin_deg 2 1 `uc 1 PointCount 1 3 `uc 1 Bounce 1 4 `ui 1 LoopCount 2 5 `[18]i 1 Distances_deg 36 7 `[18]ui 1 TravelTimes_sec 36 43 `[19]ui 1 DwellTimes_sec 38 79 ]
+"51
+[v _CurrentPath `S45  1 e 117 0 ]
+[s S54 . 18 `uc 1 Type 1 0 `ui 1 Origin_deg 2 1 `uc 1 EndMode 1 3 `uc 1 IsClockWise 1 4 `d 1 ProgramRunTime_sec 3 5 `d 1 CycleCount_rev 3 8 `d 1 CycleTime_sec 3 11 `d 1 Speed_deg_sec 3 14 `uc 1 SpeedMode 1 17 ]
+"52
+[v _CurrentOrbitProgram `S54  1 e 18 0 ]
+"10 Z:\CineFlux\Dropbox\Orbit\Timings.h
+[v _bWaiting `Vb  1 e 0 0 ]
+"11
+[v _WaitUntil_Tick500Hz `Vul  1 e 4 0 ]
+"12
+[v _bTick40Khz `Vb  1 e 0 0 ]
+"13
+[v _bLock_Tick500Hz `Vb  1 e 0 0 ]
+"14
+[v _Tick500Hz `Vul  1 e 4 0 ]
+"16 Z:\CineFlux\Dropbox\Orbit\Main.c
+[v _main `(v  1 e 0 0 ]
+{
+"40
+[v main@MSG2 `[20]uc  1 a 20 20 ]
+"39
+[v main@MSG1 `[20]uc  1 a 20 0 ]
+"65
+[v main@CommandMenu `[7]*.MCuc  1 a 14 54 ]
+"64
+[v main@COMMAND_6 `*.dCuc  1 a 2 52 ]
+"63
+[v main@COMMAND_5 `*.dCuc  1 a 2 50 ]
+"62
+[v main@COMMAND_4 `*.dCuc  1 a 2 48 ]
+"61
+[v main@COMMAND_2 `*.dCuc  1 a 2 46 ]
+"60
+[v main@COMMAND_3 `*.dCuc  1 a 2 44 ]
+"59
+[v main@COMMAND_1 `*.dCuc  1 a 2 42 ]
+"58
+[v main@COMMAND_0 `*.dCuc  1 a 2 40 ]
+"17
+[v main@ret `c  1 a 1 74 ]
+"41
+[v main@xx `uc  1 a 1 73 ]
+[v main@idx2 `uc  1 a 1 72 ]
+[v main@idx1 `uc  1 a 1 71 ]
+"29
+[v main@idx `uc  1 a 1 70 ]
+"19
+[v main@pnum `uc  1 a 1 69 ]
+"18
+[v main@lastMenu `c  1 a 1 68 ]
+"39
+[v main@F9838 `[20]uc  1 s 20 F9838 ]
+"40
+[v main@F9840 `[20]uc  1 s 20 F9840 ]
+"136
+} 0
+"8 Z:\CineFlux\Dropbox\Orbit\ExtMode.c
+[v _ExtMode `(uc  1 e 1 0 ]
+{
+"12
+[v ExtMode@PathTravelTimes `[100]ui  1 a 200 0 ]
+"11
+[v ExtMode@PathDistances `[100]i  1 a 200 0 ]
+"13
+[v ExtMode@PathDwellTimes `[100]ui  1 a 200 6 ]
+[u S64 . 4 `[4]uc 1 ub 4 0 `[4]c 1 b 4 0 `[2]ui 1 ui 4 0 `[2]i 1 i 4 0 `ul 1 ul 4 0 `l 1 l 4 0 `f 1 fl 3 0 `d 1 dbl 3 0 ]
+"21
+[v ExtMode@mTemp `S64  1 a 4 206 ]
+"25
+[v ExtMode@D `d  1 a 3 200 ]
+[v ExtMode@T `d  1 a 3 219 ]
+[v ExtMode@S `d  1 a 3 216 ]
+"24
+[v ExtMode@PrepMove_Acceleration `d  1 a 3 212 ]
+[v ExtMode@PrepMove_Speed `d  1 a 3 209 ]
+[v ExtMode@PrepMove_Distance `d  1 a 3 206 ]
+"17
+[v ExtMode@CmdID `uc  1 a 1 205 ]
+"20
+[v ExtMode@State `uc  1 a 1 204 ]
+"9
+[v ExtMode@PathIdx `uc  1 a 1 203 ]
+"10
+[v ExtMode@PathCount `uc  1 a 1 223 ]
+"23
+[v ExtMode@PrepMove_Ready `uc  1 a 1 222 ]
+"19
+[v ExtMode@idx `uc  1 a 1 215 ]
+"16
+[v ExtMode@ret `c  1 a 1 136 ]
+"225
+} 0
+"104 Z:\CineFlux\Dropbox\Orbit\LCD.c
+[v _LCD_PowerUp `(v  1 e 0 0 ]
+{
+"133
+} 0
+"212
+[v _LCD_FunctionSet `(v  1 e 0 0 ]
+{
+[v LCD_FunctionSet@EightBit `uc  1 a 1 wreg ]
+"214
+[v LCD_FunctionSet@dat `uc  1 a 1 24 ]
+"212
+[v LCD_FunctionSet@EightBit `uc  1 a 1 wreg ]
+[v LCD_FunctionSet@DualLine `uc  1 p 1 21 ]
+[v LCD_FunctionSet@FiveByTenDots `uc  1 p 1 22 ]
+"226
+} 0
+"637 Z:\CineFlux\Dropbox\Orbit\Main.c
+[v _SetupIO `(v  1 e 0 0 ]
+{
+"733
+} 0
+"9 Z:\CineFlux\Dropbox\Orbit\Settings.c
+[v _FactoryDefault `(v  1 e 0 0 ]
+{
+[u S1431 . 120 `[120]uc 1 ub 120 0 `S45 1 WayPoint 117 0 `S54 1 Orbit 18 0 ]
+"31
+[v FactoryDefault@Empty `S1431  1 a 120 0 ]
+"38
+} 0
+"540 Z:\CineFlux\Dropbox\Orbit\Main.c
+[v _SetupHardware `(v  1 e 0 0 ]
+{
+"635
+} 0
+"178 Z:\CineFlux\Dropbox\Orbit\UserInterface.c
+[v _DisplayMenu `(c  1 e 1 0 ]
+{
+"180
+[v DisplayMenu@SelectedItem `c  1 a 1 56 ]
+"179
+[v DisplayMenu@SecondLine `uc  1 a 1 55 ]
+"181
+[v DisplayMenu@ret `c  1 a 1 54 ]
+"178
+[v DisplayMenu@Menu `*.b*.dCuc  1 p 2 47 ]
+[v DisplayMenu@ItemCount `uc  1 p 1 49 ]
+[v DisplayMenu@Initial `uc  1 p 1 50 ]
+"231
+} 0
+"10 Z:\CineFlux\Dropbox\Orbit\OrbitProgram.c
+[v _CreateOrbitProgram `(c  1 e 1 0 ]
+{
+"23
+[v CreateOrbitProgram@SpeedModeMenu `[3]*.MCuc  1 a 6 184 ]
+"31
+[v CreateOrbitProgram@EndModeMenu `[3]*.MCuc  1 a 6 170 ]
+"38
+[v CreateOrbitProgram@CommandMenu `[2]*.MCuc  1 a 4 180 ]
+"16
+[v CreateOrbitProgram@DirectionMenu `[2]*.MCuc  1 a 4 176 ]
+"37
+[v CreateOrbitProgram@COMMAND_1 `*.dCuc  1 a 2 168 ]
+"36
+[v CreateOrbitProgram@COMMAND_0 `*.dCuc  1 a 2 166 ]
+"30
+[v CreateOrbitProgram@ENDMODE_2 `*.dCuc  1 a 2 164 ]
+"29
+[v CreateOrbitProgram@ENDMODE_1 `*.dCuc  1 a 2 162 ]
+"28
+[v CreateOrbitProgram@ENDMODE_0 `*.dCuc  1 a 2 160 ]
+"22
+[v CreateOrbitProgram@SpeedMODE_2 `*.dCuc  1 a 2 158 ]
+"21
+[v CreateOrbitProgram@SpeedMODE_1 `*.dCuc  1 a 2 156 ]
+"20
+[v CreateOrbitProgram@SpeedMODE_0 `*.dCuc  1 a 2 154 ]
+"15
+[v CreateOrbitProgram@DIRECTION_0 `*.dCuc  1 a 2 152 ]
+"14
+[v CreateOrbitProgram@DIRECTION_1 `*.dCuc  1 a 2 150 ]
+"12
+[v CreateOrbitProgram@ret `c  1 a 1 190 ]
+"172
+} 0
+"7 Z:\CineFlux\Dropbox\Orbit\RealtimeMode.c
+[v _RealtimeMode `(v  1 e 0 0 ]
+{
+"8
+[v RealtimeMode@SetSpeed `d  1 a 3 107 ]
+"10
+[v RealtimeMode@ret `c  1 a 1 106 ]
+"134
+} 0
+"9 Z:\CineFlux\Dropbox\Orbit\WaypointProgram.c
+[v _CreateWaypointProgram `(c  1 e 1 0 ]
+{
+"33
+[v CreateWaypointProgram@CommandMenu `[2]*.MCuc  1 a 4 158 ]
+"27
+[v CreateWaypointProgram@DirectionMenu `[2]*.MCuc  1 a 4 154 ]
+"16
+[v CreateWaypointProgram@MinTravelTime `d  1 a 3 185 ]
+"18
+[v CreateWaypointProgram@DwellTime `d  1 a 3 182 ]
+"15
+[v CreateWaypointProgram@TravelTime `d  1 a 3 177 ]
+"19
+[v CreateWaypointProgram@CycleCount `d  1 a 3 174 ]
+"13
+[v CreateWaypointProgram@DeltaDistance `d  1 a 3 169 ]
+"12
+[v CreateWaypointProgram@CurrentPos `d  1 a 3 166 ]
+"11
+[v CreateWaypointProgram@LastPos `d  1 a 3 162 ]
+"17
+[v CreateWaypointProgram@intTravelTime `ui  1 a 2 180 ]
+"14
+[v CreateWaypointProgram@intDistance `i  1 a 2 172 ]
+"32
+[v CreateWaypointProgram@COMMAND_1 `*.dCuc  1 a 2 152 ]
+"31
+[v CreateWaypointProgram@COMMAND_0 `*.dCuc  1 a 2 150 ]
+"26
+[v CreateWaypointProgram@DIRECTION_1 `*.dCuc  1 a 2 148 ]
+"25
+[v CreateWaypointProgram@DIRECTION_0 `*.dCuc  1 a 2 146 ]
+"10
+[v CreateWaypointProgram@ret `c  1 a 1 189 ]
+"22
+[v CreateWaypointProgram@idx `c  1 a 1 188 ]
+"21
+[v CreateWaypointProgram@Done `uc  1 a 1 165 ]
+"200
+} 0
+"523 Z:\CineFlux\Dropbox\Orbit\UserInterface.c
+[v _GetPresetNumber `(c  1 e 1 0 ]
+{
+"525
+[v GetPresetNumber@pnum `uc  1 a 1 49 ]
+"526
+[v GetPresetNumber@ptype `c  1 a 1 48 ]
+"524
+[v GetPresetNumber@inp `c  1 a 1 47 ]
+"568
+} 0
+"202 Z:\CineFlux\Dropbox\Orbit\WaypointProgram.c
+[v _RunWaypointProgram `(c  1 e 1 0 ]
+{
+"205
+[v RunWaypointProgram@D `d  1 a 3 136 ]
+"207
+[v RunWaypointProgram@S `d  1 a 3 133 ]
+"206
+[v RunWaypointProgram@T `d  1 a 3 127 ]
+"210
+[v RunWaypointProgram@CycleIndex `ui  1 a 2 141 ]
+"209
+[v RunWaypointProgram@idx `c  1 a 1 144 ]
+"204
+[v RunWaypointProgram@ret `c  1 a 1 143 ]
+"208
+[v RunWaypointProgram@PingPong `uc  1 a 1 140 ]
+"203
+[v RunWaypointProgram@EarlyExit `uc  1 a 1 139 ]
+"400
+} 0
+"5 Z:\CineFlux\Dropbox\Orbit\Timings.c
+[v _Wait_seconds_nonblocking `(v  1 e 0 0 ]
+{
+"6
+[v Wait_seconds_nonblocking@msWait `ui  1 a 2 19 ]
+"5
+[v Wait_seconds_nonblocking@time `ui  1 p 2 17 ]
+"8
+} 0
+"28 Z:\CineFlux\Dropbox\Orbit\MotionEngine.c
+[v _SpeedRequiredToMoveInTime `(d  1 e 3 0 ]
+{
+"30
+[v SpeedRequiredToMoveInTime@T `d  1 a 3 105 ]
+"29
+[v SpeedRequiredToMoveInTime@D `d  1 a 3 102 ]
+"44
+[v SpeedRequiredToMoveInTime@Speed `d  1 a 3 99 ]
+"40
+[v SpeedRequiredToMoveInTime@RootPrime `d  1 a 3 96 ]
+"43
+[v SpeedRequiredToMoveInTime@AccelTime `d  1 a 3 90 ]
+"28
+[v SpeedRequiredToMoveInTime@_Distance `d  1 p 3 84 ]
+[v SpeedRequiredToMoveInTime@_Time `d  1 p 3 87 ]
+"47
+} 0
+"174 Z:\CineFlux\Dropbox\Orbit\OrbitProgram.c
+[v _RunOrbitProgram `(c  1 e 1 0 ]
+{
+"180
+[v RunOrbitProgram@DistanceRemaining `d  1 a 3 144 ]
+"178
+[v RunOrbitProgram@CurrentPos `d  1 a 3 141 ]
+"195
+[v RunOrbitProgram@Distance `d  1 a 3 138 ]
+"217
+[v RunOrbitProgram@SpdConvert `d  1 a 3 133 ]
+"179
+[v RunOrbitProgram@TimeRemaining `d  1 a 3 130 ]
+"177
+[v RunOrbitProgram@EndPos `d  1 a 3 127 ]
+"176
+[v RunOrbitProgram@ret `uc  1 a 1 137 ]
+"175
+[v RunOrbitProgram@EarlyExit `uc  1 a 1 136 ]
+"261
+} 0
+"30 Z:\CineFlux\Dropbox\Orbit\Timings.c
+[v _Wait_ms `(v  1 e 0 0 ]
+{
+[v Wait_ms@time `ui  1 p 2 46 ]
+"33
+} 0
+"78 Z:\CineFlux\Dropbox\Orbit\Settings.c
+[v _GetPresetType `(uc  1 e 1 0 ]
+{
+[v GetPresetType@pnum `uc  1 a 1 wreg ]
+"80
+[v GetPresetType@addr `ui  1 a 2 19 ]
+"79
+[v GetPresetType@ret `uc  1 a 1 21 ]
+"78
+[v GetPresetType@pnum `uc  1 a 1 wreg ]
+"84
+} 0
+"9 Z:\CineFlux\Dropbox\Orbit\UserInterface.c
+[v _ShowVoltage `(v  1 e 0 0 ]
+{
+"10
+[v ShowVoltage@Batt `d  1 a 3 103 ]
+"21
+} 0
+"23
+[v _GetClick `(c  1 e 1 0 ]
+{
+"24
+[v GetClick@ret `c  1 a 1 47 ]
+"32
+} 0
+"913 Z:\CineFlux\Dropbox\Orbit\Main.c
+[v _GoToSleep `(v  1 e 0 0 ]
+{
+"923
+[v GoToSleep@Expires `d  1 a 3 56 ]
+"924
+[v GoToSleep@Time `d  1 a 3 49 ]
+"915
+[v GoToSleep@bin `i  1 a 2 52 ]
+"916
+[v GoToSleep@idx `uc  1 a 1 55 ]
+"914
+[v GoToSleep@inp `uc  1 a 1 54 ]
+"966
+} 0
+"48 Z:\CineFlux\Dropbox\Orbit\UserInterface.c
+[v _GetInput_nonblocking `(c  1 e 1 0 ]
+{
+"49
+[v GetInput_nonblocking@ret `c  1 a 1 11 ]
+"58
+} 0
+"58 Z:\CineFlux\Dropbox\Orbit\Timings.c
+[v _Now `(d  1 e 3 0 ]
+{
+"59
+[v Now@ret `d  1 a 3 43 ]
+"64
+} 0
+"6 Z:\CineFlux\Dropbox\Orbit\MotionEngine.c
+[v _MinTimeToMove `(d  1 e 3 0 ]
+{
+"14
+[v MinTimeToMove@AccelTime `d  1 a 3 114 ]
+"7
+[v MinTimeToMove@D `d  1 a 3 111 ]
+"23
+[v MinTimeToMove@TotalTime `d  1 a 3 108 ]
+"15
+[v MinTimeToMove@AccelDist `d  1 a 3 99 ]
+"22
+[v MinTimeToMove@CoastTime `d  1 a 3 96 ]
+"21
+[v MinTimeToMove@CoastDistance `d  1 a 3 93 ]
+"20
+[v MinTimeToMove@RealSpeed `d  1 a 3 90 ]
+"8
+[v MinTimeToMove@HalfD `d  1 a 3 87 ]
+"6
+[v MinTimeToMove@_Distance `d  1 p 3 84 ]
+"26
+} 0
+"14 C:\Program Files (x86)\HI-TECH Software\PICC-18\9.80\sources\sqrt.c
+[v _sqrt `(d  1 e 3 0 ]
+{
+"15
+[v sqrt@x `d  1 a 3 81 ]
+[v sqrt@q `d  1 a 3 78 ]
+[v sqrt@z `d  1 a 3 74 ]
+"16
+[v sqrt@i `uc  1 a 1 77 ]
+"14
+[v sqrt@y `d  1 p 3 68 ]
+"44
+} 0
+"49 Z:\CineFlux\Dropbox\Orbit\MotionEngine.c
+[v _GetCurrentLinearPosition `(d  1 e 3 0 ]
+{
+"50
+[v GetCurrentLinearPosition@MotorPos `d  1 a 3 48 ]
+"58
+} 0
+"84
+[v _MoveToAngle `(uc  1 e 1 0 ]
+{
+"85
+[v MoveToAngle@DestinationAngle `d  1 a 3 30 ]
+"101
+[v MoveToAngle@CurrentAngle `d  1 a 3 27 ]
+"105
+[v MoveToAngle@CCW_Distance `d  1 a 3 21 ]
+"104
+[v MoveToAngle@CW_Distance `d  1 a 3 18 ]
+"86
+[v MoveToAngle@Speed_Deg_Sec `d  1 a 3 15 ]
+"84
+[v MoveToAngle@_DestinationAngle `d  1 p 3 6 ]
+[v MoveToAngle@_Speed_Deg_Sec `d  1 p 3 9 ]
+"119
+} 0
+"121
+[v _Move `(uc  1 e 1 0 ]
+{
+[v Move@Distance_deg `d  1 p 3 0 ]
+[v Move@_Speed_Deg_Sec `d  1 p 3 3 ]
+"123
+} 0
+"125
+[v _MoveAdvanced `(uc  1 e 1 0 ]
+{
+"138
+[v MoveAdvanced@Distance_counts `l  1 a 4 114 ]
+"128
+[v MoveAdvanced@CurrentPosition_counts `l  1 a 4 110 ]
+"148
+[v MoveAdvanced@DD `d  1 a 3 130 ]
+"130
+[v MoveAdvanced@Accel_Deg_Sec_Sec `d  1 a 3 127 ]
+"158
+[v MoveAdvanced@AccelDist `d  1 a 3 124 ]
+"129
+[v MoveAdvanced@Speed_Deg_Sec `d  1 a 3 121 ]
+"157
+[v MoveAdvanced@AccelTime `d  1 a 3 118 ]
+"170
+[v MoveAdvanced@CS `d  1 a 3 104 ]
+"167
+[v MoveAdvanced@AV `d  1 a 3 101 ]
+"164
+[v MoveAdvanced@DP `d  1 a 3 98 ]
+"125
+[v MoveAdvanced@Distance_deg `d  1 p 3 89 ]
+[v MoveAdvanced@_Speed_Deg_Sec `d  1 p 3 92 ]
+[v MoveAdvanced@_Acceleration_Deg_Sec_Sec `d  1 p 3 95 ]
+"180
+} 0
+"60
+[v _GetCurrentAngle `(d  1 e 3 0 ]
+{
+"61
+[v GetCurrentAngle@MotorPos `d  1 a 3 71 ]
+"76
+} 0
+"233 Z:\CineFlux\Dropbox\Orbit\UserInterface.c
+[v _DisplayChoices `(c  1 e 1 0 ]
+{
+"234
+[v DisplayChoices@SelectedItem `uc  1 a 1 54 ]
+"235
+[v DisplayChoices@ret `c  1 a 1 53 ]
+"233
+[v DisplayChoices@Menu `*.b*.dCuc  1 p 2 47 ]
+[v DisplayChoices@ItemCount `uc  1 p 1 49 ]
+[v DisplayChoices@Prompt `*.dCuc  1 p 2 50 ]
+[v DisplayChoices@Initial `uc  1 p 1 52 ]
+"264
+} 0
+"94
+[v _GetFloat `(c  1 e 1 0 ]
+{
+"95
+[v GetFloat@Output `d  1 a 3 120 ]
+"97
+[v GetFloat@FractionalPlaces `uc  1 a 1 119 ]
+"96
+[v GetFloat@WholePlaces `uc  1 a 1 118 ]
+"94
+[v GetFloat@prompt `*.dCuc  1 p 2 103 ]
+[v GetFloat@unit `*.dCuc  1 p 2 105 ]
+[v GetFloat@Value `*.bd  1 p 2 107 ]
+[v GetFloat@Min `d  1 p 3 109 ]
+[v GetFloat@Max `d  1 p 3 112 ]
+[v GetFloat@Precision `d  1 p 3 115 ]
+"148
+} 0
+"6 Z:\CineFlux\Dropbox\Orbit\LCD.c
+[v _LCD_PrintFloat `(v  1 e 0 0 ]
+{
+"8
+[v LCD_PrintFloat@fraction `l  1 a 4 99 ]
+"7
+[v LCD_PrintFloat@wholepart `l  1 a 4 95 ]
+"6
+[v LCD_PrintFloat@dat `d  1 p 3 89 ]
+[v LCD_PrintFloat@whole `uc  1 p 1 92 ]
+[v LCD_PrintFloat@fract `uc  1 p 1 93 ]
+[v LCD_PrintFloat@sign `uc  1 p 1 94 ]
+"42
+} 0
+"300 Z:\CineFlux\Dropbox\Orbit\UserInterface.c
+[v _GetTime `(c  1 e 1 0 ]
+{
+"303
+[v GetTime@Tm `d  1 a 3 135 ]
+"302
+[v GetTime@Milliseconds `i  1 a 2 130 ]
+"301
+[v GetTime@Hours `uc  1 a 1 134 ]
+[v GetTime@Minutes `uc  1 a 1 133 ]
+[v GetTime@Seconds `uc  1 a 1 132 ]
+"300
+[v GetTime@prompt `*.dCuc  1 p 2 119 ]
+[v GetTime@Time `*.bd  1 p 2 121 ]
+[v GetTime@Min `d  1 p 3 123 ]
+[v GetTime@Max `d  1 p 3 126 ]
+[v GetTime@Precision `uc  1 p 1 129 ]
+"424
+} 0
+"448
+[v _PrintTime `(v  1 e 0 0 ]
+{
+"450
+[v PrintTime@Milliseconds `i  1 a 2 117 ]
+"449
+[v PrintTime@Seconds `uc  1 a 1 116 ]
+[v PrintTime@Minutes `uc  1 a 1 115 ]
+[v PrintTime@Hours `uc  1 a 1 114 ]
+"448
+[v PrintTime@dat `d  1 p 3 109 ]
+[v PrintTime@precision `uc  1 p 1 112 ]
+[v PrintTime@EditChevron `uc  1 p 1 113 ]
+"484
+} 0
+"44 Z:\CineFlux\Dropbox\Orbit\LCD.c
+[v _LCD_PrintLong `(v  1 e 0 0 ]
+{
+"45
+[v LCD_PrintLong@temp `l  1 a 4 31 ]
+"44
+[v LCD_PrintLong@dat `l  1 p 4 25 ]
+[v LCD_PrintLong@places `uc  1 p 1 29 ]
+[v LCD_PrintLong@sign `uc  1 p 1 30 ]
+"102
+} 0
+"150 Z:\CineFlux\Dropbox\Orbit\UserInterface.c
+[v _GetRotaryMultiplier `(uc  1 e 1 0 ]
+{
+"152
+[v GetRotaryMultiplier@uiAccum `ui  1 a 2 11 ]
+"151
+[v GetRotaryMultiplier@idx `uc  1 a 1 13 ]
+"176
+} 0
+"15 Z:\CineFlux\Dropbox\Orbit\Timings.c
+[v _Wait_ms_nonblocking `(v  1 e 0 0 ]
+{
+[v Wait_ms_nonblocking@time `ui  1 p 2 11 ]
+"28
+} 0
+"60 Z:\CineFlux\Dropbox\Orbit\UserInterface.c
+[v _GetYesNo `(c  1 e 1 0 ]
+{
+"61
+[v GetYesNo@answer `c  1 a 1 51 ]
+"62
+[v GetYesNo@inp `uc  1 a 1 50 ]
+"60
+[v GetYesNo@prompt `*.dCuc  1 p 2 47 ]
+[v GetYesNo@Initial `c  1 p 1 49 ]
+"92
+} 0
+"135 Z:\CineFlux\Dropbox\Orbit\LCD.c
+[v _LCD_ClearDisplay `(v  1 e 0 0 ]
+{
+"136
+[v LCD_ClearDisplay@idx `uc  1 a 1 21 ]
+"151
+} 0
+"260
+[v _LCD_PrintString `(v  1 e 0 0 ]
+{
+"261
+[v LCD_PrintString@a `uc  1 a 1 24 ]
+"260
+[v LCD_PrintString@dat `*.dCuc  1 p 2 22 ]
+"267
+} 0
+"245
+[v _LCD_PrintChar `(v  1 e 0 0 ]
+{
+[v LCD_PrintChar@dat `uc  1 a 1 wreg ]
+[v LCD_PrintChar@dat `uc  1 a 1 wreg ]
+"258
+} 0
+"181
+[v _LCD_DisplayOnOff `(v  1 e 0 0 ]
+{
+[v LCD_DisplayOnOff@DisplayOn `uc  1 a 1 wreg ]
+"183
+[v LCD_DisplayOnOff@dat `uc  1 a 1 24 ]
+"181
+[v LCD_DisplayOnOff@DisplayOn `uc  1 a 1 wreg ]
+[v LCD_DisplayOnOff@CursorOn `uc  1 p 1 21 ]
+[v LCD_DisplayOnOff@BlinkOn `uc  1 p 1 22 ]
+"195
+} 0
+"228
+[v _LCD_SetPosition `(v  1 e 0 0 ]
+{
+[v LCD_SetPosition@Row `uc  1 a 1 wreg ]
+"230
+[v LCD_SetPosition@dat `uc  1 a 1 22 ]
+"228
+[v LCD_SetPosition@Row `uc  1 a 1 wreg ]
+[v LCD_SetPosition@Col `uc  1 p 1 21 ]
+"243
+} 0
+"35 Z:\CineFlux\Dropbox\Orbit\Timings.c
+[v _Wait_us `(v  1 e 0 0 ]
+{
+"36
+[v Wait_us@tickcount `uc  1 a 1 20 ]
+"35
+[v Wait_us@time `ui  1 p 2 18 ]
+"42
+} 0
+"46
+[v _Wait_ticks `(v  1 e 0 0 ]
+{
+[v Wait_ticks@Ticks `uc  1 a 1 wreg ]
+"48
+[v Wait_ticks@remaining `uc  1 a 1 13 ]
+"46
+[v Wait_ticks@Ticks `uc  1 a 1 wreg ]
+"47
+[v Wait_ticks@LastFlop `b  1 s 0 LastFlop ]
+"54
+} 0
+"34 Z:\CineFlux\Dropbox\Orbit\UserInterface.c
+[v _GetInput `(c  1 e 1 0 ]
+{
+"35
+[v GetInput@ret `c  1 a 1 46 ]
+"46
+} 0
+"754 Z:\CineFlux\Dropbox\Orbit\Main.c
+[v _Idle `(v  1 e 0 0 ]
+{
+"775
+[v Idle@CmdID `uc  1 a 1 125 ]
+"758
+[v Idle@tempPset `S1431  1 a 120 1 ]
+"757
+[v Idle@temp `S64  1 a 4 121 ]
+"756
+[v Idle@idx `uc  1 a 1 126 ]
+"755
+[v Idle@PresetNumber `uc  1 a 1 0 ]
+"881
+} 0
+"906
+[v _MessageStream_ReadByte `(uc  1 e 1 0 ]
+{
+"907
+[v MessageStream_ReadByte@temp `uc  1 a 1 12 ]
+"911
+} 0
+"735
+[v _AckCmd `(v  1 e 0 0 ]
+{
+[v AckCmd@CmdID `uc  1 a 1 wreg ]
+[v AckCmd@CmdID `uc  1 a 1 wreg ]
+"742
+} 0
+"744
+[v _NackCmd `(v  1 e 0 0 ]
+{
+[v NackCmd@CmdID `uc  1 a 1 wreg ]
+[v NackCmd@CmdID `uc  1 a 1 wreg ]
+[v NackCmd@Reason `uc  1 p 1 13 ]
+"752
+} 0
+"92 Z:\CineFlux\Dropbox\Orbit\Settings.c
+[v _LoadPreset `(v  1 e 0 0 ]
+{
+[v LoadPreset@pnum `uc  1 a 1 wreg ]
+"93
+[v LoadPreset@addr `ui  1 a 2 21 ]
+"92
+[v LoadPreset@pnum `uc  1 a 1 wreg ]
+[v LoadPreset@dat `*.buc  1 p 2 18 ]
+"96
+} 0
+"883 Z:\CineFlux\Dropbox\Orbit\Main.c
+[v _MessageStream_WriteMULTI `(v  1 e 0 0 ]
+{
+"884
+[v MessageStream_WriteMULTI@bCount `uc  1 a 1 18 ]
+"883
+[v MessageStream_WriteMULTI@dat `S64  1 p 4 13 ]
+[v MessageStream_WriteMULTI@CmdID `uc  1 p 1 17 ]
+"896
+} 0
+"898
+[v _MessageStream_WriteByte `(v  1 e 0 0 ]
+{
+[v MessageStream_WriteByte@dat `uc  1 a 1 wreg ]
+"899
+[v MessageStream_WriteByte@temp `uc  1 a 1 12 ]
+"898
+[v MessageStream_WriteByte@dat `uc  1 a 1 wreg ]
+"904
+} 0
+"86 Z:\CineFlux\Dropbox\Orbit\Settings.c
+[v _SavePreset `(v  1 e 0 0 ]
+{
+[v SavePreset@pnum `uc  1 a 1 wreg ]
+"87
+[v SavePreset@addr `ui  1 a 2 22 ]
+"86
+[v SavePreset@pnum `uc  1 a 1 wreg ]
+[v SavePreset@dat `*.buc  1 p 2 19 ]
+"90
+} 0
+"60
+[v _EEprom_write `(v  1 e 0 0 ]
+{
+[v EEprom_write@addr `*.bui  1 p 2 14 ]
+[v EEprom_write@dat `*.buc  1 p 2 16 ]
+[v EEprom_write@bCount `uc  1 p 1 18 ]
+"67
+} 0
+"69
+[v _EEprom_read `(v  1 e 0 0 ]
+{
+[v EEprom_read@addr `*.bui  1 p 2 13 ]
+[v EEprom_read@dat `*.buc  1 p 2 15 ]
+[v EEprom_read@bCount `uc  1 p 1 17 ]
+"76
+} 0
+"13 plib/EEP/busy_eep.c
+[v _Busy_eep `(v  1 e 0 0 ]
+{
+"15
+} 0
+"46 plib/EEP/write_B.c
+[v _Write_b_eep `(v  1 e 0 0 ]
+{
+[v Write_b_eep@badd `ui  1 p 2 11 ]
+[v Write_b_eep@bdat `uc  1 p 1 13 ]
+"60
+} 0
+"36 plib/EEP/read_B.c
+[v _Read_b_eep `(uc  1 e 1 0 ]
+{
+[v Read_b_eep@badd `ui  1 p 2 11 ]
+"45
+} 0
+"266 Z:\CineFlux\Dropbox\Orbit\UserInterface.c
+[v _ConvertTimeToDiscrete `(v  1 e 0 0 ]
+{
+"267
+[v ConvertTimeToDiscrete@dat `d  1 a 3 106 ]
+"269
+[v ConvertTimeToDiscrete@holder `d  1 a 3 103 ]
+"268
+[v ConvertTimeToDiscrete@temp `d  1 a 3 100 ]
+"266
+[v ConvertTimeToDiscrete@Time `d  1 p 3 89 ]
+[v ConvertTimeToDiscrete@Hours `*.buc  1 p 2 92 ]
+[v ConvertTimeToDiscrete@Minutes `*.buc  1 p 2 94 ]
+[v ConvertTimeToDiscrete@Seconds `*.buc  1 p 2 96 ]
+[v ConvertTimeToDiscrete@Milliseconds `*.bi  1 p 2 98 ]
+"298
+} 0
+"426
+[v _ConvertTimeFromDiscrete `(d  1 e 3 0 ]
+{
+[v ConvertTimeFromDiscrete@Hours `uc  1 a 1 wreg ]
+"429
+[v ConvertTimeFromDiscrete@temp `l  1 a 4 53 ]
+"427
+[v ConvertTimeFromDiscrete@ret `d  1 a 3 57 ]
+"428
+[v ConvertTimeFromDiscrete@dTemp `d  1 a 3 50 ]
+"426
+[v ConvertTimeFromDiscrete@Hours `uc  1 a 1 wreg ]
+[v ConvertTimeFromDiscrete@Minutes `uc  1 p 1 45 ]
+[v ConvertTimeFromDiscrete@Seconds `uc  1 p 1 46 ]
+[v ConvertTimeFromDiscrete@Milliseconds `i  1 p 2 47 ]
+"446
+} 0
+"10 C:\Program Files (x86)\HI-TECH Software\PICC-18\9.80\sources\aldiv.c
+[v ___aldiv `(l  1 e 4 0 ]
+{
+"11
+[v ___aldiv@quotient `l  1 a 4 21 ]
+"12
+[v ___aldiv@sign `uc  1 a 1 20 ]
+[v ___aldiv@counter `uc  1 a 1 19 ]
+"10
+[v ___aldiv@dividend `l  1 p 4 11 ]
+[v ___aldiv@divisor `l  1 p 4 15 ]
+"42
+} 0
+"43 C:\Program Files (x86)\HI-TECH Software\PICC-18\9.80\sources\altoft.c
+[v ___altoft `(f  1 e 3 0 ]
+{
+"44
+[v ___altoft@sign `uc  1 a 1 28 ]
+[v ___altoft@exp `uc  1 a 1 27 ]
+"43
+[v ___altoft@c `l  1 p 4 19 ]
+"57
+} 0
+"10 C:\Program Files (x86)\HI-TECH Software\PICC-18\9.80\sources\awdiv.c
+[v ___awdiv `(i  1 e 2 0 ]
+{
+"11
+[v ___awdiv@quotient `i  1 a 2 17 ]
+"12
+[v ___awdiv@sign `uc  1 a 1 16 ]
+[v ___awdiv@counter `uc  1 a 1 15 ]
+"10
+[v ___awdiv@dividend `i  1 p 2 11 ]
+[v ___awdiv@divisor `i  1 p 2 13 ]
+"42
+} 0
+"33 C:\Program Files (x86)\HI-TECH Software\PICC-18\9.80\sources\awtoft.c
+[v ___awtoft `(f  1 e 3 0 ]
+{
+"34
+[v ___awtoft@sign `uc  1 a 1 22 ]
+"33
+[v ___awtoft@c `i  1 p 2 19 ]
+"42
+} 0
+"5 C:\Program Files (x86)\HI-TECH Software\PICC-18\9.80\sources\ftge.c
+[v ___ftge `(b  1 e 0 0 ]
+{
+[v ___ftge@ff1 `f  1 p 3 40 ]
+[v ___ftge@ff2 `f  1 p 3 43 ]
+"13
+} 0
+"16 C:\Program Files (x86)\HI-TECH Software\PICC-18\9.80\sources\ftneg.c
+[v ___ftneg `(f  1 e 3 0 ]
+{
+[v ___ftneg@f1 `f  1 p 3 11 ]
+"20
+} 0
+"45 C:\Program Files (x86)\HI-TECH Software\PICC-18\9.80\sources\fttol.c
+[v ___fttol `(l  1 e 4 0 ]
+{
+"47
+[v ___fttol@lval `ul  1 a 4 84 ]
+"46
+[v ___fttol@exp1 `uc  1 a 1 88 ]
+[v ___fttol@sign1 `uc  1 a 1 83 ]
+"45
+[v ___fttol@f1 `f  1 p 3 74 ]
+"73
+} 0
+"28 C:\Program Files (x86)\HI-TECH Software\PICC-18\9.80\sources\lbtoft.c
+[v ___lbtoft `(f  1 e 3 0 ]
+{
+[v ___lbtoft@c `uc  1 a 1 wreg ]
+[v ___lbtoft@c `uc  1 a 1 wreg ]
+"30
+} 0
+"36 C:\Program Files (x86)\HI-TECH Software\PICC-18\9.80\sources\lltoft.c
+[v ___lltoft `(f  1 e 3 0 ]
+{
+"37
+[v ___lltoft@exp `uc  1 a 1 27 ]
+"36
+[v ___lltoft@c `ul  1 p 4 19 ]
+"46
+} 0
+"3 C:\Program Files (x86)\HI-TECH Software\PICC-18\9.80\sources\lmul.c
+[v ___lmul `(ul  1 e 4 0 ]
+{
+"4
+[v ___lmul@product `ul  1 a 4 19 ]
+"3
+[v ___lmul@multiplier `ul  1 p 4 11 ]
+[v ___lmul@multiplicand `ul  1 p 4 15 ]
+"13
+} 0
+"10 C:\Program Files (x86)\HI-TECH Software\PICC-18\9.80\sources\lwdiv.c
+[v ___lwdiv `(ui  1 e 2 0 ]
+{
+"11
+[v ___lwdiv@quotient `ui  1 a 2 16 ]
+"12
+[v ___lwdiv@counter `uc  1 a 1 15 ]
+"10
+[v ___lwdiv@dividend `ui  1 p 2 11 ]
+[v ___lwdiv@divisor `ui  1 p 2 13 ]
+"31
+} 0
+"3 C:\Program Files (x86)\HI-TECH Software\PICC-18\9.80\sources\wmul.c
+[v ___wmul `(ui  1 e 2 0 ]
+{
+"4
+[v ___wmul@product `ui  1 a 2 15 ]
+"3
+[v ___wmul@multiplier `ui  1 p 2 11 ]
+[v ___wmul@multiplicand `ui  1 p 2 13 ]
+"13
+} 0
+"5 C:\Program Files (x86)\HI-TECH Software\PICC-18\9.80\sources\asftadd.c
+[v ___asftadd `(f  1 e 3 0 ]
+{
+[v ___asftadd@f1p `*.bf  1 p 2 40 ]
+[v ___asftadd@f2 `f  1 p 3 42 ]
+"7
+} 0
+"5 C:\Program Files (x86)\HI-TECH Software\PICC-18\9.80\sources\asftmul.c
+[v ___asftmul `(f  1 e 3 0 ]
+{
+[v ___asftmul@f1p `*.bf  1 p 2 40 ]
+[v ___asftmul@f2 `f  1 p 3 42 ]
+"7
+} 0
+"5 C:\Program Files (x86)\HI-TECH Software\PICC-18\9.80\sources\asftsub.c
+[v ___asftsub `(f  1 e 3 0 ]
+{
+[v ___asftsub@f1p `*.bf  1 p 2 63 ]
+[v ___asftsub@f2 `f  1 p 3 65 ]
+"7
+} 0
+"22 C:\Program Files (x86)\HI-TECH Software\PICC-18\9.80\sources\ftsub.c
+[v ___ftsub `(f  1 e 3 0 ]
+{
+[v ___ftsub@f1 `f  1 p 3 57 ]
+[v ___ftsub@f2 `f  1 p 3 60 ]
+"25
+} 0
+"87 C:\Program Files (x86)\HI-TECH Software\PICC-18\9.80\sources\ftadd.c
+[v ___ftadd `(f  1 e 3 0 ]
+{
+"88
+[v ___ftadd@exp1 `uc  1 a 1 32 ]
+[v ___ftadd@exp2 `uc  1 a 1 31 ]
+[v ___ftadd@sign `uc  1 a 1 30 ]
+"87
+[v ___ftadd@f1 `f  1 p 3 19 ]
+[v ___ftadd@f2 `f  1 p 3 22 ]
+"148
+} 0
+"63 C:\Program Files (x86)\HI-TECH Software\PICC-18\9.80\sources\float.c
+[v ___ftpack `(f  1 e 3 0 ]
+{
+[v ___ftpack@arg `um  1 p 3 11 ]
+[v ___ftpack@exp `uc  1 p 1 14 ]
+[v ___ftpack@sign `uc  1 p 1 15 ]
+"86
+} 0
+"50 C:\Program Files (x86)\HI-TECH Software\PICC-18\9.80\sources\ftdiv.c
+[v ___ftdiv `(f  1 e 3 0 ]
+{
+"52
+[v ___ftdiv@f3 `f  1 a 3 52 ]
+"51
+[v ___ftdiv@sign `uc  1 a 1 56 ]
+[v ___ftdiv@exp `uc  1 a 1 55 ]
+[v ___ftdiv@cntr `uc  1 a 1 51 ]
+"50
+[v ___ftdiv@f1 `f  1 p 3 40 ]
+[v ___ftdiv@f2 `f  1 p 3 43 ]
+"78
+} 0
+"52 C:\Program Files (x86)\HI-TECH Software\PICC-18\9.80\sources\ftmul.c
+[v ___ftmul `(f  1 e 3 0 ]
+{
+"54
+[v ___ftmul@f3_as_product `um  1 a 3 35 ]
+"53
+[v ___ftmul@sign `uc  1 a 1 39 ]
+[v ___ftmul@cntr `uc  1 a 1 38 ]
+[v ___ftmul@exp `uc  1 a 1 34 ]
+"52
+[v ___ftmul@f1 `f  1 p 3 23 ]
+[v ___ftmul@f2 `f  1 p 3 26 ]
+"84
+} 0
+"29 C:\Program Files (x86)\HI-TECH Software\PICC-18\9.80\sources\lwtoft.c
+[v ___lwtoft `(f  1 e 3 0 ]
+{
+[v ___lwtoft@c `ui  1 p 2 19 ]
+"31
+} 0
+"217 Z:\CineFlux\Dropbox\Orbit\Main.c
+[v _SlowTick `IL(v  1 e 0 0 ]
+{
+"240
+[v SlowTick@PID_Error `l  1 a 4 42 ]
+"241
+[v SlowTick@CurrentMotorPosition `l  1 a 4 36 ]
+"242
+[v SlowTick@PID_ResponseLimit `ul  1 a 4 30 ]
+"238
+[v SlowTick@ResponseOutput `i  1 a 2 46 ]
+"218
+[v SlowTick@uiTemp `ui  1 a 2 40 ]
+"237
+[v SlowTick@MotorSpeed `i  1 a 2 34 ]
+"456
+[v SlowTick@diff `i  1 a 2 27 ]
+"480
+[v SlowTick@BatteryScaleQ8 `ui  1 a 2 25 ]
+"239
+[v SlowTick@PID_Error_delta `i  1 a 2 23 ]
+"479
+[v SlowTick@ucBatt `uc  1 a 1 29 ]
+"219
+[v SlowTick@RotaryEncoder `uc  1 s 1 RotaryEncoder ]
+"220
+[v SlowTick@RawRotaryEncoder `c  1 s 1 RawRotaryEncoder ]
+"221
+[v SlowTick@RotaryTickInterval `uc  1 s 1 RotaryTickInterval ]
+"222
+[v SlowTick@RotaryDetentIntervalIndex `uc  1 s 1 RotaryDetentIntervalIndex ]
+"223
+[v SlowTick@SwitchPressDuration `ui  1 s 2 SwitchPressDuration ]
+"224
+[v SlowTick@internal_BatteryVoltage `ui  1 s 2 internal_BatteryVoltage ]
+"225
+[v SlowTick@LCD_IdleTimer `ui  1 s 2 LCD_IdleTimer ]
+"226
+[v SlowTick@internal_Tick500Hz `ul  1 s 4 internal_Tick500Hz ]
+"227
+[v SlowTick@internal_PID_SetPoint `l  1 s 4 internal_PID_SetPoint ]
+"228
+[v SlowTick@PID_LastError `i  1 s 2 PID_LastError ]
+"229
+[v SlowTick@LastMotorPosition `l  1 s 4 LastMotorPosition ]
+"231
+[v SlowTick@isPendingUIEvent `b  1 s 0 isPendingUIEvent ]
+"232
+[v SlowTick@PendingUIEvent `c  1 s 1 PendingUIEvent ]
+"234
+[v SlowTick@isPendingRotaryTick `b  1 s 0 isPendingRotaryTick ]
+"235
+[v SlowTick@PendingRotaryTick `ui  1 s 2 PendingRotaryTick ]
+"538
+} 0
+"10 C:\Program Files (x86)\HI-TECH Software\PICC-18\9.80\sources\lwdiv.c
+[v i1___lwdiv `(ui  1 e 2 0 ]
+{
+[v i1___lwdiv@quotient `ui  1 a 2 5 ]
+[v i1___lwdiv@counter `uc  1 a 1 4 ]
+[v i1___lwdiv@dividend `ui  1 p 2 0 ]
+[v i1___lwdiv@divisor `ui  1 p 2 2 ]
+"31
+} 0
+"3 C:\Program Files (x86)\HI-TECH Software\PICC-18\9.80\sources\wmul.c
+[v i1___wmul `(ui  1 e 2 0 ]
+{
+[v i1___wmul@product `ui  1 a 2 4 ]
+[v i1___wmul@multiplier `ui  1 p 2 0 ]
+[v i1___wmul@multiplicand `ui  1 p 2 2 ]
+"13
+} 0
+"138 Z:\CineFlux\Dropbox\Orbit\Main.c
+[v _FastTick `I(v  1 e 0 0 ]
+{
+"144
+[v FastTick@RXDat `uc  1 a 1 10 ]
+"139
+[v FastTick@LowTrigger `uc  1 s 1 LowTrigger ]
+"140
+[v FastTick@Motor_Encoder `uc  1 s 1 Motor_Encoder ]
+"141
+[v FastTick@interal_PID_MeasuredPoint `l  1 s 4 interal_PID_MeasuredPoint ]
+"142
+[v FastTick@TimmingError `ui  1 s 2 TimmingError ]
+"143
+[v FastTick@BacklightPWM_PR `uc  1 s 1 BacklightPWM_PR ]
+"215
+} 0

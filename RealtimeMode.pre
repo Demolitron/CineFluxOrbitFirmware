@@ -1,0 +1,358 @@
+
+# 1 "Z:\CineFlux\Dropbox\Orbit\RealtimeMode.c"
+
+# 7 "Z:\CineFlux\Dropbox\Orbit\main.h"
+typedef union LONG {
+unsigned char ub[4];
+signed char b[4];
+unsigned int ui[2];
+signed int i[2];
+unsigned long ul;
+signed long l;
+};
+
+typedef union {
+unsigned char ub[4];
+signed char b[4];
+unsigned int ui[2];
+signed int i[2];
+unsigned long ul;
+signed long l;
+float fl;
+double dbl;
+} MULTI;
+
+
+
+void main(void);
+void AckCmd(unsigned char CmdID);
+void NackCmd(unsigned char CmdID, unsigned char Reason);
+void MessageStream_WriteMULTI(MULTI dat, unsigned char CmdID);
+void MessageStream_WriteByte(unsigned char dat);
+unsigned char MessageStream_ReadByte();
+void GoToSleep();
+void SetupIO();
+void interrupt FastTick(void);
+void interrupt low_priority SlowTick();
+void SetupHardware();
+void Idle(void);
+double GetCurrentLinearPosition();
+double GetCurrentAngle();
+
+const signed char enc_states[] = {0, -1, 1, 0, 1, 0, 0, -1, -1, 0, 0, 1, 0, 1, -1, 0};
+
+
+
+
+unsigned char ReadIdx = 0;
+volatile unsigned char TX_Idx = 0;
+volatile unsigned char TX_bCount = 0;
+volatile unsigned char TXBuffer[255];
+volatile bit RX_MsgComplete;
+volatile bit RX_InProgress;
+volatile unsigned char RX_Idx = 0;
+volatile unsigned char RXBuffer[255];
+volatile unsigned char MyID = 0xAA;
+volatile bit isPendingExternalUIEvent;
+volatile char PendingExternalUIEvent;
+volatile bit ExtModeActive;
+
+
+
+
+volatile bit ClearUI_Event = 0;
+volatile bit bLock_RotaryDetentIntervals = 0;
+unsigned char RotaryDetentIntervals[16];
+volatile bit ZeroRotaryDetentIntervals = 0;
+volatile bit bLock_UI_Event = 0;
+volatile char UI_Event;
+
+# 83
+volatile bit bLock_BatteryVoltage = 0;
+unsigned int BatteryVoltage = 0;
+volatile bit bLowVoltageTrip = 0;
+
+
+volatile bit LCD_BacklightEnabled;
+
+
+volatile bit bFollowMode = 0;
+volatile bit bMove_InProgress = 0;
+unsigned long Move_speedQ24 = 0;
+union LONG Move_shifted_position;
+union LONG Move_position[2];
+unsigned long Move_AccelValueQ24 = 0;
+unsigned long Move_CoastSpeedQ24 = 0;
+unsigned long Move_DecelPosition = 0;
+signed long Move_FinalPosition = 0;
+signed long Move_Origin = 0;
+volatile bit bMove_Neg = 0;
+
+
+
+volatile bit bSpeedMode = 0;
+unsigned long Speed_SetToThis;
+volatile bit Speed_SetPending;
+volatile bit Speed_IsAccelerating;
+
+
+
+volatile bit bClear_MotorPosition = 0;
+signed long Motor_Position = 0;
+volatile bit bLock_Motor_Position = 0;
+
+
+volatile bit bIncrement_PID_Setpoint = 0;
+volatile bit bDecrement_PID_Setpoint = 0;
+volatile bit bLock_PID_SetPoint = 0;
+
+volatile bit bMotionError = 0;
+volatile bit bPowerOff = 0;
+
+# 181
+const unsigned char ASCII_HEX_TO_BINARY[128] ={0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 0, 0, 0, 0, 0, 0,
+0, 10, 11, 12, 13, 14, 15, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+0, 10, 11, 12, 13, 14, 15, 0, 0, 0, 0, 0, 0, 0, 0, 0};
+
+const unsigned char BINARY_TO_ASCII_HEX[16] = {'0', '1', '2', '3', '4', '5', '6', '7', '8', '9', 'A', 'B', 'C', 'D', 'E', 'F'};
+
+# 4 "Z:\CineFlux\Dropbox\Orbit\UserInterface.h"
+void ShowVoltage();
+signed char GetClick(void);
+signed char GetYesNo(const char *prompt, signed char Initial);
+signed char GetFloat(const char *prompt, const char *unit, double* Value, double Min, double Max, double Precision);
+signed char GetInput(void);
+signed char GetInput_nonblocking(void);
+signed char DisplayMenu(const char *Menu[], char ItemCount, char Initial);
+signed char DisplayChoices(const char *Menu[], char ItemCount, const char *Prompt, char Initial);
+signed char GetPresetNumber();
+
+signed char GetTime(const char *prompt, double *Time, double Min, double Max, char Precision);
+void PrintTime(double dat, unsigned char precision, unsigned char EditChevron);
+void ConvertTimeToDiscrete(double Time, char *Hours, char *Minutes, char *Seconds, int *Milliseconds);
+double ConvertTimeFromDiscrete(char Hours, char Minutes, char Seconds, int Milliseconds);
+double RoundTimeUp(double Time,unsigned char precision);
+double RoundTimeDown(double Time,unsigned char precision);
+
+unsigned char GetRotaryMultiplier();
+
+# 1 "Z:\CineFlux\Dropbox\Orbit\lcd.h"
+void LCD_PrintString(const unsigned char *dat);
+void LCD_PrintChar(char dat);
+void LCD_PrintLong(long dat, char places, char sign);
+void LCD_PrintFloat(double dat, char whole, char fract, char sign);
+
+void LCD_ClearDisplay(void);
+void LCD_PowerUp(void);
+
+void LCD_SetPosition(char Row, char Col);
+void LCD_FunctionSet(char EightBit, char DualLine, char FiveByTenDots);
+void LCD_CursorShift(char ShiftDisplay, char ShiftRight);
+void LCD_DisplayOnOff(char DisplayOn, char CursorOn, char BlinkOn);
+void LCD_EntryModeSet(char Increment, char ShiftOn);
+void LCD_ReturnHome(void);
+
+void putc(unsigned char dat);
+
+unsigned char LCD_Line1[20];
+unsigned char LCD_Line2[20];
+unsigned char LCD_Row=0;
+unsigned char LCD_Col=0;
+
+# 2 "Z:\CineFlux\Dropbox\Orbit\settings.h"
+typedef struct {
+unsigned char Version;
+unsigned int BatteryLowVoltageLevel;
+unsigned int Battery12V_Q8;
+unsigned char PowerResponseLimiter_Slope;
+unsigned char PowerResponseLimiter_Intercept;
+double Counts_per_Volt;
+double Volts_per_Count;
+unsigned char BacklightPWM_Duty;
+unsigned int BacklightIdleTimeout;
+double SystemAcceleration;
+double MaxSpeed;
+signed int PID_MaxError;
+unsigned int PID_Kp;
+unsigned int PID_Kd;
+double Counts_Per_Degree;
+double Degrees_Per_Count;
+} ConfigStruct;
+
+typedef struct {
+char Type;
+unsigned int Origin_deg;
+char EndMode;
+char IsClockWise;
+double ProgramRunTime_sec;
+double CycleCount_rev;
+double CycleTime_sec;
+double Speed_deg_sec;
+char SpeedMode;
+} OrbitProgramStruct;
+
+typedef struct {
+char Type;
+unsigned int Origin_deg;
+unsigned char PointCount;
+unsigned char Bounce;
+unsigned int LoopCount;
+signed int Distances_deg[18];
+unsigned int TravelTimes_sec[18];
+unsigned int DwellTimes_sec[19];
+} WaypointProgramStruct;
+
+typedef union {
+unsigned char ub[120];
+WaypointProgramStruct WayPoint;
+OrbitProgramStruct Orbit;
+} PRESET;
+
+ConfigStruct Config;
+WaypointProgramStruct CurrentPath;
+OrbitProgramStruct CurrentOrbitProgram;
+
+void FactoryDefault();
+void SaveSettings();
+void LoadSettings();
+void EEprom_write(unsigned int *addr, unsigned char *dat, unsigned char bCount);
+void EEprom_read(unsigned int *addr, unsigned char *dat, unsigned char bCount);
+unsigned char GetPresetType(char pnum);
+void SavePreset(char pnum, unsigned char *dat);
+void LoadPreset(char pnum, unsigned char *dat);
+
+# 1 "Z:\CineFlux\Dropbox\Orbit\RealtimeMode.h"
+void RealtimeMode();
+
+# 7 "Z:\CineFlux\Dropbox\Orbit\RealtimeMode.c"
+void RealtimeMode() {
+double SetSpeed = 0;
+
+signed char ret;
+
+bLock_Motor_Position = 1;
+Move_Origin = Motor_Position;
+bLock_Motor_Position = 0;
+
+
+Move_AccelValueQ24 = (unsigned long) (180 * Config.Counts_Per_Degree * 67.1088640);
+
+
+Move_shifted_position.ul = 0;
+Move_speedQ24 = 0;
+Move_position[0].ul = 0;
+Move_position[1].ul = 0;
+bFollowMode=0;
+bMove_InProgress=0;
+bSpeedMode = 1;
+bSpeedMode = 1;
+
+ret = GetInput_nonblocking();
+LCD_ClearDisplay();
+LCD_PrintString("REALTIME MODE\0");
+LCD_SetPosition(1, 0);
+LCD_PrintString("SPEED: XX.XX\xDF/Sec\0");
+
+while (1) {
+ret = GetInput_nonblocking();
+if (ret == 3) goto labelExit;
+if (ret == 2) goto labelExit;
+if (ret == 1) SetSpeed = 0;
+if (ret == 4) {
+SetSpeed += GetRotaryMultiplier() * 0.05;
+if (SetSpeed > 90) SetSpeed = 90;
+}
+if (ret == 5) {
+SetSpeed -= GetRotaryMultiplier() * 0.05;
+if (SetSpeed<-90) SetSpeed = -90;
+}
+
+LCD_SetPosition(1, 6);
+
+LCD_PrintFloat(SetSpeed, 2, 2, 1);
+
+
+if (bMove_Neg) {
+if (SetSpeed < 0) {
+Speed_SetToThis = (unsigned long) (-SetSpeed * Config.Counts_Per_Degree * 33554.4320);
+Speed_SetPending = 1;
+while (Speed_SetPending) Idle();
+} else if (SetSpeed > 0) {
+Speed_SetToThis = 1;
+Speed_SetPending = 1;
+while (Speed_SetPending) Idle();
+if (!Speed_IsAccelerating) {
+bSpeedMode = 0;
+bSpeedMode = 0;
+Move_shifted_position.ul = 0;
+Move_speedQ24 = 0;
+Move_position[0].ul = 0;
+Move_position[1].ul = 0;
+
+bMove_Neg = 0;
+bLock_Motor_Position = 1;
+Move_Origin = Motor_Position;
+bLock_Motor_Position = 0;
+bSpeedMode = 1;
+bSpeedMode = 1;
+}
+} else {
+Speed_SetToThis = 1;
+Speed_SetPending = 1;
+while (Speed_SetPending) Idle();
+}
+} else {
+if (SetSpeed > 0) {
+Speed_SetToThis = (unsigned long) (SetSpeed * Config.Counts_Per_Degree * 33554.4320);
+Speed_SetPending = 1;
+while (Speed_SetPending) Idle();
+} else if (SetSpeed < 0) {
+Speed_SetToThis = 1;
+Speed_SetPending = 1;
+while (Speed_SetPending) Idle();
+
+if (!Speed_IsAccelerating) {
+bSpeedMode = 0;
+bSpeedMode = 0;
+Move_shifted_position.ul = 0;
+Move_speedQ24 = 0;
+Move_position[0].ul = 0;
+Move_position[1].ul = 0;
+bMove_Neg = 1;
+bLock_Motor_Position = 1;
+Move_Origin = Motor_Position;
+bLock_Motor_Position = 0;
+bSpeedMode = 1;
+bSpeedMode = 1;
+}
+} else {
+Speed_SetToThis = 1;
+Speed_SetPending = 1;
+while (Speed_SetPending) Idle();
+}
+}
+
+Idle();
+
+}
+labelExit:
+
+LCD_ClearDisplay();
+LCD_PrintString("STOPPING...\0");
+while (1) {
+Speed_SetToThis = 1;
+Speed_SetPending = 1;
+while (Speed_SetPending) Idle();
+if (!Speed_IsAccelerating) {
+bSpeedMode = 0;
+bSpeedMode = 0;
+return;
+}
+Idle();
+}
+
+
+}

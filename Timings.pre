@@ -1,0 +1,198 @@
+
+# 1 "Z:\CineFlux\Dropbox\Orbit\Timings.c"
+
+# 7 "Z:\CineFlux\Dropbox\Orbit\main.h"
+typedef union LONG {
+unsigned char ub[4];
+signed char b[4];
+unsigned int ui[2];
+signed int i[2];
+unsigned long ul;
+signed long l;
+};
+
+typedef union {
+unsigned char ub[4];
+signed char b[4];
+unsigned int ui[2];
+signed int i[2];
+unsigned long ul;
+signed long l;
+float fl;
+double dbl;
+} MULTI;
+
+
+
+void main(void);
+void AckCmd(unsigned char CmdID);
+void NackCmd(unsigned char CmdID, unsigned char Reason);
+void MessageStream_WriteMULTI(MULTI dat, unsigned char CmdID);
+void MessageStream_WriteByte(unsigned char dat);
+unsigned char MessageStream_ReadByte();
+void GoToSleep();
+void SetupIO();
+void interrupt FastTick(void);
+void interrupt low_priority SlowTick();
+void SetupHardware();
+void Idle(void);
+double GetCurrentLinearPosition();
+double GetCurrentAngle();
+
+const signed char enc_states[] = {0, -1, 1, 0, 1, 0, 0, -1, -1, 0, 0, 1, 0, 1, -1, 0};
+
+
+
+
+unsigned char ReadIdx = 0;
+volatile unsigned char TX_Idx = 0;
+volatile unsigned char TX_bCount = 0;
+volatile unsigned char TXBuffer[255];
+volatile bit RX_MsgComplete;
+volatile bit RX_InProgress;
+volatile unsigned char RX_Idx = 0;
+volatile unsigned char RXBuffer[255];
+volatile unsigned char MyID = 0xAA;
+volatile bit isPendingExternalUIEvent;
+volatile char PendingExternalUIEvent;
+volatile bit ExtModeActive;
+
+
+
+
+volatile bit ClearUI_Event = 0;
+volatile bit bLock_RotaryDetentIntervals = 0;
+unsigned char RotaryDetentIntervals[16];
+volatile bit ZeroRotaryDetentIntervals = 0;
+volatile bit bLock_UI_Event = 0;
+volatile char UI_Event;
+
+# 83
+volatile bit bLock_BatteryVoltage = 0;
+unsigned int BatteryVoltage = 0;
+volatile bit bLowVoltageTrip = 0;
+
+
+volatile bit LCD_BacklightEnabled;
+
+
+volatile bit bFollowMode = 0;
+volatile bit bMove_InProgress = 0;
+unsigned long Move_speedQ24 = 0;
+union LONG Move_shifted_position;
+union LONG Move_position[2];
+unsigned long Move_AccelValueQ24 = 0;
+unsigned long Move_CoastSpeedQ24 = 0;
+unsigned long Move_DecelPosition = 0;
+signed long Move_FinalPosition = 0;
+signed long Move_Origin = 0;
+volatile bit bMove_Neg = 0;
+
+
+
+volatile bit bSpeedMode = 0;
+unsigned long Speed_SetToThis;
+volatile bit Speed_SetPending;
+volatile bit Speed_IsAccelerating;
+
+
+
+volatile bit bClear_MotorPosition = 0;
+signed long Motor_Position = 0;
+volatile bit bLock_Motor_Position = 0;
+
+
+volatile bit bIncrement_PID_Setpoint = 0;
+volatile bit bDecrement_PID_Setpoint = 0;
+volatile bit bLock_PID_SetPoint = 0;
+
+volatile bit bMotionError = 0;
+volatile bit bPowerOff = 0;
+
+# 181
+const unsigned char ASCII_HEX_TO_BINARY[128] ={0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 0, 0, 0, 0, 0, 0,
+0, 10, 11, 12, 13, 14, 15, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+0, 10, 11, 12, 13, 14, 15, 0, 0, 0, 0, 0, 0, 0, 0, 0};
+
+const unsigned char BINARY_TO_ASCII_HEX[16] = {'0', '1', '2', '3', '4', '5', '6', '7', '8', '9', 'A', 'B', 'C', 'D', 'E', 'F'};
+
+# 1 "Z:\CineFlux\Dropbox\Orbit\timings.h"
+void Wait_seconds(unsigned int time);
+void Wait_ms(unsigned int time);
+void Wait_seconds_nonblocking(unsigned int time);
+void Wait_ms_nonblocking(unsigned int time);
+void Wait_ticks(unsigned char time);
+void Wait_us(unsigned int time);
+double Now();
+
+
+volatile bit bWaiting=0;
+volatile unsigned long WaitUntil_Tick500Hz=0;
+volatile bit bTick40Khz=0;
+volatile bit bLock_Tick500Hz=0;
+volatile unsigned long Tick500Hz=0;
+
+# 5 "Z:\CineFlux\Dropbox\Orbit\Timings.c"
+void Wait_seconds_nonblocking(unsigned int time) {
+unsigned int msWait = time * 1000;
+Wait_ms_nonblocking(msWait);
+}
+
+void Wait_seconds(unsigned int time) {
+unsigned int msWait = time * 1000;
+Wait_ms(msWait);
+}
+
+void Wait_ms_nonblocking(unsigned int time) {
+time >>= 1;
+if (time == 0) time = 1;
+
+time++;
+
+bLock_Tick500Hz = 1;
+WaitUntil_Tick500Hz = Tick500Hz;
+bLock_Tick500Hz = 0;
+
+bWaiting = 0;
+WaitUntil_Tick500Hz += time;
+bWaiting = 1;
+}
+
+void Wait_ms(unsigned int time) {
+Wait_ms_nonblocking(time);
+while (bWaiting) Idle();
+}
+
+void Wait_us(unsigned int time) {
+unsigned char tickcount;
+if (time > 3180) time = 3180;
+time /= 25;
+if(time==0) time=1;
+tickcount=(unsigned char)time;
+Wait_ticks(tickcount);
+}
+
+
+
+void Wait_ticks(unsigned char Ticks) {
+static bit LastFlop = 0;
+unsigned char remaining=Ticks+1;
+while (remaining) {
+while (LastFlop==bTick40Khz);
+remaining--;
+LastFlop = !LastFlop;
+}
+}
+
+
+
+double Now() {
+double ret;
+bLock_Tick500Hz = 1;
+ret = Tick500Hz;
+bLock_Tick500Hz = 0;
+return (ret * 2);
+}

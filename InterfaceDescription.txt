@@ -1,0 +1,295 @@
+------------------------------------------------------------------------
+Serial Interface - 115200 8N1
+------------------------------------------------------------------------
+ASCII Data Format.
+All values sent as HEX - BigEndian Example (INT16=44829 would be sent as AF1D)
+
+Messages Conventions sending to the controller (@XXCC........#)
+	@ - Signals the Start of a message to the controller
+	XX - The NODE ID of the controller.  If this does not match the internal value the message is ignored.
+	CC - The Command.
+	.... - Any Data as defined by the command
+	# - Signals the message end.
+
+Message Conventions for Controller Responses:
+All Messages which match this NodeID will be either ACK or NACK
+	$CC.....# - ($)=ACK Message.  CC = Comand being ACK'd, (.....) = Any response Data, # = Message Complete
+	!CCYY# - (!)=NACK Message. CC = Command being NACK'd, YY = Reason Code defined by the command, # = Message Complete
+	
+-----------------------------------------------------------
+Preset Data Structures
+-----------------------------------------------------------
+typedef struct {
+    char Type;	// 1 = Orbit Program, 2=Waypoint Program
+    unsigned int Origin_deg;	//Origin of the Orbit Program in Degrees % 360
+    char EndMode;	// 0 = End based on Cycle Count, 1=End by Total Runtime, 2=Infinite Run (never ending)
+    char IsClockWise;	//1=ClockWise Rotation, 0 = Counter-ClockWise Rotation
+    double ProgramRunTime_sec;	//Total Runtime in Seconds if EndMode=1
+    double CycleCount_rev;	//Total revolution count if EndMode=0
+    double CycleTime_sec;	//Only used to Guide the UI if they have choosen to define the speed in terms of seconds per revolution.
+    double Speed_deg_sec;	//Rotation Speed. - The User can define this manually, by time per rotation, or by time for all revolutions.
+    char SpeedMode;		//Only used to Guide the UI
+} OrbitProgramStruct;
+
+typedef struct {
+    char Type; // 1 = Orbit Program, 2=Waypoint Program
+    unsigned int Origin_deg; //Origin of the Waypoint Program in Degrees % 360
+    unsigned char PointCount; //Number of WayPoints
+    unsigned char Bounce;	//When looping 0=Move back to the origin as fast of possible then repeat, 1=Reverse the waypoints to PING-PONG
+    unsigned int LoopCount;	//Number of Times to run through the waypoints. 0=Infinity Max=999
+    signed int Distances_deg[18];	//List of travel distances in whole degrees.
+    unsigned int TravelTimes_sec[18];	//List of travel times in whole seconds.
+    unsigned int DwellTimes_sec[19];	//Offset list of dwell times.  DwellTimes_sec[0]=Dwell time at the origin.
+} WaypointProgramStruct;
+
+typedef union {	//Just a union to make it easier when dealing with the presets as blobs of data... This is what is passed into EEPROM and over the serial interface.
+    unsigned char ub[120];
+    WaypointProgramStruct WayPoint;
+    OrbitProgramStruct Orbit;
+} PRESET;
+
+------------------------------------------------------------------------
+------------------------------------------------------------------------
+COMMANDS
+------------------------------------------------------------------------
+------------------------------------------------------------------------
+
+-----------------------------------------------------
+#define CMD_SET_PRESET  0x01
+Write a preset into EEPROM for later use
+-----------------------------------------------------
+@XX01YYDDDDD...#
+XX=NODE ID
+YY=PRESET NUMBER (0-4)
+DDDDD... = 120 bytes of preset data (*See Preset Typedef's for layout)
+
+RETURNS: 
+$01# - Success
+!0101# - Failure (Preset Number Out of Range)
+
+!01FE# - Failure (In External Command Mode)
+
+-----------------------------------------------------
+#define CMD_GET_PRESET  0x02
+Read a specific preset from EEPROM
+-----------------------------------------------------
+@XX02YY#
+XX=NODE ID
+YY=PRESET NUMBER (0-4)
+
+RETURNS
+$02DDDDD...# - Success (DDDDD...=120 Bytes of preset data *See Preset Typedef's for layout)
+!0201# - - Failure (Preset Number Out of Range)
+
+!02FE# - Failure (In External Command Mode)
+
+-----------------------------------------------------
+#define CMD_GETDISPLAY  0x10
+Get the currently displayed LCD Text
+-----------------------------------------------------
+@XX10#
+XX=NODE ID
+
+RETURNS
+$10AAAAA....BBBBB...#
+AAAAA....=20 ASCII Bytes for LINE1
+BBBBB....=20 ASCII Bytes for LINE2
+
+!10FE# - Failure (In External Command Mode)
+
+-----------------------------------------------------
+#define CMD_UI_CLICK    0x11
+Sends a simulated knob short Press (click)
+-----------------------------------------------------
+@XX11#
+XX=NODE ID
+
+RETURNS
+$11# - Success
+
+!11FE# - Failure (In External Command Mode)
+
+-----------------------------------------------------
+#define CMD_UI_BACK     0x12
+Sends a simulated knob medium press (BACK)
+-----------------------------------------------------
+@XX12#
+XX=NODE ID
+
+RETURNS
+$12# - Success
+
+!12FE# - Failure (In External Command Mode)
+
+-----------------------------------------------------
+#define CMD_UI_CANCEL   0x13
+Sends a simulated knob long press (CANCEL)
+-----------------------------------------------------
+@XX13#
+XX=NODE ID
+
+RETURNS
+$13# - Success
+
+!13FE# - Failure (In External Command Mode)
+
+-----------------------------------------------------
+#define CMD_UI_INC      0x14
+Sends a simulated knob clockwise rotation
+-----------------------------------------------------
+@XX14#
+XX=NODE ID
+
+RETURNS
+$14# - Success
+
+!14FE# - Failure (In External Command Mode)
+
+-----------------------------------------------------
+#define CMD_UI_DEC      0x15
+Sends a simulated knob counter-clockwise rotation
+-----------------------------------------------------
+@XX15#
+XX=NODE ID
+
+RETURNS
+$15# - Success
+
+!15FE# - Failure (In External Command Mode)
+
+-----------------------------------------------------
+#define CMD_GET_POS     0x16
+Returns a float value equal to the linear position of the motor in degrees.
+-----------------------------------------------------
+@XX16#
+XX=NODE ID
+
+RETURNS
+$16XXXXXXXX# - Success
+XXXXXXXX=4 Byte Hex floating point variable
+
+!16FE# - Failure (In External Command Mode)
+
+-----------------------------------------------------
+#define CMD_GET_SPEED   0x17
+Returns a float value equal to the speed of the motor in degrees per second.
+-----------------------------------------------------
+@XX17#
+XX=NODE ID
+
+RETURNS
+$17XXXXXXXX# - Success
+XXXXXXXX=4 Byte Hex floating point variable
+
+!17FE# - Failure (In External Command Mode)
+
+
+-----------------------------------------------------
+#define CMD_GET_BATTERY 0x18
+Returns a float value equal to the Battery Voltage in Volts.
+-----------------------------------------------------
+@XX18#
+XX=NODE ID
+
+RETURNS
+$18XXXXXXXX# - Success
+XXXXXXXX=4 Byte Hex floating point variable
+
+!18FE# - Failure (In External Command Mode)
+
+-----------------------------------------------------
+#define CMD_PREP_MOVE   0x60
+Loads Move Trajectory Data into temporary storage in prep for a Move.
+-----------------------------------------------------
+@XX60DDDDDDDDYYYYYYYYZZZZZZZZ#
+XX=NODE ID
+DDDDDDDD=HEX Representation of a float = Distance to Move in Degrees.
+YYYYYYYY=HEX Representation of a float = Speed of Move in Degrees Per Second.
+ZZZZZZZZ=HEX Representation of a float = Acceleration of Move in Degrees Per Second Per Second.
+
+RETURNS
+$60# - Success
+!60FF# - Failure (In UI Mode)
+
+-----------------------------------------------------
+#define CMD_EXEC_MOVE   0x61
+Executes the Prepped Move
+-----------------------------------------------------
+@XX61$
+XX=NODE ID
+
+RETURNS
+$61# - Success
+!6101# - Prepped Move Data was not available. Send Move Data using CmdID=60
+!6102# - Unabmle to Move as the engine is not IDLE (It is either stopping or executing a PATH)
+!61FF# - Failure (In UI Mode)
+
+-----------------------------------------------------
+#define CMD_STOP        0x62
+Commands the Engine to perform an immediate stop which will deccelerate the motor to 0
+------------------------------------------------------
+@XX62$
+XX=NODE ID
+
+RETURNS
+$62# - Success
+!62FF# - Failure (In UI Mode)
+
+-----------------------------------------------------
+#define CMD_STATUS      0x63
+Returns a collection of information regarding the status of the Motion Engine
+-----------------------------------------------------
+@XX63$
+XX=NODE ID
+
+RETURNS
+$63AABBCCCCCCCCDDDDDDDDEEEEEEEEFFFFFFFF# - Success
+AA=Hex Byte of State (0=Idle, 1=Stopping, 2=Trajectory Move, 3=Path Move, 4=Path Dwell)
+BB=Hex Byte of PrepMove (0=No Move Data Prepped, 1=Move Data Prepped)
+CCCCCCCC=4 Byte Hex Float = Motor Position in Degrees
+DDDDDDDD=4 Byte Hex Float = Motor Speed in Deg/Sec
+EEEEEEEE=4 Byte Hex Float = Engine Time since Power On in Seconds
+FFFFFFFF=4 Byte Hex Float = Battery Voltage in Volts
+
+!63FF# - Failure (In UI Mode)
+
+-----------------------------------------------------
+#define CMD_PATH_INIT   0x64
+Initializes the Engine's Path Program. Call this to start a new Path Program.
+-----------------------------------------------------
+@XX64$
+XX=NODE ID
+
+$64# - Success
+!6401# - Failure (The Engine is currently executing the Path Program, Stop the Engine)
+!64FF# - Failure (In UI Mode)
+
+-----------------------------------------------------
+#define CMD_PATH_ADD    0x65
+Appends a movement to the Path Program. Call this repeatedly to build a Path Program.
+-----------------------------------------------------
+@XX65DDDDYYYYZZZZ#
+XX=NODE ID
+DDDD=HEX Representation of a signed int16 = Distance to Move in whole Degrees.
+YYYY=HEX Representation of a signed int16 = Time to Travel in whole Seconds.
+ZZZZ=HEX Representation of a signed int16 = Time to Dwell, in whole seconds, at this point before the next move
+
+
+RETURNS
+$65# - Success
+!6501# - Failure (The Engine is currently executing the Path Program, Stop the Engine)
+!6502# - Failure (The Path had reached the maximum node count of 100)
+!65FF# - Failure (In UI Mode)
+
+
+-----------------------------------------------------
+#define CMD_PATH_RUN    0x66
+-----------------------------------------------------
+@XX66#
+XX=NODE ID
+
+RETURNS
+$66# - Success
+!6601# - Failure (Engine is not IDLE, Stop the Engine)
+!66FF# - Failure (In UI Mode)
+

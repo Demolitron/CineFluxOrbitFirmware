@@ -1,0 +1,1270 @@
+Version 3.2 HI-TECH Software Intermediate Code
+[u S1 `uc -> 4 `i `c -> 4 `i `ui -> 2 `i `i -> 2 `i `ul 1 `l 1 ]
+[n S1 LONG ub b ui i ul l ]
+[s S3 `uc 1 `ui 1 `ui 1 `uc 1 `uc 1 `d 1 `d 1 `uc 1 `ui 1 `d 1 `d 1 `i 1 `ui 1 `ui 1 `d 1 `d 1 ]
+[n S3 . Version BatteryLowVoltageLevel Battery12V_Q8 PowerResponseLimiter_Slope PowerResponseLimiter_Intercept Counts_per_Volt Volts_per_Count BacklightPWM_Duty BacklightIdleTimeout SystemAcceleration MaxSpeed PID_MaxError PID_Kp PID_Kd Counts_Per_Degree Degrees_Per_Count ]
+[s S5 `uc 1 `ui 1 `uc 1 `uc 1 `ui 1 `i -> 18 `i `ui -> 18 `i `ui -> 19 `i ]
+[n S5 . Type Origin_deg PointCount Bounce LoopCount Distances_deg TravelTimes_sec DwellTimes_sec ]
+[s S4 `uc 1 `ui 1 `uc 1 `uc 1 `d 1 `d 1 `d 1 `d 1 `uc 1 ]
+[n S4 . Type Origin_deg EndMode IsClockWise ProgramRunTime_sec CycleCount_rev CycleTime_sec Speed_deg_sec SpeedMode ]
+[u S2 `uc -> 4 `i `c -> 4 `i `ui -> 2 `i `i -> 2 `i `ul 1 `l 1 `f 1 `d 1 ]
+[n S2 . ub b ui i ul l fl dbl ]
+"6 Z:\CineFlux\Dropbox\Orbit\lcd.h
+[v _LCD_ClearDisplay `(v ~T0 0 ef ]
+"1
+[v _LCD_PrintString `(v ~T0 0 ef1`*Cuc ]
+"9 Z:\CineFlux\Dropbox\Orbit\userInterface.h
+[v _GetInput_nonblocking `(c ~T0 0 ef ]
+"3 Z:\CineFlux\Dropbox\Orbit\Timings.h
+[v _Wait_seconds_nonblocking `(v ~T0 0 ef1`ui ]
+"5 Z:\CineFlux\Dropbox\Orbit\MotionEngine.h
+[v _SpeedRequiredToMoveInTime `(d ~T0 0 ef2`d`d ]
+"1
+[v _Move `(uc ~T0 0 ef2`d`d ]
+"34 Z:\CineFlux\Dropbox\Orbit\Main.h
+[v _MessageStream_ReadByte `(uc ~T0 0 ef ]
+"30
+[v _AckCmd `(v ~T0 0 ef1`uc ]
+"31
+[v _NackCmd `(v ~T0 0 ef2`uc`uc ]
+"2 Z:\CineFlux\Dropbox\Orbit\MotionEngine.h
+[v _MoveAdvanced `(uc ~T0 0 ef3`d`d`d ]
+"33 Z:\CineFlux\Dropbox\Orbit\Main.h
+[v _MessageStream_WriteByte `(v ~T0 0 ef1`uc ]
+[; ;Main.h: 7: typedef union LONG {
+[; ;Main.h: 8: unsigned char ub[4];
+[; ;Main.h: 9: signed char b[4];
+[; ;Main.h: 10: unsigned int ui[2];
+[; ;Main.h: 11: signed int i[2];
+[; ;Main.h: 12: unsigned long ul;
+[; ;Main.h: 13: signed long l;
+[; ;Main.h: 14: };
+[; ;Main.h: 16: typedef union {
+[; ;Main.h: 17: unsigned char ub[4];
+[; ;Main.h: 18: signed char b[4];
+[; ;Main.h: 19: unsigned int ui[2];
+[; ;Main.h: 20: signed int i[2];
+[; ;Main.h: 21: unsigned long ul;
+[; ;Main.h: 22: signed long l;
+[; ;Main.h: 23: float fl;
+[; ;Main.h: 24: double dbl;
+[; ;Main.h: 25: } MULTI;
+[; ;Main.h: 29: void main(void);
+[; ;Main.h: 30: void AckCmd(unsigned char CmdID);
+[; ;Main.h: 31: void NackCmd(unsigned char CmdID, unsigned char Reason);
+[; ;Main.h: 32: void MessageStream_WriteMULTI(MULTI dat, unsigned char CmdID);
+[; ;Main.h: 33: void MessageStream_WriteByte(unsigned char dat);
+[; ;Main.h: 34: unsigned char MessageStream_ReadByte();
+[; ;Main.h: 35: void GoToSleep();
+[; ;Main.h: 36: void SetupIO();
+[; ;Main.h: 37: void interrupt FastTick(void);
+[; ;Main.h: 38: void interrupt low_priority SlowTick();
+[; ;Main.h: 39: void SetupHardware();
+[; ;Main.h: 40: void Idle(void);
+[; ;Main.h: 41: double GetCurrentLinearPosition();
+[; ;Main.h: 42: double GetCurrentAngle();
+"44 Z:\CineFlux\Dropbox\Orbit\Main.h
+[v _enc_states `Cc ~T0 -> 0 `x e ]
+[i _enc_states
+:U ..
+-> -> 0 `i `c
+-> -U -> 1 `i `c
+-> -> 1 `i `c
+-> -> 0 `i `c
+-> -> 1 `i `c
+-> -> 0 `i `c
+-> -> 0 `i `c
+-> -U -> 1 `i `c
+-> -U -> 1 `i `c
+-> -> 0 `i `c
+-> -> 0 `i `c
+-> -> 1 `i `c
+-> -> 0 `i `c
+-> -> 1 `i `c
+-> -U -> 1 `i `c
+-> -> 0 `i `c
+..
+]
+[; ;Main.h: 44: const signed char enc_states[] = {0, -1, 1, 0, 1, 0, 0, -1, -1, 0, 0, 1, 0, 1, -1, 0};
+"49
+[v _ReadIdx `uc ~T0 1 e ]
+[i _ReadIdx
+-> -> 0 `i `uc
+]
+[; ;Main.h: 49: unsigned char ReadIdx = 0;
+"50
+[v _TX_Idx `Vuc ~T0 1 e ]
+[i _TX_Idx
+-> -> 0 `i `uc
+]
+[; ;Main.h: 50: volatile unsigned char TX_Idx = 0;
+"51
+[v _TX_bCount `Vuc ~T0 1 e ]
+[i _TX_bCount
+-> -> 0 `i `uc
+]
+[; ;Main.h: 51: volatile unsigned char TX_bCount = 0;
+"52
+[v _TXBuffer `Vuc ~T0 -> 255 `i e ]
+[; ;Main.h: 52: volatile unsigned char TXBuffer[255];
+"53
+[v _RX_MsgComplete `Vb ~T0 1 e ]
+[; ;Main.h: 53: volatile bit RX_MsgComplete;
+"54
+[v _RX_InProgress `Vb ~T0 1 e ]
+[; ;Main.h: 54: volatile bit RX_InProgress;
+"55
+[v _RX_Idx `Vuc ~T0 1 e ]
+[i _RX_Idx
+-> -> 0 `i `uc
+]
+[; ;Main.h: 55: volatile unsigned char RX_Idx = 0;
+"56
+[v _RXBuffer `Vuc ~T0 -> 255 `i e ]
+[; ;Main.h: 56: volatile unsigned char RXBuffer[255];
+"57
+[v _MyID `Vuc ~T0 1 e ]
+[i _MyID
+-> -> 170 `i `uc
+]
+[; ;Main.h: 57: volatile unsigned char MyID = 0xAA;
+"58
+[v _isPendingExternalUIEvent `Vb ~T0 1 e ]
+[; ;Main.h: 58: volatile bit isPendingExternalUIEvent;
+"59
+[v _PendingExternalUIEvent `Vuc ~T0 1 e ]
+[; ;Main.h: 59: volatile char PendingExternalUIEvent;
+"60
+[v _ExtModeActive `Vb ~T0 1 e ]
+[; ;Main.h: 60: volatile bit ExtModeActive;
+"65
+[v _ClearUI_Event `Vb ~T0 1 e ]
+[i _ClearUI_Event
+-> 0 `i
+]
+[; ;Main.h: 65: volatile bit ClearUI_Event = 0;
+"66
+[v _bLock_RotaryDetentIntervals `Vb ~T0 1 e ]
+[i _bLock_RotaryDetentIntervals
+-> 0 `i
+]
+[; ;Main.h: 66: volatile bit bLock_RotaryDetentIntervals = 0;
+"67
+[v _RotaryDetentIntervals `uc ~T0 -> 16 `i e ]
+[; ;Main.h: 67: unsigned char RotaryDetentIntervals[16];
+"68
+[v _ZeroRotaryDetentIntervals `Vb ~T0 1 e ]
+[i _ZeroRotaryDetentIntervals
+-> 0 `i
+]
+[; ;Main.h: 68: volatile bit ZeroRotaryDetentIntervals = 0;
+"69
+[v _bLock_UI_Event `Vb ~T0 1 e ]
+[i _bLock_UI_Event
+-> 0 `i
+]
+[; ;Main.h: 69: volatile bit bLock_UI_Event = 0;
+"70
+[v _UI_Event `Vuc ~T0 1 e ]
+[; ;Main.h: 70: volatile char UI_Event;
+"83
+[v _bLock_BatteryVoltage `Vb ~T0 1 e ]
+[i _bLock_BatteryVoltage
+-> 0 `i
+]
+[; ;Main.h: 83: volatile bit bLock_BatteryVoltage = 0;
+"84
+[v _BatteryVoltage `ui ~T0 1 e ]
+[i _BatteryVoltage
+-> -> 0 `i `ui
+]
+[; ;Main.h: 84: unsigned int BatteryVoltage = 0;
+"85
+[v _bLowVoltageTrip `Vb ~T0 1 e ]
+[i _bLowVoltageTrip
+-> 0 `i
+]
+[; ;Main.h: 85: volatile bit bLowVoltageTrip = 0;
+"88
+[v _LCD_BacklightEnabled `Vb ~T0 1 e ]
+[; ;Main.h: 88: volatile bit LCD_BacklightEnabled;
+"91
+[v _bFollowMode `Vb ~T0 1 e ]
+[i _bFollowMode
+-> 0 `i
+]
+[; ;Main.h: 91: volatile bit bFollowMode = 0;
+"92
+[v _bMove_InProgress `Vb ~T0 1 e ]
+[i _bMove_InProgress
+-> 0 `i
+]
+[; ;Main.h: 92: volatile bit bMove_InProgress = 0;
+"93
+[v _Move_speedQ24 `ul ~T0 1 e ]
+[i _Move_speedQ24
+-> -> -> 0 `i `l `ul
+]
+[; ;Main.h: 93: unsigned long Move_speedQ24 = 0;
+"94
+[v _Move_shifted_position `S1 ~T0 1 e ]
+[; ;Main.h: 94: union LONG Move_shifted_position;
+"95
+[v _Move_position `S1 ~T0 -> 2 `i e ]
+[; ;Main.h: 95: union LONG Move_position[2];
+"96
+[v _Move_AccelValueQ24 `ul ~T0 1 e ]
+[i _Move_AccelValueQ24
+-> -> -> 0 `i `l `ul
+]
+[; ;Main.h: 96: unsigned long Move_AccelValueQ24 = 0;
+"97
+[v _Move_CoastSpeedQ24 `ul ~T0 1 e ]
+[i _Move_CoastSpeedQ24
+-> -> -> 0 `i `l `ul
+]
+[; ;Main.h: 97: unsigned long Move_CoastSpeedQ24 = 0;
+"98
+[v _Move_DecelPosition `ul ~T0 1 e ]
+[i _Move_DecelPosition
+-> -> -> 0 `i `l `ul
+]
+[; ;Main.h: 98: unsigned long Move_DecelPosition = 0;
+"99
+[v _Move_FinalPosition `l ~T0 1 e ]
+[i _Move_FinalPosition
+-> -> 0 `i `l
+]
+[; ;Main.h: 99: signed long Move_FinalPosition = 0;
+"100
+[v _Move_Origin `l ~T0 1 e ]
+[i _Move_Origin
+-> -> 0 `i `l
+]
+[; ;Main.h: 100: signed long Move_Origin = 0;
+"101
+[v _bMove_Neg `Vb ~T0 1 e ]
+[i _bMove_Neg
+-> 0 `i
+]
+[; ;Main.h: 101: volatile bit bMove_Neg = 0;
+"105
+[v _bSpeedMode `Vb ~T0 1 e ]
+[i _bSpeedMode
+-> 0 `i
+]
+[; ;Main.h: 105: volatile bit bSpeedMode = 0;
+"106
+[v _Speed_SetToThis `ul ~T0 1 e ]
+[; ;Main.h: 106: unsigned long Speed_SetToThis;
+"107
+[v _Speed_SetPending `Vb ~T0 1 e ]
+[; ;Main.h: 107: volatile bit Speed_SetPending;
+"108
+[v _Speed_IsAccelerating `Vb ~T0 1 e ]
+[; ;Main.h: 108: volatile bit Speed_IsAccelerating;
+"112
+[v _bClear_MotorPosition `Vb ~T0 1 e ]
+[i _bClear_MotorPosition
+-> 0 `i
+]
+[; ;Main.h: 112: volatile bit bClear_MotorPosition = 0;
+"113
+[v _Motor_Position `l ~T0 1 e ]
+[i _Motor_Position
+-> -> 0 `i `l
+]
+[; ;Main.h: 113: signed long Motor_Position = 0;
+"114
+[v _bLock_Motor_Position `Vb ~T0 1 e ]
+[i _bLock_Motor_Position
+-> 0 `i
+]
+[; ;Main.h: 114: volatile bit bLock_Motor_Position = 0;
+"117
+[v _bIncrement_PID_Setpoint `Vb ~T0 1 e ]
+[i _bIncrement_PID_Setpoint
+-> 0 `i
+]
+[; ;Main.h: 117: volatile bit bIncrement_PID_Setpoint = 0;
+"118
+[v _bDecrement_PID_Setpoint `Vb ~T0 1 e ]
+[i _bDecrement_PID_Setpoint
+-> 0 `i
+]
+[; ;Main.h: 118: volatile bit bDecrement_PID_Setpoint = 0;
+"119
+[v _bLock_PID_SetPoint `Vb ~T0 1 e ]
+[i _bLock_PID_SetPoint
+-> 0 `i
+]
+[; ;Main.h: 119: volatile bit bLock_PID_SetPoint = 0;
+"121
+[v _bMotionError `Vb ~T0 1 e ]
+[i _bMotionError
+-> 0 `i
+]
+[; ;Main.h: 121: volatile bit bMotionError = 0;
+"122
+[v _bPowerOff `Vb ~T0 1 e ]
+[i _bPowerOff
+-> 0 `i
+]
+[; ;Main.h: 122: volatile bit bPowerOff = 0;
+"181
+[v _ASCII_HEX_TO_BINARY `Cuc ~T0 -> 128 `i e ]
+[i _ASCII_HEX_TO_BINARY
+:U ..
+-> -> 0 `i `uc
+-> -> 0 `i `uc
+-> -> 0 `i `uc
+-> -> 0 `i `uc
+-> -> 0 `i `uc
+-> -> 0 `i `uc
+-> -> 0 `i `uc
+-> -> 0 `i `uc
+-> -> 0 `i `uc
+-> -> 0 `i `uc
+-> -> 0 `i `uc
+-> -> 0 `i `uc
+-> -> 0 `i `uc
+-> -> 0 `i `uc
+-> -> 0 `i `uc
+-> -> 0 `i `uc
+"182
+-> -> 0 `i `uc
+-> -> 0 `i `uc
+-> -> 0 `i `uc
+-> -> 0 `i `uc
+-> -> 0 `i `uc
+-> -> 0 `i `uc
+-> -> 0 `i `uc
+-> -> 0 `i `uc
+-> -> 0 `i `uc
+-> -> 0 `i `uc
+-> -> 0 `i `uc
+-> -> 0 `i `uc
+-> -> 0 `i `uc
+-> -> 0 `i `uc
+-> -> 0 `i `uc
+-> -> 0 `i `uc
+"183
+-> -> 0 `i `uc
+-> -> 0 `i `uc
+-> -> 0 `i `uc
+-> -> 0 `i `uc
+-> -> 0 `i `uc
+-> -> 0 `i `uc
+-> -> 0 `i `uc
+-> -> 0 `i `uc
+-> -> 0 `i `uc
+-> -> 0 `i `uc
+-> -> 0 `i `uc
+-> -> 0 `i `uc
+-> -> 0 `i `uc
+-> -> 0 `i `uc
+-> -> 0 `i `uc
+-> -> 0 `i `uc
+"184
+-> -> 0 `i `uc
+-> -> 1 `i `uc
+-> -> 2 `i `uc
+-> -> 3 `i `uc
+-> -> 4 `i `uc
+-> -> 5 `i `uc
+-> -> 6 `i `uc
+-> -> 7 `i `uc
+-> -> 8 `i `uc
+-> -> 9 `i `uc
+-> -> 0 `i `uc
+-> -> 0 `i `uc
+-> -> 0 `i `uc
+-> -> 0 `i `uc
+-> -> 0 `i `uc
+-> -> 0 `i `uc
+"185
+-> -> 0 `i `uc
+-> -> 10 `i `uc
+-> -> 11 `i `uc
+-> -> 12 `i `uc
+-> -> 13 `i `uc
+-> -> 14 `i `uc
+-> -> 15 `i `uc
+-> -> 0 `i `uc
+-> -> 0 `i `uc
+-> -> 0 `i `uc
+-> -> 0 `i `uc
+-> -> 0 `i `uc
+-> -> 0 `i `uc
+-> -> 0 `i `uc
+-> -> 0 `i `uc
+-> -> 0 `i `uc
+"186
+-> -> 0 `i `uc
+-> -> 10 `i `uc
+-> -> 11 `i `uc
+-> -> 12 `i `uc
+-> -> 13 `i `uc
+-> -> 14 `i `uc
+-> -> 15 `i `uc
+-> -> 0 `i `uc
+-> -> 0 `i `uc
+-> -> 0 `i `uc
+-> -> 0 `i `uc
+-> -> 0 `i `uc
+-> -> 0 `i `uc
+-> -> 0 `i `uc
+-> -> 0 `i `uc
+-> -> 0 `i `uc
+..
+]
+[; ;Main.h: 181: const unsigned char ASCII_HEX_TO_BINARY[128] ={0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+[; ;Main.h: 182: 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+[; ;Main.h: 183: 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+[; ;Main.h: 184: 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 0, 0, 0, 0, 0, 0,
+[; ;Main.h: 185: 0, 10, 11, 12, 13, 14, 15, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+[; ;Main.h: 186: 0, 10, 11, 12, 13, 14, 15, 0, 0, 0, 0, 0, 0, 0, 0, 0};
+"188
+[v _BINARY_TO_ASCII_HEX `Cuc ~T0 -> 16 `i e ]
+[i _BINARY_TO_ASCII_HEX
+:U ..
+-> -> 48 `ui `uc
+-> -> 49 `ui `uc
+-> -> 50 `ui `uc
+-> -> 51 `ui `uc
+-> -> 52 `ui `uc
+-> -> 53 `ui `uc
+-> -> 54 `ui `uc
+-> -> 55 `ui `uc
+-> -> 56 `ui `uc
+-> -> 57 `ui `uc
+-> -> 65 `ui `uc
+-> -> 66 `ui `uc
+-> -> 67 `ui `uc
+-> -> 68 `ui `uc
+-> -> 69 `ui `uc
+-> -> 70 `ui `uc
+..
+]
+[; ;Main.h: 188: const unsigned char BINARY_TO_ASCII_HEX[16] = {'0', '1', '2', '3', '4', '5', '6', '7', '8', '9', 'A', 'B', 'C', 'D', 'E', 'F'};
+[; ;Timings.h: 1: void Wait_seconds(unsigned int time);
+[; ;Timings.h: 2: void Wait_ms(unsigned int time);
+[; ;Timings.h: 3: void Wait_seconds_nonblocking(unsigned int time);
+[; ;Timings.h: 4: void Wait_ms_nonblocking(unsigned int time);
+[; ;Timings.h: 5: void Wait_ticks(unsigned char time);
+[; ;Timings.h: 6: void Wait_us(unsigned int time);
+[; ;Timings.h: 7: double Now();
+"10 Z:\CineFlux\Dropbox\Orbit\Timings.h
+[v _bWaiting `Vb ~T0 1 e ]
+[i _bWaiting
+-> 0 `i
+]
+[; ;Timings.h: 10: volatile bit bWaiting=0;
+"11
+[v _WaitUntil_Tick500Hz `Vul ~T0 1 e ]
+[i _WaitUntil_Tick500Hz
+-> -> -> 0 `i `l `ul
+]
+[; ;Timings.h: 11: volatile unsigned long WaitUntil_Tick500Hz=0;
+"12
+[v _bTick40Khz `Vb ~T0 1 e ]
+[i _bTick40Khz
+-> 0 `i
+]
+[; ;Timings.h: 12: volatile bit bTick40Khz=0;
+"13
+[v _bLock_Tick500Hz `Vb ~T0 1 e ]
+[i _bLock_Tick500Hz
+-> 0 `i
+]
+[; ;Timings.h: 13: volatile bit bLock_Tick500Hz=0;
+"14
+[v _Tick500Hz `Vul ~T0 1 e ]
+[i _Tick500Hz
+-> -> -> 0 `i `l `ul
+]
+[; ;Timings.h: 14: volatile unsigned long Tick500Hz=0;
+[; ;MotionEngine.h: 1: char Move(double Distance_deg, double Speed_deg_sec);
+[; ;MotionEngine.h: 2: char MoveAdvanced(double Distance_deg, double _Speed_Deg_Sec, double _Acceleration_Deg_Sec_Sec);
+[; ;MotionEngine.h: 3: char MoveToLinear(double DestinationPostion, double Speed_Deg_Sec);
+[; ;MotionEngine.h: 4: char MoveToAngle(double DestinationAngle, double Speed_Deg_Sec);
+[; ;MotionEngine.h: 5: double SpeedRequiredToMoveInTime(double Distance, double Time);
+[; ;MotionEngine.h: 6: double MinTimeToMove(double Distance);
+[; ;Settings.h: 2: typedef struct {
+[; ;Settings.h: 3: unsigned char Version;
+[; ;Settings.h: 4: unsigned int BatteryLowVoltageLevel;
+[; ;Settings.h: 5: unsigned int Battery12V_Q8;
+[; ;Settings.h: 6: unsigned char PowerResponseLimiter_Slope;
+[; ;Settings.h: 7: unsigned char PowerResponseLimiter_Intercept;
+[; ;Settings.h: 8: double Counts_per_Volt;
+[; ;Settings.h: 9: double Volts_per_Count;
+[; ;Settings.h: 10: unsigned char BacklightPWM_Duty;
+[; ;Settings.h: 11: unsigned int BacklightIdleTimeout;
+[; ;Settings.h: 12: double SystemAcceleration;
+[; ;Settings.h: 13: double MaxSpeed;
+[; ;Settings.h: 14: signed int PID_MaxError;
+[; ;Settings.h: 15: unsigned int PID_Kp;
+[; ;Settings.h: 16: unsigned int PID_Kd;
+[; ;Settings.h: 17: double Counts_Per_Degree;
+[; ;Settings.h: 18: double Degrees_Per_Count;
+[; ;Settings.h: 19: } ConfigStruct;
+[; ;Settings.h: 21: typedef struct {
+[; ;Settings.h: 22: char Type;
+[; ;Settings.h: 23: unsigned int Origin_deg;
+[; ;Settings.h: 24: char EndMode;
+[; ;Settings.h: 25: char IsClockWise;
+[; ;Settings.h: 26: double ProgramRunTime_sec;
+[; ;Settings.h: 27: double CycleCount_rev;
+[; ;Settings.h: 28: double CycleTime_sec;
+[; ;Settings.h: 29: double Speed_deg_sec;
+[; ;Settings.h: 30: char SpeedMode;
+[; ;Settings.h: 31: } OrbitProgramStruct;
+[; ;Settings.h: 33: typedef struct {
+[; ;Settings.h: 34: char Type;
+[; ;Settings.h: 35: unsigned int Origin_deg;
+[; ;Settings.h: 36: unsigned char PointCount;
+[; ;Settings.h: 37: unsigned char Bounce;
+[; ;Settings.h: 38: unsigned int LoopCount;
+[; ;Settings.h: 39: signed int Distances_deg[18];
+[; ;Settings.h: 40: unsigned int TravelTimes_sec[18];
+[; ;Settings.h: 41: unsigned int DwellTimes_sec[19];
+[; ;Settings.h: 42: } WaypointProgramStruct;
+[; ;Settings.h: 44: typedef union {
+[; ;Settings.h: 45: unsigned char ub[120];
+[; ;Settings.h: 46: WaypointProgramStruct WayPoint;
+[; ;Settings.h: 47: OrbitProgramStruct Orbit;
+[; ;Settings.h: 48: } PRESET;
+"50 Z:\CineFlux\Dropbox\Orbit\Settings.h
+[v _Config `S3 ~T0 1 e ]
+[; ;Settings.h: 50: ConfigStruct Config;
+"51
+[v _CurrentPath `S5 ~T0 1 e ]
+[; ;Settings.h: 51: WaypointProgramStruct CurrentPath;
+"52
+[v _CurrentOrbitProgram `S4 ~T0 1 e ]
+[; ;Settings.h: 52: OrbitProgramStruct CurrentOrbitProgram;
+[; ;Settings.h: 54: void FactoryDefault();
+[; ;Settings.h: 55: void SaveSettings();
+[; ;Settings.h: 56: void LoadSettings();
+[; ;Settings.h: 57: void EEprom_write(unsigned int *addr, unsigned char *dat, unsigned char bCount);
+[; ;Settings.h: 58: void EEprom_read(unsigned int *addr, unsigned char *dat, unsigned char bCount);
+[; ;Settings.h: 59: unsigned char GetPresetType(char pnum);
+[; ;Settings.h: 60: void SavePreset(char pnum, unsigned char *dat);
+[; ;Settings.h: 61: void LoadPreset(char pnum, unsigned char *dat);
+[; ;lcd.h: 1: void LCD_PrintString(const unsigned char *dat);
+[; ;lcd.h: 2: void LCD_PrintChar(char dat);
+[; ;lcd.h: 3: void LCD_PrintLong(long dat, char places, char sign);
+[; ;lcd.h: 4: void LCD_PrintFloat(double dat, char whole, char fract, char sign);
+[; ;lcd.h: 6: void LCD_ClearDisplay(void);
+[; ;lcd.h: 7: void LCD_PowerUp(void);
+[; ;lcd.h: 9: void LCD_SetPosition(char Row, char Col);
+[; ;lcd.h: 10: void LCD_FunctionSet(char EightBit, char DualLine, char FiveByTenDots);
+[; ;lcd.h: 11: void LCD_CursorShift(char ShiftDisplay, char ShiftRight);
+[; ;lcd.h: 12: void LCD_DisplayOnOff(char DisplayOn, char CursorOn, char BlinkOn);
+[; ;lcd.h: 13: void LCD_EntryModeSet(char Increment, char ShiftOn);
+[; ;lcd.h: 14: void LCD_ReturnHome(void);
+[; ;lcd.h: 16: void putc(unsigned char dat);
+"18 Z:\CineFlux\Dropbox\Orbit\lcd.h
+[v _LCD_Line1 `uc ~T0 -> 20 `i e ]
+[; ;lcd.h: 18: unsigned char LCD_Line1[20];
+"19
+[v _LCD_Line2 `uc ~T0 -> 20 `i e ]
+[; ;lcd.h: 19: unsigned char LCD_Line2[20];
+"20
+[v _LCD_Row `uc ~T0 1 e ]
+[i _LCD_Row
+-> -> 0 `i `uc
+]
+[; ;lcd.h: 20: unsigned char LCD_Row=0;
+"21
+[v _LCD_Col `uc ~T0 1 e ]
+[i _LCD_Col
+-> -> 0 `i `uc
+]
+[; ;lcd.h: 21: unsigned char LCD_Col=0;
+[; ;userInterface.h: 4: void ShowVoltage();
+[; ;userInterface.h: 5: signed char GetClick(void);
+[; ;userInterface.h: 6: signed char GetYesNo(const char *prompt, signed char Initial);
+[; ;userInterface.h: 7: signed char GetFloat(const char *prompt, const char *unit, double* Value, double Min, double Max, double Precision);
+[; ;userInterface.h: 8: signed char GetInput(void);
+[; ;userInterface.h: 9: signed char GetInput_nonblocking(void);
+[; ;userInterface.h: 10: signed char DisplayMenu(const char *Menu[], char ItemCount, char Initial);
+[; ;userInterface.h: 11: signed char DisplayChoices(const char *Menu[], char ItemCount, const char *Prompt, char Initial);
+[; ;userInterface.h: 12: signed char GetPresetNumber();
+[; ;userInterface.h: 14: signed char GetTime(const char *prompt, double *Time, double Min, double Max, char Precision);
+[; ;userInterface.h: 15: void PrintTime(double dat, unsigned char precision, unsigned char EditChevron);
+[; ;userInterface.h: 16: void ConvertTimeToDiscrete(double Time, char *Hours, char *Minutes, char *Seconds, int *Milliseconds);
+[; ;userInterface.h: 17: double ConvertTimeFromDiscrete(char Hours, char Minutes, char Seconds, int Milliseconds);
+[; ;userInterface.h: 18: double RoundTimeUp(double Time,unsigned char precision);
+[; ;userInterface.h: 19: double RoundTimeDown(double Time,unsigned char precision);
+[; ;userInterface.h: 21: unsigned char GetRotaryMultiplier();
+"8 Z:\CineFlux\Dropbox\Orbit\ExtMode.c
+[v _ExtMode `(uc ~T0 1 ef ]
+{
+[; ;ExtMode.c: 8: unsigned char ExtMode() {
+[e :U _ExtMode ]
+[f ]
+"9
+[v _PathIdx `uc ~T0 1 a ]
+[; ;ExtMode.c: 9: unsigned char PathIdx = 0;
+[e = _PathIdx -> -> 0 `i `uc ]
+"10
+[v _PathCount `uc ~T0 1 a ]
+[; ;ExtMode.c: 10: unsigned char PathCount = 0;
+[e = _PathCount -> -> 0 `i `uc ]
+"11
+[v _PathDistances `i ~T0 -> 100 `i a ]
+"12
+[v _PathTravelTimes `ui ~T0 -> 100 `i a ]
+"13
+[v _PathDwellTimes `ui ~T0 -> 100 `i a ]
+[; ;ExtMode.c: 11: signed int PathDistances[100];
+[; ;ExtMode.c: 12: unsigned int PathTravelTimes[100];
+[; ;ExtMode.c: 13: unsigned int PathDwellTimes[100];
+[; ;ExtMode.c: 15: ExtModeActive = 1;
+"15
+[e = _ExtModeActive -> -> 1 `i `b ]
+"16
+[v _ret `c ~T0 1 a ]
+"17
+[v _CmdID `uc ~T0 1 a ]
+"19
+[v _idx `uc ~T0 1 a ]
+"20
+[v _State `uc ~T0 1 a ]
+[; ;ExtMode.c: 16: signed char ret;
+[; ;ExtMode.c: 17: unsigned char CmdID;
+[; ;ExtMode.c: 19: unsigned char idx;
+[; ;ExtMode.c: 20: unsigned char State = 0;
+[e = _State -> -> 0 `i `uc ]
+"21
+[v _mTemp `S2 ~T0 1 a ]
+"23
+[v _PrepMove_Ready `uc ~T0 1 a ]
+[; ;ExtMode.c: 21: MULTI mTemp;
+[; ;ExtMode.c: 23: char PrepMove_Ready = 0;
+[e = _PrepMove_Ready -> -> 0 `i `uc ]
+"24
+[v _PrepMove_Distance `d ~T0 1 a ]
+[v _PrepMove_Speed `d ~T0 1 a ]
+[v _PrepMove_Acceleration `d ~T0 1 a ]
+"25
+[v _S `d ~T0 1 a ]
+[v _D `d ~T0 1 a ]
+[v _T `d ~T0 1 a ]
+[; ;ExtMode.c: 24: double PrepMove_Distance, PrepMove_Speed, PrepMove_Acceleration;
+[; ;ExtMode.c: 25: double S, D, T;
+[; ;ExtMode.c: 27: LCD_ClearDisplay();
+"27
+[e ( _LCD_ClearDisplay ..  ]
+[; ;ExtMode.c: 28: LCD_PrintString("EXTERNAL MODE");
+"28
+[e ( _LCD_PrintString (1 :s 1C ]
+[; ;ExtMode.c: 30: while (1) {
+"30
+[e :U 9 ]
+{
+[; ;ExtMode.c: 31: ret = GetInput_nonblocking();
+"31
+[e = _ret ( _GetInput_nonblocking ..  ]
+[; ;ExtMode.c: 32: if (ret == 3) {
+"32
+[e $ ! == -> _ret `i -> 3 `i 11  ]
+{
+[; ;ExtMode.c: 33: ExtModeActive = 0;
+"33
+[e = _ExtModeActive -> -> 0 `i `b ]
+[; ;ExtMode.c: 34: return (-2);
+"34
+[e ) -> -U -> 2 `i `uc ]
+[e $UE 7  ]
+"35
+}
+[e :U 11 ]
+[; ;ExtMode.c: 35: }
+[; ;ExtMode.c: 36: switch (State) {
+"36
+[e $U 13  ]
+{
+[; ;ExtMode.c: 37: case 0:
+"37
+[e :U 14 ]
+[; ;ExtMode.c: 38: bMove_InProgress = 0;
+"38
+[e = _bMove_InProgress -> -> 0 `i `b ]
+[; ;ExtMode.c: 39: bFollowMode = 0;
+"39
+[e = _bFollowMode -> -> 0 `i `b ]
+[; ;ExtMode.c: 40: bSpeedMode = 0;
+"40
+[e = _bSpeedMode -> -> 0 `i `b ]
+[; ;ExtMode.c: 41: break;
+"41
+[e $U 12  ]
+[; ;ExtMode.c: 42: case 1:
+"42
+[e :U 15 ]
+[; ;ExtMode.c: 43: bSpeedMode = 1;
+"43
+[e = _bSpeedMode -> -> 1 `i `b ]
+[; ;ExtMode.c: 44: Speed_SetToThis = 0;
+"44
+[e = _Speed_SetToThis -> -> -> 0 `i `l `ul ]
+[; ;ExtMode.c: 45: Speed_SetPending = 1;
+"45
+[e = _Speed_SetPending -> -> 1 `i `b ]
+[; ;ExtMode.c: 46: if (!Speed_IsAccelerating) State = 0;
+"46
+[e $ ! ! _Speed_IsAccelerating 16  ]
+[e = _State -> -> 0 `i `uc ]
+[e :U 16 ]
+[; ;ExtMode.c: 47: case 2:
+"47
+[e :U 17 ]
+[; ;ExtMode.c: 48: if (!bMove_InProgress) State = 1;
+"48
+[e $ ! ! _bMove_InProgress 18  ]
+[e = _State -> -> 1 `i `uc ]
+[e :U 18 ]
+[; ;ExtMode.c: 49: case 3:
+"49
+[e :U 19 ]
+[; ;ExtMode.c: 50: if (!bMove_InProgress) {
+"50
+[e $ ! ! _bMove_InProgress 20  ]
+{
+[; ;ExtMode.c: 51: Wait_seconds_nonblocking(PathDwellTimes[PathIdx]);
+"51
+[e ( _Wait_seconds_nonblocking (1 *U + &U _PathDwellTimes * -> _PathIdx `ux -> -> # *U &U _PathDwellTimes `ui `ux ]
+[; ;ExtMode.c: 52: PathIdx += 1;
+"52
+[e =+ _PathIdx -> -> 1 `i `uc ]
+[; ;ExtMode.c: 53: State = 4;
+"53
+[e = _State -> -> 4 `i `uc ]
+"54
+}
+[e :U 20 ]
+[; ;ExtMode.c: 54: }
+[; ;ExtMode.c: 55: break;
+"55
+[e $U 12  ]
+[; ;ExtMode.c: 56: case 4:
+"56
+[e :U 21 ]
+[; ;ExtMode.c: 57: if (!bWaiting) {
+"57
+[e $ ! ! _bWaiting 22  ]
+{
+[; ;ExtMode.c: 58: if (PathIdx == PathCount) {
+"58
+[e $ ! == -> _PathIdx `i -> _PathCount `i 23  ]
+{
+[; ;ExtMode.c: 59: State = 1;
+"59
+[e = _State -> -> 1 `i `uc ]
+"60
+}
+[; ;ExtMode.c: 60: } else {
+[e $U 24  ]
+[e :U 23 ]
+{
+[; ;ExtMode.c: 61: D = PathDistances[PathIdx];
+"61
+[e = _D -> *U + &U _PathDistances * -> _PathIdx `ux -> -> # *U &U _PathDistances `ui `ux `d ]
+[; ;ExtMode.c: 62: T = PathTravelTimes[PathIdx];
+"62
+[e = _T -> *U + &U _PathTravelTimes * -> _PathIdx `ux -> -> # *U &U _PathTravelTimes `ui `ux `d ]
+[; ;ExtMode.c: 63: S = SpeedRequiredToMoveInTime(D, T);
+"63
+[e = _S ( _SpeedRequiredToMoveInTime (2 , _D _T ]
+[; ;ExtMode.c: 64: Move(D, S);
+"64
+[e ( _Move (2 , _D _S ]
+[; ;ExtMode.c: 65: State = 3;
+"65
+[e = _State -> -> 3 `i `uc ]
+"66
+}
+[e :U 24 ]
+"67
+}
+[e :U 22 ]
+[; ;ExtMode.c: 66: }
+[; ;ExtMode.c: 67: }
+[; ;ExtMode.c: 68: break;
+"68
+[e $U 12  ]
+"69
+}
+[; ;ExtMode.c: 69: }
+[e $U 12  ]
+"36
+[e :U 13 ]
+[e [\ _State , $ -> -> 0 `i `uc 14
+ , $ -> -> 1 `i `uc 15
+ , $ -> -> 2 `i `uc 17
+ , $ -> -> 3 `i `uc 19
+ , $ -> -> 4 `i `uc 21
+ 12 ]
+"69
+[e :U 12 ]
+[; ;ExtMode.c: 71: if (RX_MsgComplete) {
+"71
+[e $ ! _RX_MsgComplete 25  ]
+{
+[; ;ExtMode.c: 72: ReadIdx = 1;
+"72
+[e = _ReadIdx -> -> 1 `i `uc ]
+[; ;ExtMode.c: 73: RX_MsgComplete = 0;
+"73
+[e = _RX_MsgComplete -> -> 0 `i `b ]
+[; ;ExtMode.c: 74: if (MessageStream_ReadByte() == MyID) {
+"74
+[e $ ! == -> ( _MessageStream_ReadByte ..  `i -> _MyID `i 26  ]
+{
+[; ;ExtMode.c: 75: CmdID = MessageStream_ReadByte();
+"75
+[e = _CmdID ( _MessageStream_ReadByte ..  ]
+[; ;ExtMode.c: 76: switch (CmdID) {
+"76
+[e $U 28  ]
+{
+[; ;ExtMode.c: 77: case 0x60:
+"77
+[e :U 29 ]
+[; ;ExtMode.c: 78: mTemp.ub[3] = MessageStream_ReadByte();
+"78
+[e = *U + &U . _mTemp 0 * -> -> -> 3 `i `ui `ux -> -> # *U &U . _mTemp 0 `ui `ux ( _MessageStream_ReadByte ..  ]
+[; ;ExtMode.c: 79: mTemp.ub[2] = MessageStream_ReadByte();
+"79
+[e = *U + &U . _mTemp 0 * -> -> -> 2 `i `ui `ux -> -> # *U &U . _mTemp 0 `ui `ux ( _MessageStream_ReadByte ..  ]
+[; ;ExtMode.c: 80: mTemp.ub[1] = MessageStream_ReadByte();
+"80
+[e = *U + &U . _mTemp 0 * -> -> -> 1 `i `ui `ux -> -> # *U &U . _mTemp 0 `ui `ux ( _MessageStream_ReadByte ..  ]
+[; ;ExtMode.c: 81: mTemp.ub[0] = MessageStream_ReadByte();
+"81
+[e = *U + &U . _mTemp 0 * -> -> -> 0 `i `ui `ux -> -> # *U &U . _mTemp 0 `ui `ux ( _MessageStream_ReadByte ..  ]
+[; ;ExtMode.c: 82: PrepMove_Distance = mTemp.dbl;
+"82
+[e = _PrepMove_Distance . _mTemp 7 ]
+[; ;ExtMode.c: 84: mTemp.ub[3] = MessageStream_ReadByte();
+"84
+[e = *U + &U . _mTemp 0 * -> -> -> 3 `i `ui `ux -> -> # *U &U . _mTemp 0 `ui `ux ( _MessageStream_ReadByte ..  ]
+[; ;ExtMode.c: 85: mTemp.ub[2] = MessageStream_ReadByte();
+"85
+[e = *U + &U . _mTemp 0 * -> -> -> 2 `i `ui `ux -> -> # *U &U . _mTemp 0 `ui `ux ( _MessageStream_ReadByte ..  ]
+[; ;ExtMode.c: 86: mTemp.ub[1] = MessageStream_ReadByte();
+"86
+[e = *U + &U . _mTemp 0 * -> -> -> 1 `i `ui `ux -> -> # *U &U . _mTemp 0 `ui `ux ( _MessageStream_ReadByte ..  ]
+[; ;ExtMode.c: 87: mTemp.ub[0] = MessageStream_ReadByte();
+"87
+[e = *U + &U . _mTemp 0 * -> -> -> 0 `i `ui `ux -> -> # *U &U . _mTemp 0 `ui `ux ( _MessageStream_ReadByte ..  ]
+[; ;ExtMode.c: 88: PrepMove_Speed = mTemp.dbl;
+"88
+[e = _PrepMove_Speed . _mTemp 7 ]
+[; ;ExtMode.c: 90: mTemp.ub[3] = MessageStream_ReadByte();
+"90
+[e = *U + &U . _mTemp 0 * -> -> -> 3 `i `ui `ux -> -> # *U &U . _mTemp 0 `ui `ux ( _MessageStream_ReadByte ..  ]
+[; ;ExtMode.c: 91: mTemp.ub[2] = MessageStream_ReadByte();
+"91
+[e = *U + &U . _mTemp 0 * -> -> -> 2 `i `ui `ux -> -> # *U &U . _mTemp 0 `ui `ux ( _MessageStream_ReadByte ..  ]
+[; ;ExtMode.c: 92: mTemp.ub[1] = MessageStream_ReadByte();
+"92
+[e = *U + &U . _mTemp 0 * -> -> -> 1 `i `ui `ux -> -> # *U &U . _mTemp 0 `ui `ux ( _MessageStream_ReadByte ..  ]
+[; ;ExtMode.c: 93: mTemp.ub[0] = MessageStream_ReadByte();
+"93
+[e = *U + &U . _mTemp 0 * -> -> -> 0 `i `ui `ux -> -> # *U &U . _mTemp 0 `ui `ux ( _MessageStream_ReadByte ..  ]
+[; ;ExtMode.c: 94: PrepMove_Acceleration = mTemp.dbl;
+"94
+[e = _PrepMove_Acceleration . _mTemp 7 ]
+[; ;ExtMode.c: 95: PrepMove_Ready = 1;
+"95
+[e = _PrepMove_Ready -> -> 1 `i `uc ]
+[; ;ExtMode.c: 97: AckCmd(CmdID);
+"97
+[e ( _AckCmd (1 _CmdID ]
+[; ;ExtMode.c: 99: break;
+"99
+[e $U 27  ]
+[; ;ExtMode.c: 100: case 0x61:
+"100
+[e :U 30 ]
+[; ;ExtMode.c: 101: if (!PrepMove_Ready) {
+"101
+[e $ ! ! != -> _PrepMove_Ready `i -> -> -> 0 `i `uc `i 31  ]
+{
+[; ;ExtMode.c: 102: NackCmd(CmdID, 1);
+"102
+[e ( _NackCmd (2 , _CmdID -> -> 1 `i `uc ]
+[; ;ExtMode.c: 103: break;
+"103
+[e $U 27  ]
+"104
+}
+[e :U 31 ]
+[; ;ExtMode.c: 104: }
+[; ;ExtMode.c: 105: if (State) {
+"105
+[e $ ! != -> _State `i -> -> -> 0 `i `uc `i 32  ]
+{
+[; ;ExtMode.c: 106: NackCmd(CmdID, 2);
+"106
+[e ( _NackCmd (2 , _CmdID -> -> 2 `i `uc ]
+[; ;ExtMode.c: 107: break;
+"107
+[e $U 27  ]
+"108
+}
+[e :U 32 ]
+[; ;ExtMode.c: 108: }
+[; ;ExtMode.c: 109: MoveAdvanced(PrepMove_Distance, PrepMove_Speed, PrepMove_Acceleration);
+"109
+[e ( _MoveAdvanced (3 , , _PrepMove_Distance _PrepMove_Speed _PrepMove_Acceleration ]
+[; ;ExtMode.c: 110: PrepMove_Ready = 0;
+"110
+[e = _PrepMove_Ready -> -> 0 `i `uc ]
+[; ;ExtMode.c: 111: State = 2;
+"111
+[e = _State -> -> 2 `i `uc ]
+[; ;ExtMode.c: 112: AckCmd(CmdID);
+"112
+[e ( _AckCmd (1 _CmdID ]
+[; ;ExtMode.c: 114: break;
+"114
+[e $U 27  ]
+[; ;ExtMode.c: 115: case 0x62:
+"115
+[e :U 33 ]
+[; ;ExtMode.c: 116: if (!State == 0) State = 1;
+"116
+[e $ ! == -> ! != -> _State `i -> -> -> 0 `i `uc `i `i -> 0 `i 34  ]
+[e = _State -> -> 1 `i `uc ]
+[e :U 34 ]
+[; ;ExtMode.c: 117: AckCmd(CmdID);
+"117
+[e ( _AckCmd (1 _CmdID ]
+[; ;ExtMode.c: 118: break;
+"118
+[e $U 27  ]
+[; ;ExtMode.c: 119: case 0x63:
+"119
+[e :U 35 ]
+[; ;ExtMode.c: 120: TX_Idx = 0;
+"120
+[e = _TX_Idx -> -> 0 `i `uc ]
+[; ;ExtMode.c: 121: TXBuffer[TX_Idx++] = '$';
+"121
+[e = *U + &U _TXBuffer * -> ++ _TX_Idx -> -> 1 `i `uc `ux -> -> # *U &U _TXBuffer `ui `ux -> -> 36 `ui `uc ]
+[; ;ExtMode.c: 122: MessageStream_WriteByte(CmdID);
+"122
+[e ( _MessageStream_WriteByte (1 _CmdID ]
+[; ;ExtMode.c: 124: MessageStream_WriteByte(State);
+"124
+[e ( _MessageStream_WriteByte (1 _State ]
+[; ;ExtMode.c: 125: MessageStream_WriteByte(PrepMove_Ready);
+"125
+[e ( _MessageStream_WriteByte (1 _PrepMove_Ready ]
+[; ;ExtMode.c: 127: bLock_Motor_Position = 1;
+"127
+[e = _bLock_Motor_Position -> -> 1 `i `b ]
+[; ;ExtMode.c: 128: mTemp.dbl = Motor_Position;
+"128
+[e = . _mTemp 7 -> _Motor_Position `d ]
+[; ;ExtMode.c: 129: bLock_Motor_Position = 0;
+"129
+[e = _bLock_Motor_Position -> -> 0 `i `b ]
+[; ;ExtMode.c: 130: mTemp.dbl *= Config.Degrees_Per_Count;
+"130
+[e =* . _mTemp 7 . _Config 15 ]
+[; ;ExtMode.c: 131: MessageStream_WriteByte(mTemp.ub[3]);
+"131
+[e ( _MessageStream_WriteByte (1 *U + &U . _mTemp 0 * -> -> -> 3 `i `ui `ux -> -> # *U &U . _mTemp 0 `ui `ux ]
+[; ;ExtMode.c: 132: MessageStream_WriteByte(mTemp.ub[2]);
+"132
+[e ( _MessageStream_WriteByte (1 *U + &U . _mTemp 0 * -> -> -> 2 `i `ui `ux -> -> # *U &U . _mTemp 0 `ui `ux ]
+[; ;ExtMode.c: 133: MessageStream_WriteByte(mTemp.ub[1]);
+"133
+[e ( _MessageStream_WriteByte (1 *U + &U . _mTemp 0 * -> -> -> 1 `i `ui `ux -> -> # *U &U . _mTemp 0 `ui `ux ]
+[; ;ExtMode.c: 134: MessageStream_WriteByte(mTemp.ub[0]);
+"134
+[e ( _MessageStream_WriteByte (1 *U + &U . _mTemp 0 * -> -> -> 0 `i `ui `ux -> -> # *U &U . _mTemp 0 `ui `ux ]
+[; ;ExtMode.c: 136: mTemp.dbl = 0;
+"136
+[e = . _mTemp 7 -> -> 0 `i `d ]
+[; ;ExtMode.c: 137: while (!(mTemp.dbl == Move_speedQ24)) mTemp.dbl = Move_speedQ24;
+"137
+[e $U 36  ]
+[e :U 37 ]
+[e = . _mTemp 7 -> _Move_speedQ24 `d ]
+[e :U 36 ]
+[e $ ! == . _mTemp 7 -> _Move_speedQ24 `d 37  ]
+[e :U 38 ]
+[; ;ExtMode.c: 138: mTemp.dbl *= 0.0000298023224;
+"138
+[e =* . _mTemp 7 .0.0000298023224 ]
+[; ;ExtMode.c: 139: mTemp.dbl *= Config.Degrees_Per_Count;
+"139
+[e =* . _mTemp 7 . _Config 15 ]
+[; ;ExtMode.c: 140: MessageStream_WriteByte(mTemp.ub[3]);
+"140
+[e ( _MessageStream_WriteByte (1 *U + &U . _mTemp 0 * -> -> -> 3 `i `ui `ux -> -> # *U &U . _mTemp 0 `ui `ux ]
+[; ;ExtMode.c: 141: MessageStream_WriteByte(mTemp.ub[2]);
+"141
+[e ( _MessageStream_WriteByte (1 *U + &U . _mTemp 0 * -> -> -> 2 `i `ui `ux -> -> # *U &U . _mTemp 0 `ui `ux ]
+[; ;ExtMode.c: 142: MessageStream_WriteByte(mTemp.ub[1]);
+"142
+[e ( _MessageStream_WriteByte (1 *U + &U . _mTemp 0 * -> -> -> 1 `i `ui `ux -> -> # *U &U . _mTemp 0 `ui `ux ]
+[; ;ExtMode.c: 143: MessageStream_WriteByte(mTemp.ub[0]);
+"143
+[e ( _MessageStream_WriteByte (1 *U + &U . _mTemp 0 * -> -> -> 0 `i `ui `ux -> -> # *U &U . _mTemp 0 `ui `ux ]
+[; ;ExtMode.c: 145: bLock_Tick500Hz = 1;
+"145
+[e = _bLock_Tick500Hz -> -> 1 `i `b ]
+[; ;ExtMode.c: 146: mTemp.dbl = Tick500Hz;
+"146
+[e = . _mTemp 7 -> _Tick500Hz `d ]
+[; ;ExtMode.c: 147: bLock_Tick500Hz = 0;
+"147
+[e = _bLock_Tick500Hz -> -> 0 `i `b ]
+[; ;ExtMode.c: 148: mTemp.dbl *= 0.002;
+"148
+[e =* . _mTemp 7 .0.002 ]
+[; ;ExtMode.c: 149: MessageStream_WriteByte(mTemp.ub[3]);
+"149
+[e ( _MessageStream_WriteByte (1 *U + &U . _mTemp 0 * -> -> -> 3 `i `ui `ux -> -> # *U &U . _mTemp 0 `ui `ux ]
+[; ;ExtMode.c: 150: MessageStream_WriteByte(mTemp.ub[2]);
+"150
+[e ( _MessageStream_WriteByte (1 *U + &U . _mTemp 0 * -> -> -> 2 `i `ui `ux -> -> # *U &U . _mTemp 0 `ui `ux ]
+[; ;ExtMode.c: 151: MessageStream_WriteByte(mTemp.ub[1]);
+"151
+[e ( _MessageStream_WriteByte (1 *U + &U . _mTemp 0 * -> -> -> 1 `i `ui `ux -> -> # *U &U . _mTemp 0 `ui `ux ]
+[; ;ExtMode.c: 152: MessageStream_WriteByte(mTemp.ub[0]);
+"152
+[e ( _MessageStream_WriteByte (1 *U + &U . _mTemp 0 * -> -> -> 0 `i `ui `ux -> -> # *U &U . _mTemp 0 `ui `ux ]
+[; ;ExtMode.c: 154: bLock_BatteryVoltage = 1;
+"154
+[e = _bLock_BatteryVoltage -> -> 1 `i `b ]
+[; ;ExtMode.c: 155: mTemp.dbl = BatteryVoltage;
+"155
+[e = . _mTemp 7 -> _BatteryVoltage `d ]
+[; ;ExtMode.c: 156: bLock_BatteryVoltage = 0;
+"156
+[e = _bLock_BatteryVoltage -> -> 0 `i `b ]
+[; ;ExtMode.c: 157: mTemp.dbl *= Config.Volts_per_Count;
+"157
+[e =* . _mTemp 7 . _Config 6 ]
+[; ;ExtMode.c: 158: MessageStream_WriteByte(mTemp.ub[3]);
+"158
+[e ( _MessageStream_WriteByte (1 *U + &U . _mTemp 0 * -> -> -> 3 `i `ui `ux -> -> # *U &U . _mTemp 0 `ui `ux ]
+[; ;ExtMode.c: 159: MessageStream_WriteByte(mTemp.ub[2]);
+"159
+[e ( _MessageStream_WriteByte (1 *U + &U . _mTemp 0 * -> -> -> 2 `i `ui `ux -> -> # *U &U . _mTemp 0 `ui `ux ]
+[; ;ExtMode.c: 160: MessageStream_WriteByte(mTemp.ub[1]);
+"160
+[e ( _MessageStream_WriteByte (1 *U + &U . _mTemp 0 * -> -> -> 1 `i `ui `ux -> -> # *U &U . _mTemp 0 `ui `ux ]
+[; ;ExtMode.c: 161: MessageStream_WriteByte(mTemp.ub[0]);
+"161
+[e ( _MessageStream_WriteByte (1 *U + &U . _mTemp 0 * -> -> -> 0 `i `ui `ux -> -> # *U &U . _mTemp 0 `ui `ux ]
+[; ;ExtMode.c: 163: TXBuffer[TX_Idx++] = '#';
+"163
+[e = *U + &U _TXBuffer * -> ++ _TX_Idx -> -> 1 `i `uc `ux -> -> # *U &U _TXBuffer `ui `ux -> -> 35 `ui `uc ]
+[; ;ExtMode.c: 164: idx = TX_Idx;
+"164
+[e = _idx _TX_Idx ]
+[; ;ExtMode.c: 165: TX_Idx = 0;
+"165
+[e = _TX_Idx -> -> 0 `i `uc ]
+[; ;ExtMode.c: 166: TX_bCount = idx;
+"166
+[e = _TX_bCount _idx ]
+[; ;ExtMode.c: 167: break;
+"167
+[e $U 27  ]
+[; ;ExtMode.c: 168: case 0x64:
+"168
+[e :U 39 ]
+[; ;ExtMode.c: 169: if ((State == 3) || (State == 4)) {
+"169
+[e $ ! || == -> _State `i -> 3 `i == -> _State `i -> 4 `i 40  ]
+{
+[; ;ExtMode.c: 170: NackCmd(CmdID, 1);
+"170
+[e ( _NackCmd (2 , _CmdID -> -> 1 `i `uc ]
+[; ;ExtMode.c: 171: break;
+"171
+[e $U 27  ]
+"172
+}
+[e :U 40 ]
+[; ;ExtMode.c: 172: }
+[; ;ExtMode.c: 173: PathIdx = 0;
+"173
+[e = _PathIdx -> -> 0 `i `uc ]
+[; ;ExtMode.c: 174: PathCount = 0;
+"174
+[e = _PathCount -> -> 0 `i `uc ]
+[; ;ExtMode.c: 175: AckCmd(CmdID);
+"175
+[e ( _AckCmd (1 _CmdID ]
+[; ;ExtMode.c: 176: break;
+"176
+[e $U 27  ]
+[; ;ExtMode.c: 177: case 0x65:
+"177
+[e :U 41 ]
+[; ;ExtMode.c: 178: if ((State == 3) || (State == 4)) {
+"178
+[e $ ! || == -> _State `i -> 3 `i == -> _State `i -> 4 `i 42  ]
+{
+[; ;ExtMode.c: 179: NackCmd(CmdID, 1);
+"179
+[e ( _NackCmd (2 , _CmdID -> -> 1 `i `uc ]
+[; ;ExtMode.c: 180: break;
+"180
+[e $U 27  ]
+"181
+}
+[e :U 42 ]
+[; ;ExtMode.c: 181: }
+[; ;ExtMode.c: 183: if (PathCount > 99) {
+"183
+[e $ ! > -> _PathCount `i -> 99 `i 43  ]
+{
+[; ;ExtMode.c: 184: NackCmd(CmdID, 2);
+"184
+[e ( _NackCmd (2 , _CmdID -> -> 2 `i `uc ]
+[; ;ExtMode.c: 185: break;
+"185
+[e $U 27  ]
+"186
+}
+[e :U 43 ]
+[; ;ExtMode.c: 186: }
+[; ;ExtMode.c: 188: mTemp.ub[1] = MessageStream_ReadByte();
+"188
+[e = *U + &U . _mTemp 0 * -> -> -> 1 `i `ui `ux -> -> # *U &U . _mTemp 0 `ui `ux ( _MessageStream_ReadByte ..  ]
+[; ;ExtMode.c: 189: mTemp.ub[0] = MessageStream_ReadByte();
+"189
+[e = *U + &U . _mTemp 0 * -> -> -> 0 `i `ui `ux -> -> # *U &U . _mTemp 0 `ui `ux ( _MessageStream_ReadByte ..  ]
+[; ;ExtMode.c: 190: PathDistances[PathCount] = mTemp.i[0];
+"190
+[e = *U + &U _PathDistances * -> _PathCount `ux -> -> # *U &U _PathDistances `ui `ux *U + &U . _mTemp 3 * -> -> -> 0 `i `ui `ux -> -> # *U &U . _mTemp 3 `ui `ux ]
+[; ;ExtMode.c: 192: mTemp.ub[1] = MessageStream_ReadByte();
+"192
+[e = *U + &U . _mTemp 0 * -> -> -> 1 `i `ui `ux -> -> # *U &U . _mTemp 0 `ui `ux ( _MessageStream_ReadByte ..  ]
+[; ;ExtMode.c: 193: mTemp.ub[0] = MessageStream_ReadByte();
+"193
+[e = *U + &U . _mTemp 0 * -> -> -> 0 `i `ui `ux -> -> # *U &U . _mTemp 0 `ui `ux ( _MessageStream_ReadByte ..  ]
+[; ;ExtMode.c: 194: PathTravelTimes[PathCount] = mTemp.ui[0];
+"194
+[e = *U + &U _PathTravelTimes * -> _PathCount `ux -> -> # *U &U _PathTravelTimes `ui `ux *U + &U . _mTemp 2 * -> -> -> 0 `i `ui `ux -> -> # *U &U . _mTemp 2 `ui `ux ]
+[; ;ExtMode.c: 196: mTemp.ub[1] = MessageStream_ReadByte();
+"196
+[e = *U + &U . _mTemp 0 * -> -> -> 1 `i `ui `ux -> -> # *U &U . _mTemp 0 `ui `ux ( _MessageStream_ReadByte ..  ]
+[; ;ExtMode.c: 197: mTemp.ub[0] = MessageStream_ReadByte();
+"197
+[e = *U + &U . _mTemp 0 * -> -> -> 0 `i `ui `ux -> -> # *U &U . _mTemp 0 `ui `ux ( _MessageStream_ReadByte ..  ]
+[; ;ExtMode.c: 198: PathDwellTimes[PathCount] = mTemp.ui[0];
+"198
+[e = *U + &U _PathDwellTimes * -> _PathCount `ux -> -> # *U &U _PathDwellTimes `ui `ux *U + &U . _mTemp 2 * -> -> -> 0 `i `ui `ux -> -> # *U &U . _mTemp 2 `ui `ux ]
+[; ;ExtMode.c: 199: AckCmd(CmdID);
+"199
+[e ( _AckCmd (1 _CmdID ]
+[; ;ExtMode.c: 200: PathCount++;
+"200
+[e ++ _PathCount -> -> 1 `i `uc ]
+[; ;ExtMode.c: 202: break;
+"202
+[e $U 27  ]
+[; ;ExtMode.c: 203: case 0x66:
+"203
+[e :U 44 ]
+[; ;ExtMode.c: 204: if (!(State == 0)) {
+"204
+[e $ ! ! == -> _State `i -> 0 `i 45  ]
+{
+[; ;ExtMode.c: 205: NackCmd(CmdID, 1);
+"205
+[e ( _NackCmd (2 , _CmdID -> -> 1 `i `uc ]
+[; ;ExtMode.c: 206: break;
+"206
+[e $U 27  ]
+"207
+}
+[e :U 45 ]
+[; ;ExtMode.c: 207: }
+[; ;ExtMode.c: 208: PathIdx = 0;
+"208
+[e = _PathIdx -> -> 0 `i `uc ]
+[; ;ExtMode.c: 209: D = PathDistances[PathIdx];
+"209
+[e = _D -> *U + &U _PathDistances * -> _PathIdx `ux -> -> # *U &U _PathDistances `ui `ux `d ]
+[; ;ExtMode.c: 210: T = PathTravelTimes[PathIdx];
+"210
+[e = _T -> *U + &U _PathTravelTimes * -> _PathIdx `ux -> -> # *U &U _PathTravelTimes `ui `ux `d ]
+[; ;ExtMode.c: 211: S = SpeedRequiredToMoveInTime(D, T);
+"211
+[e = _S ( _SpeedRequiredToMoveInTime (2 , _D _T ]
+[; ;ExtMode.c: 212: Move(D, S);
+"212
+[e ( _Move (2 , _D _S ]
+[; ;ExtMode.c: 213: State = 3;
+"213
+[e = _State -> -> 3 `i `uc ]
+[; ;ExtMode.c: 214: AckCmd(CmdID);
+"214
+[e ( _AckCmd (1 _CmdID ]
+[; ;ExtMode.c: 215: break;
+"215
+[e $U 27  ]
+[; ;ExtMode.c: 216: default:
+"216
+[e :U 46 ]
+[; ;ExtMode.c: 217: NackCmd(CmdID, 0xFE);
+"217
+[e ( _NackCmd (2 , _CmdID -> -> 254 `i `uc ]
+[; ;ExtMode.c: 218: break;
+"218
+[e $U 27  ]
+"219
+}
+[; ;ExtMode.c: 219: }
+[e $U 27  ]
+"76
+[e :U 28 ]
+[e [\ _CmdID , $ -> -> 96 `i `uc 29
+ , $ -> -> 97 `i `uc 30
+ , $ -> -> 98 `i `uc 33
+ , $ -> -> 99 `i `uc 35
+ , $ -> -> 100 `i `uc 39
+ , $ -> -> 101 `i `uc 41
+ , $ -> -> 102 `i `uc 44
+ 46 ]
+"219
+[e :U 27 ]
+"220
+}
+[e :U 26 ]
+"222
+}
+[e :U 25 ]
+"223
+}
+[e :U 8 ]
+"30
+[e $U 9  ]
+[e :U 10 ]
+[; ;ExtMode.c: 220: }
+[; ;ExtMode.c: 222: }
+[; ;ExtMode.c: 223: }
+[; ;ExtMode.c: 224: return 0;
+"224
+[e ) -> -> 0 `i `uc ]
+[e $UE 7  ]
+[; ;ExtMode.c: 225: }
+"225
+[e :UE 7 ]
+}
+[a 1C 69 88 84 69 82 78 65 76 32 77 79 68 69 0 ]
+

@@ -1,0 +1,1496 @@
+Version 3.2 HI-TECH Software Intermediate Code
+[u S1 `uc -> 4 `i `c -> 4 `i `ui -> 2 `i `i -> 2 `i `ul 1 `l 1 ]
+[n S1 LONG ub b ui i ul l ]
+[s S3 `uc 1 `ui 1 `ui 1 `uc 1 `uc 1 `d 1 `d 1 `uc 1 `ui 1 `d 1 `d 1 `i 1 `ui 1 `ui 1 `d 1 `d 1 ]
+[n S3 . Version BatteryLowVoltageLevel Battery12V_Q8 PowerResponseLimiter_Slope PowerResponseLimiter_Intercept Counts_per_Volt Volts_per_Count BacklightPWM_Duty BacklightIdleTimeout SystemAcceleration MaxSpeed PID_MaxError PID_Kp PID_Kd Counts_Per_Degree Degrees_Per_Count ]
+[s S5 `uc 1 `ui 1 `uc 1 `uc 1 `ui 1 `i -> 18 `i `ui -> 18 `i `ui -> 19 `i ]
+[n S5 . Type Origin_deg PointCount Bounce LoopCount Distances_deg TravelTimes_sec DwellTimes_sec ]
+[s S4 `uc 1 `ui 1 `uc 1 `uc 1 `d 1 `d 1 `d 1 `d 1 `uc 1 ]
+[n S4 . Type Origin_deg EndMode IsClockWise ProgramRunTime_sec CycleCount_rev CycleTime_sec Speed_deg_sec SpeedMode ]
+"6 Z:\CineFlux\Dropbox\Orbit\LCD.h
+[v _LCD_ClearDisplay `(v ~T0 0 ef ]
+"1
+[v _LCD_PrintString `(v ~T0 0 ef1`*Cuc ]
+"9
+[v _LCD_SetPosition `(v ~T0 0 ef2`uc`uc ]
+"5 Z:\CineFlux\Dropbox\Orbit\UserInterface.h
+[v _GetClick `(c ~T0 0 ef ]
+"42 Z:\CineFlux\Dropbox\Orbit\Main.h
+[v _GetCurrentAngle `(d ~T0 0 ef ]
+"11 Z:\CineFlux\Dropbox\Orbit\UserInterface.h
+[v _DisplayChoices `(c ~T0 0 ef4`**Cuc`uc`*Cuc`uc ]
+"7
+[v _GetFloat `(c ~T0 0 ef6`*Cuc`*Cuc`*d`d`d`d ]
+"14
+[v _GetTime `(c ~T0 0 ef5`*Cuc`*d`d`d`uc ]
+"1 Z:\CineFlux\Dropbox\Orbit\OrbitProgram.h
+[v _RunOrbitProgram `(c ~T0 0 ef ]
+"12 Z:\CineFlux\Dropbox\Orbit\UserInterface.h
+[v _GetPresetNumber `(c ~T0 0 ef ]
+"60 Z:\CineFlux\Dropbox\Orbit\Settings.h
+[v _SavePreset `(v ~T0 0 ef2`uc`*uc ]
+"4 Z:\CineFlux\Dropbox\Orbit\MotionEngine.h
+[v _MoveToAngle `(uc ~T0 0 ef2`d`d ]
+"40 Z:\CineFlux\Dropbox\Orbit\Main.h
+[v _Idle `(v ~T0 0 ef ]
+"9 Z:\CineFlux\Dropbox\Orbit\UserInterface.h
+[v _GetInput_nonblocking `(c ~T0 0 ef ]
+"1 Z:\CineFlux\Dropbox\Orbit\MotionEngine.h
+[v _Move `(uc ~T0 0 ef2`d`d ]
+"15 Z:\CineFlux\Dropbox\Orbit\UserInterface.h
+[v _PrintTime `(v ~T0 0 ef3`d`uc`uc ]
+"4 Z:\CineFlux\Dropbox\Orbit\LCD.h
+[v _LCD_PrintFloat `(v ~T0 0 ef4`d`uc`uc`uc ]
+"2 Z:\CineFlux\Dropbox\Orbit\Timings.h
+[v _Wait_ms `(v ~T0 0 ef1`ui ]
+[; ;LCD.h: 1: void LCD_PrintString(const unsigned char *dat);
+[; ;LCD.h: 2: void LCD_PrintChar(char dat);
+[; ;LCD.h: 3: void LCD_PrintLong(long dat, char places, char sign);
+[; ;LCD.h: 4: void LCD_PrintFloat(double dat, char whole, char fract, char sign);
+[; ;LCD.h: 6: void LCD_ClearDisplay(void);
+[; ;LCD.h: 7: void LCD_PowerUp(void);
+[; ;LCD.h: 9: void LCD_SetPosition(char Row, char Col);
+[; ;LCD.h: 10: void LCD_FunctionSet(char EightBit, char DualLine, char FiveByTenDots);
+[; ;LCD.h: 11: void LCD_CursorShift(char ShiftDisplay, char ShiftRight);
+[; ;LCD.h: 12: void LCD_DisplayOnOff(char DisplayOn, char CursorOn, char BlinkOn);
+[; ;LCD.h: 13: void LCD_EntryModeSet(char Increment, char ShiftOn);
+[; ;LCD.h: 14: void LCD_ReturnHome(void);
+[; ;LCD.h: 16: void putc(unsigned char dat);
+"18 Z:\CineFlux\Dropbox\Orbit\LCD.h
+[v _LCD_Line1 `uc ~T0 -> 20 `i e ]
+[; ;LCD.h: 18: unsigned char LCD_Line1[20];
+"19
+[v _LCD_Line2 `uc ~T0 -> 20 `i e ]
+[; ;LCD.h: 19: unsigned char LCD_Line2[20];
+"20
+[v _LCD_Row `uc ~T0 1 e ]
+[i _LCD_Row
+-> -> 0 `i `uc
+]
+[; ;LCD.h: 20: unsigned char LCD_Row=0;
+"21
+[v _LCD_Col `uc ~T0 1 e ]
+[i _LCD_Col
+-> -> 0 `i `uc
+]
+[; ;LCD.h: 21: unsigned char LCD_Col=0;
+[; ;WaypointProgram.h: 1: signed char CreateWaypointProgram();
+[; ;WaypointProgram.h: 2: signed char RunWaypointProgram();
+[; ;Main.h: 7: typedef union LONG {
+[; ;Main.h: 8: unsigned char ub[4];
+[; ;Main.h: 9: signed char b[4];
+[; ;Main.h: 10: unsigned int ui[2];
+[; ;Main.h: 11: signed int i[2];
+[; ;Main.h: 12: unsigned long ul;
+[; ;Main.h: 13: signed long l;
+[; ;Main.h: 14: };
+[; ;Main.h: 16: typedef union {
+[; ;Main.h: 17: unsigned char ub[4];
+[; ;Main.h: 18: signed char b[4];
+[; ;Main.h: 19: unsigned int ui[2];
+[; ;Main.h: 20: signed int i[2];
+[; ;Main.h: 21: unsigned long ul;
+[; ;Main.h: 22: signed long l;
+[; ;Main.h: 23: float fl;
+[; ;Main.h: 24: double dbl;
+[; ;Main.h: 25: } MULTI;
+[; ;Main.h: 29: void main(void);
+[; ;Main.h: 30: void AckCmd(unsigned char CmdID);
+[; ;Main.h: 31: void NackCmd(unsigned char CmdID, unsigned char Reason);
+[; ;Main.h: 32: void MessageStream_WriteMULTI(MULTI dat, unsigned char CmdID);
+[; ;Main.h: 33: void MessageStream_WriteByte(unsigned char dat);
+[; ;Main.h: 34: unsigned char MessageStream_ReadByte();
+[; ;Main.h: 35: void GoToSleep();
+[; ;Main.h: 36: void SetupIO();
+[; ;Main.h: 37: void interrupt FastTick(void);
+[; ;Main.h: 38: void interrupt low_priority SlowTick();
+[; ;Main.h: 39: void SetupHardware();
+[; ;Main.h: 40: void Idle(void);
+[; ;Main.h: 41: double GetCurrentLinearPosition();
+[; ;Main.h: 42: double GetCurrentAngle();
+"44 Z:\CineFlux\Dropbox\Orbit\Main.h
+[v _enc_states `Cc ~T0 -> 0 `x e ]
+[i _enc_states
+:U ..
+-> -> 0 `i `c
+-> -U -> 1 `i `c
+-> -> 1 `i `c
+-> -> 0 `i `c
+-> -> 1 `i `c
+-> -> 0 `i `c
+-> -> 0 `i `c
+-> -U -> 1 `i `c
+-> -U -> 1 `i `c
+-> -> 0 `i `c
+-> -> 0 `i `c
+-> -> 1 `i `c
+-> -> 0 `i `c
+-> -> 1 `i `c
+-> -U -> 1 `i `c
+-> -> 0 `i `c
+..
+]
+[; ;Main.h: 44: const signed char enc_states[] = {0, -1, 1, 0, 1, 0, 0, -1, -1, 0, 0, 1, 0, 1, -1, 0};
+"49
+[v _ReadIdx `uc ~T0 1 e ]
+[i _ReadIdx
+-> -> 0 `i `uc
+]
+[; ;Main.h: 49: unsigned char ReadIdx = 0;
+"50
+[v _TX_Idx `Vuc ~T0 1 e ]
+[i _TX_Idx
+-> -> 0 `i `uc
+]
+[; ;Main.h: 50: volatile unsigned char TX_Idx = 0;
+"51
+[v _TX_bCount `Vuc ~T0 1 e ]
+[i _TX_bCount
+-> -> 0 `i `uc
+]
+[; ;Main.h: 51: volatile unsigned char TX_bCount = 0;
+"52
+[v _TXBuffer `Vuc ~T0 -> 255 `i e ]
+[; ;Main.h: 52: volatile unsigned char TXBuffer[255];
+"53
+[v _RX_MsgComplete `Vb ~T0 1 e ]
+[; ;Main.h: 53: volatile bit RX_MsgComplete;
+"54
+[v _RX_InProgress `Vb ~T0 1 e ]
+[; ;Main.h: 54: volatile bit RX_InProgress;
+"55
+[v _RX_Idx `Vuc ~T0 1 e ]
+[i _RX_Idx
+-> -> 0 `i `uc
+]
+[; ;Main.h: 55: volatile unsigned char RX_Idx = 0;
+"56
+[v _RXBuffer `Vuc ~T0 -> 255 `i e ]
+[; ;Main.h: 56: volatile unsigned char RXBuffer[255];
+"57
+[v _MyID `Vuc ~T0 1 e ]
+[i _MyID
+-> -> 170 `i `uc
+]
+[; ;Main.h: 57: volatile unsigned char MyID = 0xAA;
+"58
+[v _isPendingExternalUIEvent `Vb ~T0 1 e ]
+[; ;Main.h: 58: volatile bit isPendingExternalUIEvent;
+"59
+[v _PendingExternalUIEvent `Vuc ~T0 1 e ]
+[; ;Main.h: 59: volatile char PendingExternalUIEvent;
+"60
+[v _ExtModeActive `Vb ~T0 1 e ]
+[; ;Main.h: 60: volatile bit ExtModeActive;
+"65
+[v _ClearUI_Event `Vb ~T0 1 e ]
+[i _ClearUI_Event
+-> 0 `i
+]
+[; ;Main.h: 65: volatile bit ClearUI_Event = 0;
+"66
+[v _bLock_RotaryDetentIntervals `Vb ~T0 1 e ]
+[i _bLock_RotaryDetentIntervals
+-> 0 `i
+]
+[; ;Main.h: 66: volatile bit bLock_RotaryDetentIntervals = 0;
+"67
+[v _RotaryDetentIntervals `uc ~T0 -> 16 `i e ]
+[; ;Main.h: 67: unsigned char RotaryDetentIntervals[16];
+"68
+[v _ZeroRotaryDetentIntervals `Vb ~T0 1 e ]
+[i _ZeroRotaryDetentIntervals
+-> 0 `i
+]
+[; ;Main.h: 68: volatile bit ZeroRotaryDetentIntervals = 0;
+"69
+[v _bLock_UI_Event `Vb ~T0 1 e ]
+[i _bLock_UI_Event
+-> 0 `i
+]
+[; ;Main.h: 69: volatile bit bLock_UI_Event = 0;
+"70
+[v _UI_Event `Vuc ~T0 1 e ]
+[; ;Main.h: 70: volatile char UI_Event;
+"83
+[v _bLock_BatteryVoltage `Vb ~T0 1 e ]
+[i _bLock_BatteryVoltage
+-> 0 `i
+]
+[; ;Main.h: 83: volatile bit bLock_BatteryVoltage = 0;
+"84
+[v _BatteryVoltage `ui ~T0 1 e ]
+[i _BatteryVoltage
+-> -> 0 `i `ui
+]
+[; ;Main.h: 84: unsigned int BatteryVoltage = 0;
+"85
+[v _bLowVoltageTrip `Vb ~T0 1 e ]
+[i _bLowVoltageTrip
+-> 0 `i
+]
+[; ;Main.h: 85: volatile bit bLowVoltageTrip = 0;
+"88
+[v _LCD_BacklightEnabled `Vb ~T0 1 e ]
+[; ;Main.h: 88: volatile bit LCD_BacklightEnabled;
+"91
+[v _bFollowMode `Vb ~T0 1 e ]
+[i _bFollowMode
+-> 0 `i
+]
+[; ;Main.h: 91: volatile bit bFollowMode = 0;
+"92
+[v _bMove_InProgress `Vb ~T0 1 e ]
+[i _bMove_InProgress
+-> 0 `i
+]
+[; ;Main.h: 92: volatile bit bMove_InProgress = 0;
+"93
+[v _Move_speedQ24 `ul ~T0 1 e ]
+[i _Move_speedQ24
+-> -> -> 0 `i `l `ul
+]
+[; ;Main.h: 93: unsigned long Move_speedQ24 = 0;
+"94
+[v _Move_shifted_position `S1 ~T0 1 e ]
+[; ;Main.h: 94: union LONG Move_shifted_position;
+"95
+[v _Move_position `S1 ~T0 -> 2 `i e ]
+[; ;Main.h: 95: union LONG Move_position[2];
+"96
+[v _Move_AccelValueQ24 `ul ~T0 1 e ]
+[i _Move_AccelValueQ24
+-> -> -> 0 `i `l `ul
+]
+[; ;Main.h: 96: unsigned long Move_AccelValueQ24 = 0;
+"97
+[v _Move_CoastSpeedQ24 `ul ~T0 1 e ]
+[i _Move_CoastSpeedQ24
+-> -> -> 0 `i `l `ul
+]
+[; ;Main.h: 97: unsigned long Move_CoastSpeedQ24 = 0;
+"98
+[v _Move_DecelPosition `ul ~T0 1 e ]
+[i _Move_DecelPosition
+-> -> -> 0 `i `l `ul
+]
+[; ;Main.h: 98: unsigned long Move_DecelPosition = 0;
+"99
+[v _Move_FinalPosition `l ~T0 1 e ]
+[i _Move_FinalPosition
+-> -> 0 `i `l
+]
+[; ;Main.h: 99: signed long Move_FinalPosition = 0;
+"100
+[v _Move_Origin `l ~T0 1 e ]
+[i _Move_Origin
+-> -> 0 `i `l
+]
+[; ;Main.h: 100: signed long Move_Origin = 0;
+"101
+[v _bMove_Neg `Vb ~T0 1 e ]
+[i _bMove_Neg
+-> 0 `i
+]
+[; ;Main.h: 101: volatile bit bMove_Neg = 0;
+"105
+[v _bSpeedMode `Vb ~T0 1 e ]
+[i _bSpeedMode
+-> 0 `i
+]
+[; ;Main.h: 105: volatile bit bSpeedMode = 0;
+"106
+[v _Speed_SetToThis `ul ~T0 1 e ]
+[; ;Main.h: 106: unsigned long Speed_SetToThis;
+"107
+[v _Speed_SetPending `Vb ~T0 1 e ]
+[; ;Main.h: 107: volatile bit Speed_SetPending;
+"108
+[v _Speed_IsAccelerating `Vb ~T0 1 e ]
+[; ;Main.h: 108: volatile bit Speed_IsAccelerating;
+"112
+[v _bClear_MotorPosition `Vb ~T0 1 e ]
+[i _bClear_MotorPosition
+-> 0 `i
+]
+[; ;Main.h: 112: volatile bit bClear_MotorPosition = 0;
+"113
+[v _Motor_Position `l ~T0 1 e ]
+[i _Motor_Position
+-> -> 0 `i `l
+]
+[; ;Main.h: 113: signed long Motor_Position = 0;
+"114
+[v _bLock_Motor_Position `Vb ~T0 1 e ]
+[i _bLock_Motor_Position
+-> 0 `i
+]
+[; ;Main.h: 114: volatile bit bLock_Motor_Position = 0;
+"117
+[v _bIncrement_PID_Setpoint `Vb ~T0 1 e ]
+[i _bIncrement_PID_Setpoint
+-> 0 `i
+]
+[; ;Main.h: 117: volatile bit bIncrement_PID_Setpoint = 0;
+"118
+[v _bDecrement_PID_Setpoint `Vb ~T0 1 e ]
+[i _bDecrement_PID_Setpoint
+-> 0 `i
+]
+[; ;Main.h: 118: volatile bit bDecrement_PID_Setpoint = 0;
+"119
+[v _bLock_PID_SetPoint `Vb ~T0 1 e ]
+[i _bLock_PID_SetPoint
+-> 0 `i
+]
+[; ;Main.h: 119: volatile bit bLock_PID_SetPoint = 0;
+"121
+[v _bMotionError `Vb ~T0 1 e ]
+[i _bMotionError
+-> 0 `i
+]
+[; ;Main.h: 121: volatile bit bMotionError = 0;
+"122
+[v _bPowerOff `Vb ~T0 1 e ]
+[i _bPowerOff
+-> 0 `i
+]
+[; ;Main.h: 122: volatile bit bPowerOff = 0;
+"181
+[v _ASCII_HEX_TO_BINARY `Cuc ~T0 -> 128 `i e ]
+[i _ASCII_HEX_TO_BINARY
+:U ..
+-> -> 0 `i `uc
+-> -> 0 `i `uc
+-> -> 0 `i `uc
+-> -> 0 `i `uc
+-> -> 0 `i `uc
+-> -> 0 `i `uc
+-> -> 0 `i `uc
+-> -> 0 `i `uc
+-> -> 0 `i `uc
+-> -> 0 `i `uc
+-> -> 0 `i `uc
+-> -> 0 `i `uc
+-> -> 0 `i `uc
+-> -> 0 `i `uc
+-> -> 0 `i `uc
+-> -> 0 `i `uc
+"182
+-> -> 0 `i `uc
+-> -> 0 `i `uc
+-> -> 0 `i `uc
+-> -> 0 `i `uc
+-> -> 0 `i `uc
+-> -> 0 `i `uc
+-> -> 0 `i `uc
+-> -> 0 `i `uc
+-> -> 0 `i `uc
+-> -> 0 `i `uc
+-> -> 0 `i `uc
+-> -> 0 `i `uc
+-> -> 0 `i `uc
+-> -> 0 `i `uc
+-> -> 0 `i `uc
+-> -> 0 `i `uc
+"183
+-> -> 0 `i `uc
+-> -> 0 `i `uc
+-> -> 0 `i `uc
+-> -> 0 `i `uc
+-> -> 0 `i `uc
+-> -> 0 `i `uc
+-> -> 0 `i `uc
+-> -> 0 `i `uc
+-> -> 0 `i `uc
+-> -> 0 `i `uc
+-> -> 0 `i `uc
+-> -> 0 `i `uc
+-> -> 0 `i `uc
+-> -> 0 `i `uc
+-> -> 0 `i `uc
+-> -> 0 `i `uc
+"184
+-> -> 0 `i `uc
+-> -> 1 `i `uc
+-> -> 2 `i `uc
+-> -> 3 `i `uc
+-> -> 4 `i `uc
+-> -> 5 `i `uc
+-> -> 6 `i `uc
+-> -> 7 `i `uc
+-> -> 8 `i `uc
+-> -> 9 `i `uc
+-> -> 0 `i `uc
+-> -> 0 `i `uc
+-> -> 0 `i `uc
+-> -> 0 `i `uc
+-> -> 0 `i `uc
+-> -> 0 `i `uc
+"185
+-> -> 0 `i `uc
+-> -> 10 `i `uc
+-> -> 11 `i `uc
+-> -> 12 `i `uc
+-> -> 13 `i `uc
+-> -> 14 `i `uc
+-> -> 15 `i `uc
+-> -> 0 `i `uc
+-> -> 0 `i `uc
+-> -> 0 `i `uc
+-> -> 0 `i `uc
+-> -> 0 `i `uc
+-> -> 0 `i `uc
+-> -> 0 `i `uc
+-> -> 0 `i `uc
+-> -> 0 `i `uc
+"186
+-> -> 0 `i `uc
+-> -> 10 `i `uc
+-> -> 11 `i `uc
+-> -> 12 `i `uc
+-> -> 13 `i `uc
+-> -> 14 `i `uc
+-> -> 15 `i `uc
+-> -> 0 `i `uc
+-> -> 0 `i `uc
+-> -> 0 `i `uc
+-> -> 0 `i `uc
+-> -> 0 `i `uc
+-> -> 0 `i `uc
+-> -> 0 `i `uc
+-> -> 0 `i `uc
+-> -> 0 `i `uc
+..
+]
+[; ;Main.h: 181: const unsigned char ASCII_HEX_TO_BINARY[128] ={0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+[; ;Main.h: 182: 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+[; ;Main.h: 183: 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+[; ;Main.h: 184: 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 0, 0, 0, 0, 0, 0,
+[; ;Main.h: 185: 0, 10, 11, 12, 13, 14, 15, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+[; ;Main.h: 186: 0, 10, 11, 12, 13, 14, 15, 0, 0, 0, 0, 0, 0, 0, 0, 0};
+"188
+[v _BINARY_TO_ASCII_HEX `Cuc ~T0 -> 16 `i e ]
+[i _BINARY_TO_ASCII_HEX
+:U ..
+-> -> 48 `ui `uc
+-> -> 49 `ui `uc
+-> -> 50 `ui `uc
+-> -> 51 `ui `uc
+-> -> 52 `ui `uc
+-> -> 53 `ui `uc
+-> -> 54 `ui `uc
+-> -> 55 `ui `uc
+-> -> 56 `ui `uc
+-> -> 57 `ui `uc
+-> -> 65 `ui `uc
+-> -> 66 `ui `uc
+-> -> 67 `ui `uc
+-> -> 68 `ui `uc
+-> -> 69 `ui `uc
+-> -> 70 `ui `uc
+..
+]
+[; ;Main.h: 188: const unsigned char BINARY_TO_ASCII_HEX[16] = {'0', '1', '2', '3', '4', '5', '6', '7', '8', '9', 'A', 'B', 'C', 'D', 'E', 'F'};
+[; ;UserInterface.h: 4: void ShowVoltage();
+[; ;UserInterface.h: 5: signed char GetClick(void);
+[; ;UserInterface.h: 6: signed char GetYesNo(const char *prompt, signed char Initial);
+[; ;UserInterface.h: 7: signed char GetFloat(const char *prompt, const char *unit, double* Value, double Min, double Max, double Precision);
+[; ;UserInterface.h: 8: signed char GetInput(void);
+[; ;UserInterface.h: 9: signed char GetInput_nonblocking(void);
+[; ;UserInterface.h: 10: signed char DisplayMenu(const char *Menu[], char ItemCount, char Initial);
+[; ;UserInterface.h: 11: signed char DisplayChoices(const char *Menu[], char ItemCount, const char *Prompt, char Initial);
+[; ;UserInterface.h: 12: signed char GetPresetNumber();
+[; ;UserInterface.h: 14: signed char GetTime(const char *prompt, double *Time, double Min, double Max, char Precision);
+[; ;UserInterface.h: 15: void PrintTime(double dat, unsigned char precision, unsigned char EditChevron);
+[; ;UserInterface.h: 16: void ConvertTimeToDiscrete(double Time, char *Hours, char *Minutes, char *Seconds, int *Milliseconds);
+[; ;UserInterface.h: 17: double ConvertTimeFromDiscrete(char Hours, char Minutes, char Seconds, int Milliseconds);
+[; ;UserInterface.h: 18: double RoundTimeUp(double Time,unsigned char precision);
+[; ;UserInterface.h: 19: double RoundTimeDown(double Time,unsigned char precision);
+[; ;UserInterface.h: 21: unsigned char GetRotaryMultiplier();
+[; ;Timings.h: 1: void Wait_seconds(unsigned int time);
+[; ;Timings.h: 2: void Wait_ms(unsigned int time);
+[; ;Timings.h: 3: void Wait_seconds_nonblocking(unsigned int time);
+[; ;Timings.h: 4: void Wait_ms_nonblocking(unsigned int time);
+[; ;Timings.h: 5: void Wait_ticks(unsigned char time);
+[; ;Timings.h: 6: void Wait_us(unsigned int time);
+[; ;Timings.h: 7: double Now();
+"10 Z:\CineFlux\Dropbox\Orbit\Timings.h
+[v _bWaiting `Vb ~T0 1 e ]
+[i _bWaiting
+-> 0 `i
+]
+[; ;Timings.h: 10: volatile bit bWaiting=0;
+"11
+[v _WaitUntil_Tick500Hz `Vul ~T0 1 e ]
+[i _WaitUntil_Tick500Hz
+-> -> -> 0 `i `l `ul
+]
+[; ;Timings.h: 11: volatile unsigned long WaitUntil_Tick500Hz=0;
+"12
+[v _bTick40Khz `Vb ~T0 1 e ]
+[i _bTick40Khz
+-> 0 `i
+]
+[; ;Timings.h: 12: volatile bit bTick40Khz=0;
+"13
+[v _bLock_Tick500Hz `Vb ~T0 1 e ]
+[i _bLock_Tick500Hz
+-> 0 `i
+]
+[; ;Timings.h: 13: volatile bit bLock_Tick500Hz=0;
+"14
+[v _Tick500Hz `Vul ~T0 1 e ]
+[i _Tick500Hz
+-> -> -> 0 `i `l `ul
+]
+[; ;Timings.h: 14: volatile unsigned long Tick500Hz=0;
+[; ;Settings.h: 2: typedef struct {
+[; ;Settings.h: 3: unsigned char Version;
+[; ;Settings.h: 4: unsigned int BatteryLowVoltageLevel;
+[; ;Settings.h: 5: unsigned int Battery12V_Q8;
+[; ;Settings.h: 6: unsigned char PowerResponseLimiter_Slope;
+[; ;Settings.h: 7: unsigned char PowerResponseLimiter_Intercept;
+[; ;Settings.h: 8: double Counts_per_Volt;
+[; ;Settings.h: 9: double Volts_per_Count;
+[; ;Settings.h: 10: unsigned char BacklightPWM_Duty;
+[; ;Settings.h: 11: unsigned int BacklightIdleTimeout;
+[; ;Settings.h: 12: double SystemAcceleration;
+[; ;Settings.h: 13: double MaxSpeed;
+[; ;Settings.h: 14: signed int PID_MaxError;
+[; ;Settings.h: 15: unsigned int PID_Kp;
+[; ;Settings.h: 16: unsigned int PID_Kd;
+[; ;Settings.h: 17: double Counts_Per_Degree;
+[; ;Settings.h: 18: double Degrees_Per_Count;
+[; ;Settings.h: 19: } ConfigStruct;
+[; ;Settings.h: 21: typedef struct {
+[; ;Settings.h: 22: char Type;
+[; ;Settings.h: 23: unsigned int Origin_deg;
+[; ;Settings.h: 24: char EndMode;
+[; ;Settings.h: 25: char IsClockWise;
+[; ;Settings.h: 26: double ProgramRunTime_sec;
+[; ;Settings.h: 27: double CycleCount_rev;
+[; ;Settings.h: 28: double CycleTime_sec;
+[; ;Settings.h: 29: double Speed_deg_sec;
+[; ;Settings.h: 30: char SpeedMode;
+[; ;Settings.h: 31: } OrbitProgramStruct;
+[; ;Settings.h: 33: typedef struct {
+[; ;Settings.h: 34: char Type;
+[; ;Settings.h: 35: unsigned int Origin_deg;
+[; ;Settings.h: 36: unsigned char PointCount;
+[; ;Settings.h: 37: unsigned char Bounce;
+[; ;Settings.h: 38: unsigned int LoopCount;
+[; ;Settings.h: 39: signed int Distances_deg[18];
+[; ;Settings.h: 40: unsigned int TravelTimes_sec[18];
+[; ;Settings.h: 41: unsigned int DwellTimes_sec[19];
+[; ;Settings.h: 42: } WaypointProgramStruct;
+[; ;Settings.h: 44: typedef union {
+[; ;Settings.h: 45: unsigned char ub[120];
+[; ;Settings.h: 46: WaypointProgramStruct WayPoint;
+[; ;Settings.h: 47: OrbitProgramStruct Orbit;
+[; ;Settings.h: 48: } PRESET;
+"50 Z:\CineFlux\Dropbox\Orbit\Settings.h
+[v _Config `S3 ~T0 1 e ]
+[; ;Settings.h: 50: ConfigStruct Config;
+"51
+[v _CurrentPath `S5 ~T0 1 e ]
+[; ;Settings.h: 51: WaypointProgramStruct CurrentPath;
+"52
+[v _CurrentOrbitProgram `S4 ~T0 1 e ]
+[; ;Settings.h: 52: OrbitProgramStruct CurrentOrbitProgram;
+[; ;Settings.h: 54: void FactoryDefault();
+[; ;Settings.h: 55: void SaveSettings();
+[; ;Settings.h: 56: void LoadSettings();
+[; ;Settings.h: 57: void EEprom_write(unsigned int *addr, unsigned char *dat, unsigned char bCount);
+[; ;Settings.h: 58: void EEprom_read(unsigned int *addr, unsigned char *dat, unsigned char bCount);
+[; ;Settings.h: 59: unsigned char GetPresetType(char pnum);
+[; ;Settings.h: 60: void SavePreset(char pnum, unsigned char *dat);
+[; ;Settings.h: 61: void LoadPreset(char pnum, unsigned char *dat);
+[; ;OrbitProgram.h: 1: signed char RunOrbitProgram();
+[; ;OrbitProgram.h: 2: signed char CreateOrbitProgram();
+[; ;MotionEngine.h: 1: char Move(double Distance_deg, double Speed_deg_sec);
+[; ;MotionEngine.h: 2: char MoveAdvanced(double Distance_deg, double _Speed_Deg_Sec, double _Acceleration_Deg_Sec_Sec);
+[; ;MotionEngine.h: 3: char MoveToLinear(double DestinationPostion, double Speed_Deg_Sec);
+[; ;MotionEngine.h: 4: char MoveToAngle(double DestinationAngle, double Speed_Deg_Sec);
+[; ;MotionEngine.h: 5: double SpeedRequiredToMoveInTime(double Distance, double Time);
+[; ;MotionEngine.h: 6: double MinTimeToMove(double Distance);
+"10 Z:\CineFlux\Dropbox\Orbit\OrbitProgram.c
+[v _CreateOrbitProgram `(c ~T0 1 ef ]
+{
+[; ;OrbitProgram.c: 10: signed char CreateOrbitProgram() {
+[e :U _CreateOrbitProgram ]
+[f ]
+"12
+[v _ret `c ~T0 1 a ]
+"14
+[v _DIRECTION_1 `*Cuc ~T0 1 a ]
+[; ;OrbitProgram.c: 12: signed char ret;
+[; ;OrbitProgram.c: 14: const char *DIRECTION_1 = "CLOCKWISE\0";
+[e = _DIRECTION_1 :s 1C ]
+"15
+[v _DIRECTION_0 `*Cuc ~T0 1 a ]
+[; ;OrbitProgram.c: 15: const char *DIRECTION_0 = "COUNTER CLOCKWISE\0";
+[e = _DIRECTION_0 :s 2C ]
+"16
+[v _DirectionMenu `*Cuc ~T0 -> 2 `i a ]
+[; ;OrbitProgram.c: 16: const char*DirectionMenu[2];
+[; ;OrbitProgram.c: 17: DirectionMenu[0] = DIRECTION_0;
+"17
+[e = *U + &U _DirectionMenu * -> -> -> 0 `i `ui `ux -> -> # *U &U _DirectionMenu `ui `ux _DIRECTION_0 ]
+[; ;OrbitProgram.c: 18: DirectionMenu[1] = DIRECTION_1;
+"18
+[e = *U + &U _DirectionMenu * -> -> -> 1 `i `ui `ux -> -> # *U &U _DirectionMenu `ui `ux _DIRECTION_1 ]
+"20
+[v _SpeedMODE_0 `*Cuc ~T0 1 a ]
+[; ;OrbitProgram.c: 20: const char *SpeedMODE_0 = "MANUAL\0";
+[e = _SpeedMODE_0 :s 3C ]
+"21
+[v _SpeedMODE_1 `*Cuc ~T0 1 a ]
+[; ;OrbitProgram.c: 21: const char *SpeedMODE_1 = "PER ORBIT\0";
+[e = _SpeedMODE_1 :s 4C ]
+"22
+[v _SpeedMODE_2 `*Cuc ~T0 1 a ]
+[; ;OrbitProgram.c: 22: const char *SpeedMODE_2 = "FOR ALL ORBITS\0";
+[e = _SpeedMODE_2 :s 5C ]
+"23
+[v _SpeedModeMenu `*Cuc ~T0 -> 3 `i a ]
+[; ;OrbitProgram.c: 23: const char*SpeedModeMenu[3];
+[; ;OrbitProgram.c: 24: SpeedModeMenu[0] = SpeedMODE_0;
+"24
+[e = *U + &U _SpeedModeMenu * -> -> -> 0 `i `ui `ux -> -> # *U &U _SpeedModeMenu `ui `ux _SpeedMODE_0 ]
+[; ;OrbitProgram.c: 25: SpeedModeMenu[1] = SpeedMODE_1;
+"25
+[e = *U + &U _SpeedModeMenu * -> -> -> 1 `i `ui `ux -> -> # *U &U _SpeedModeMenu `ui `ux _SpeedMODE_1 ]
+[; ;OrbitProgram.c: 26: SpeedModeMenu[2] = SpeedMODE_2;
+"26
+[e = *U + &U _SpeedModeMenu * -> -> -> 2 `i `ui `ux -> -> # *U &U _SpeedModeMenu `ui `ux _SpeedMODE_2 ]
+"28
+[v _ENDMODE_0 `*Cuc ~T0 1 a ]
+[; ;OrbitProgram.c: 28: const char *ENDMODE_0 = "BY ORBIT COUNT\0";
+[e = _ENDMODE_0 :s 6C ]
+"29
+[v _ENDMODE_1 `*Cuc ~T0 1 a ]
+[; ;OrbitProgram.c: 29: const char *ENDMODE_1 = "BY TOTAL TIME\0";
+[e = _ENDMODE_1 :s 7C ]
+"30
+[v _ENDMODE_2 `*Cuc ~T0 1 a ]
+[; ;OrbitProgram.c: 30: const char *ENDMODE_2 = "NEVER ENDING\0";
+[e = _ENDMODE_2 :s 8C ]
+"31
+[v _EndModeMenu `*Cuc ~T0 -> 3 `i a ]
+[; ;OrbitProgram.c: 31: const char*EndModeMenu[3];
+[; ;OrbitProgram.c: 32: EndModeMenu[0] = ENDMODE_0;
+"32
+[e = *U + &U _EndModeMenu * -> -> -> 0 `i `ui `ux -> -> # *U &U _EndModeMenu `ui `ux _ENDMODE_0 ]
+[; ;OrbitProgram.c: 33: EndModeMenu[1] = ENDMODE_1;
+"33
+[e = *U + &U _EndModeMenu * -> -> -> 1 `i `ui `ux -> -> # *U &U _EndModeMenu `ui `ux _ENDMODE_1 ]
+[; ;OrbitProgram.c: 34: EndModeMenu[2] = ENDMODE_2;
+"34
+[e = *U + &U _EndModeMenu * -> -> -> 2 `i `ui `ux -> -> # *U &U _EndModeMenu `ui `ux _ENDMODE_2 ]
+"36
+[v _COMMAND_0 `*Cuc ~T0 1 a ]
+[; ;OrbitProgram.c: 36: const char *COMMAND_0 = "RUN PROGRAM\0";
+[e = _COMMAND_0 :s 9C ]
+"37
+[v _COMMAND_1 `*Cuc ~T0 1 a ]
+[; ;OrbitProgram.c: 37: const char *COMMAND_1 = "SAVE PRESET\0";
+[e = _COMMAND_1 :s 10C ]
+"38
+[v _CommandMenu `*Cuc ~T0 -> 2 `i a ]
+[; ;OrbitProgram.c: 38: const char*CommandMenu[2];
+[; ;OrbitProgram.c: 39: CommandMenu[0] = COMMAND_0;
+"39
+[e = *U + &U _CommandMenu * -> -> -> 0 `i `ui `ux -> -> # *U &U _CommandMenu `ui `ux _COMMAND_0 ]
+[; ;OrbitProgram.c: 40: CommandMenu[1] = COMMAND_1;
+"40
+[e = *U + &U _CommandMenu * -> -> -> 1 `i `ui `ux -> -> # *U &U _CommandMenu `ui `ux _COMMAND_1 ]
+[; ;OrbitProgram.c: 42: labelOrigin:
+"42
+[e :U 8 ]
+[; ;OrbitProgram.c: 43: LCD_ClearDisplay();
+"43
+[e ( _LCD_ClearDisplay ..  ]
+[; ;OrbitProgram.c: 44: LCD_PrintString("MOVE TO START...\0");
+"44
+[e ( _LCD_PrintString (1 :s 11C ]
+[; ;OrbitProgram.c: 45: LCD_SetPosition(1, 0);
+"45
+[e ( _LCD_SetPosition (2 , -> -> 1 `i `uc -> -> 0 `i `uc ]
+[; ;OrbitProgram.c: 46: LCD_PrintString("THEN CLICK.\0");
+"46
+[e ( _LCD_PrintString (1 :s 12C ]
+[; ;OrbitProgram.c: 47: bFollowMode = 1;
+"47
+[e = _bFollowMode -> -> 1 `i `b ]
+[; ;OrbitProgram.c: 48: ret = GetClick();
+"48
+[e = _ret ( _GetClick ..  ]
+[; ;OrbitProgram.c: 49: if (ret < 0) return ret;
+"49
+[e $ ! < -> _ret `i -> 0 `i 9  ]
+[e ) _ret ]
+[e $UE 7  ]
+[e :U 9 ]
+[; ;OrbitProgram.c: 50: bFollowMode = 0;
+"50
+[e = _bFollowMode -> -> 0 `i `b ]
+[; ;OrbitProgram.c: 51: CurrentOrbitProgram.Origin_deg = (unsigned int) GetCurrentAngle();
+"51
+[e = . _CurrentOrbitProgram 1 -> ( _GetCurrentAngle ..  `ui ]
+[; ;OrbitProgram.c: 53: labelDirection:
+"53
+[e :U 10 ]
+[; ;OrbitProgram.c: 54: ret = DisplayChoices(DirectionMenu, 1, "ROTATION DIRECTION:\0", CurrentOrbitProgram.IsClockWise);
+"54
+[e = _ret ( _DisplayChoices (4 , , , &U _DirectionMenu -> -> 1 `i `uc :s 13C . _CurrentOrbitProgram 3 ]
+[; ;OrbitProgram.c: 55: if (ret == -1) goto labelOrigin;
+"55
+[e $ ! == -> _ret `i -U -> 1 `i 11  ]
+[e $U 8  ]
+[e :U 11 ]
+[; ;OrbitProgram.c: 56: if (ret == -2) return (-2);
+"56
+[e $ ! == -> _ret `i -U -> 2 `i 12  ]
+[e ) -> -U -> 2 `i `c ]
+[e $UE 7  ]
+[e :U 12 ]
+[; ;OrbitProgram.c: 57: CurrentOrbitProgram.IsClockWise = ret;
+"57
+[e = . _CurrentOrbitProgram 3 -> _ret `uc ]
+[; ;OrbitProgram.c: 59: labelEndMode:
+"59
+[e :U 13 ]
+[; ;OrbitProgram.c: 60: ret = DisplayChoices(EndModeMenu, 2, "PROGRAM END MODE:\0", CurrentOrbitProgram.EndMode);
+"60
+[e = _ret ( _DisplayChoices (4 , , , &U _EndModeMenu -> -> 2 `i `uc :s 14C . _CurrentOrbitProgram 2 ]
+[; ;OrbitProgram.c: 61: if (ret == -1) goto labelDirection;
+"61
+[e $ ! == -> _ret `i -U -> 1 `i 14  ]
+[e $U 10  ]
+[e :U 14 ]
+[; ;OrbitProgram.c: 62: if (ret == -2) return (-2);
+"62
+[e $ ! == -> _ret `i -U -> 2 `i 15  ]
+[e ) -> -U -> 2 `i `c ]
+[e $UE 7  ]
+[e :U 15 ]
+[; ;OrbitProgram.c: 63: CurrentOrbitProgram.EndMode = ret;
+"63
+[e = . _CurrentOrbitProgram 2 -> _ret `uc ]
+[; ;OrbitProgram.c: 64: switch (CurrentOrbitProgram.EndMode) {
+"64
+[e $U 17  ]
+{
+[; ;OrbitProgram.c: 65: case 0:
+"65
+[e :U 18 ]
+[; ;OrbitProgram.c: 66: labelCycleCount :
+"66
+[e :U 19 ]
+[; ;OrbitProgram.c: 67: if (CurrentOrbitProgram.CycleCount_rev < 1) CurrentOrbitProgram.CycleCount_rev = 1;
+"67
+[e $ ! < . _CurrentOrbitProgram 5 -> -> 1 `i `d 20  ]
+[e = . _CurrentOrbitProgram 5 -> -> 1 `i `d ]
+[e :U 20 ]
+[; ;OrbitProgram.c: 68: if (CurrentOrbitProgram.CycleCount_rev > 999) CurrentOrbitProgram.CycleCount_rev = 999;
+"68
+[e $ ! > . _CurrentOrbitProgram 5 -> -> 999 `i `d 21  ]
+[e = . _CurrentOrbitProgram 5 -> -> 999 `i `d ]
+[e :U 21 ]
+[; ;OrbitProgram.c: 70: ret = GetFloat("ORBIT LIMIT:\0", "", &CurrentOrbitProgram.CycleCount_rev, 1, 999, 1.0);
+"70
+[e = _ret ( _GetFloat (4 , , , , , :s 15C :s 16C &U . _CurrentOrbitProgram 5 -> -> 1 `i `d -> -> 999 `i `d .1.0 ]
+[; ;OrbitProgram.c: 71: if (ret == -1) goto labelEndMode;
+"71
+[e $ ! == -> _ret `i -U -> 1 `i 22  ]
+[e $U 13  ]
+[e :U 22 ]
+[; ;OrbitProgram.c: 72: if (ret == -2) return (-2);
+"72
+[e $ ! == -> _ret `i -U -> 2 `i 23  ]
+[e ) -> -U -> 2 `i `c ]
+[e $UE 7  ]
+[e :U 23 ]
+[; ;OrbitProgram.c: 74: labelSpeedMode:
+"74
+[e :U 24 ]
+[; ;OrbitProgram.c: 75: if (CurrentOrbitProgram.CycleCount_rev > 1) ret = DisplayChoices(SpeedModeMenu, 2, "ORBIT SPEED:\0", CurrentOrbitProgram.SpeedMode);
+"75
+[e $ ! > . _CurrentOrbitProgram 5 -> -> 1 `i `d 25  ]
+[e = _ret ( _DisplayChoices (4 , , , &U _SpeedModeMenu -> -> 2 `i `uc :s 17C . _CurrentOrbitProgram 8 ]
+[e $U 26  ]
+"76
+[e :U 25 ]
+[; ;OrbitProgram.c: 76: else ret = DisplayChoices(SpeedModeMenu, 1, "ORBIT SPEED:\0", CurrentOrbitProgram.SpeedMode);
+[e = _ret ( _DisplayChoices (4 , , , &U _SpeedModeMenu -> -> 1 `i `uc :s 18C . _CurrentOrbitProgram 8 ]
+[e :U 26 ]
+[; ;OrbitProgram.c: 77: if (ret == -1) goto labelCycleCount;
+"77
+[e $ ! == -> _ret `i -U -> 1 `i 27  ]
+[e $U 19  ]
+[e :U 27 ]
+[; ;OrbitProgram.c: 78: if (ret == -2) return (-2);
+"78
+[e $ ! == -> _ret `i -U -> 2 `i 28  ]
+[e ) -> -U -> 2 `i `c ]
+[e $UE 7  ]
+[e :U 28 ]
+[; ;OrbitProgram.c: 79: switch (ret) {
+"79
+[e $U 30  ]
+{
+[; ;OrbitProgram.c: 80: case 0:
+"80
+[e :U 31 ]
+[; ;OrbitProgram.c: 82: if (CurrentOrbitProgram.Speed_deg_sec < 0.01) CurrentOrbitProgram.Speed_deg_sec = 0.01;
+"82
+[e $ ! < . _CurrentOrbitProgram 7 .0.01 32  ]
+[e = . _CurrentOrbitProgram 7 .0.01 ]
+[e :U 32 ]
+[; ;OrbitProgram.c: 83: ret = GetFloat("SPEED\0", "\xDF/Sec\0", &CurrentOrbitProgram.Speed_deg_sec, 0.01, 90, 0.01);
+"83
+[e = _ret ( _GetFloat (4 , , , , , :s 19C :s 20C &U . _CurrentOrbitProgram 7 .0.01 -> -> 90 `i `d .0.01 ]
+[; ;OrbitProgram.c: 84: if (ret == -1) goto labelSpeedMode;
+"84
+[e $ ! == -> _ret `i -U -> 1 `i 33  ]
+[e $U 24  ]
+[e :U 33 ]
+[; ;OrbitProgram.c: 85: if (ret == -2) return (-2);
+"85
+[e $ ! == -> _ret `i -U -> 2 `i 34  ]
+[e ) -> -U -> 2 `i `c ]
+[e $UE 7  ]
+[e :U 34 ]
+[; ;OrbitProgram.c: 86: break;
+"86
+[e $U 29  ]
+[; ;OrbitProgram.c: 87: case 1:
+"87
+[e :U 35 ]
+[; ;OrbitProgram.c: 88: if (CurrentOrbitProgram.CycleTime_sec < 4) CurrentOrbitProgram.CycleTime_sec = 4;
+"88
+[e $ ! < . _CurrentOrbitProgram 6 -> -> 4 `i `d 36  ]
+[e = . _CurrentOrbitProgram 6 -> -> 4 `i `d ]
+[e :U 36 ]
+[; ;OrbitProgram.c: 89: ret = GetTime("TIME PER ORBIT\0", &CurrentOrbitProgram.CycleTime_sec, 4, 86400, 0b1110);
+"89
+[e = _ret ( _GetTime (4 , , , , :s 21C &U . _CurrentOrbitProgram 6 -> -> 4 `i `d -> -> 86400 `l `d -> -> 14 `i `uc ]
+[; ;OrbitProgram.c: 90: if (ret == -1) goto labelSpeedMode;
+"90
+[e $ ! == -> _ret `i -U -> 1 `i 37  ]
+[e $U 24  ]
+[e :U 37 ]
+[; ;OrbitProgram.c: 91: if (ret == -2) return (-2);
+"91
+[e $ ! == -> _ret `i -U -> 2 `i 38  ]
+[e ) -> -U -> 2 `i `c ]
+[e $UE 7  ]
+[e :U 38 ]
+[; ;OrbitProgram.c: 92: CurrentOrbitProgram.Speed_deg_sec = 360 / CurrentOrbitProgram.CycleTime_sec;
+"92
+[e = . _CurrentOrbitProgram 7 / -> -> 360 `i `d . _CurrentOrbitProgram 6 ]
+[; ;OrbitProgram.c: 93: break;
+"93
+[e $U 29  ]
+[; ;OrbitProgram.c: 94: case 2:
+"94
+[e :U 39 ]
+[; ;OrbitProgram.c: 95: if (CurrentOrbitProgram.CycleTime_sec < (4 * CurrentOrbitProgram.CycleCount_rev)) CurrentOrbitProgram.CycleTime_sec = 4 * CurrentOrbitProgram.CycleCount_rev;
+"95
+[e $ ! < . _CurrentOrbitProgram 6 * -> -> 4 `i `d . _CurrentOrbitProgram 5 40  ]
+[e = . _CurrentOrbitProgram 6 * -> -> 4 `i `d . _CurrentOrbitProgram 5 ]
+[e :U 40 ]
+[; ;OrbitProgram.c: 96: ret = GetTime("TIME FOR ALL ORBITS\0", &CurrentOrbitProgram.CycleTime_sec, 4 * CurrentOrbitProgram.CycleCount_rev, 86400, 0b1110);
+"96
+[e = _ret ( _GetTime (4 , , , , :s 22C &U . _CurrentOrbitProgram 6 * -> -> 4 `i `d . _CurrentOrbitProgram 5 -> -> 86400 `l `d -> -> 14 `i `uc ]
+[; ;OrbitProgram.c: 97: if (ret == -1) goto labelSpeedMode;
+"97
+[e $ ! == -> _ret `i -U -> 1 `i 41  ]
+[e $U 24  ]
+[e :U 41 ]
+[; ;OrbitProgram.c: 98: if (ret == -2) return (-2);
+"98
+[e $ ! == -> _ret `i -U -> 2 `i 42  ]
+[e ) -> -U -> 2 `i `c ]
+[e $UE 7  ]
+[e :U 42 ]
+[; ;OrbitProgram.c: 99: CurrentOrbitProgram.Speed_deg_sec = (360 * CurrentOrbitProgram.CycleCount_rev) / CurrentOrbitProgram.CycleTime_sec;
+"99
+[e = . _CurrentOrbitProgram 7 / * -> -> 360 `i `d . _CurrentOrbitProgram 5 . _CurrentOrbitProgram 6 ]
+[; ;OrbitProgram.c: 100: break;
+"100
+[e $U 29  ]
+"101
+}
+[; ;OrbitProgram.c: 101: }
+[e $U 29  ]
+"79
+[e :U 30 ]
+[e [\ _ret , $ -> -> 0 `i `c 31
+ , $ -> -> 1 `i `c 35
+ , $ -> -> 2 `i `c 39
+ 29 ]
+"101
+[e :U 29 ]
+[; ;OrbitProgram.c: 102: break;
+"102
+[e $U 16  ]
+[; ;OrbitProgram.c: 103: case 1:
+"103
+[e :U 43 ]
+[; ;OrbitProgram.c: 104: labelProgramRuntime :
+"104
+[e :U 44 ]
+[; ;OrbitProgram.c: 106: ret = GetTime("TOTAL RUNTIME:\0", &CurrentOrbitProgram.ProgramRunTime_sec, 1, 86400, 0b1110);
+"106
+[e = _ret ( _GetTime (4 , , , , :s 23C &U . _CurrentOrbitProgram 4 -> -> 1 `i `d -> -> 86400 `l `d -> -> 14 `i `uc ]
+[; ;OrbitProgram.c: 107: if (ret == -1) goto labelEndMode;
+"107
+[e $ ! == -> _ret `i -U -> 1 `i 45  ]
+[e $U 13  ]
+[e :U 45 ]
+[; ;OrbitProgram.c: 108: if (ret == -2) return (-2);
+"108
+[e $ ! == -> _ret `i -U -> 2 `i 46  ]
+[e ) -> -U -> 2 `i `c ]
+[e $UE 7  ]
+[e :U 46 ]
+[; ;OrbitProgram.c: 110: labelSpeedMode2:
+"110
+[e :U 47 ]
+[; ;OrbitProgram.c: 112: ret = DisplayChoices(SpeedModeMenu, 1, "ORBIT SPEED:\0", CurrentOrbitProgram.SpeedMode);
+"112
+[e = _ret ( _DisplayChoices (4 , , , &U _SpeedModeMenu -> -> 1 `i `uc :s 24C . _CurrentOrbitProgram 8 ]
+[; ;OrbitProgram.c: 113: if (ret == -1) goto labelProgramRuntime;
+"113
+[e $ ! == -> _ret `i -U -> 1 `i 48  ]
+[e $U 44  ]
+[e :U 48 ]
+[; ;OrbitProgram.c: 114: if (ret == -2) return (-2);
+"114
+[e $ ! == -> _ret `i -U -> 2 `i 49  ]
+[e ) -> -U -> 2 `i `c ]
+[e $UE 7  ]
+[e :U 49 ]
+[; ;OrbitProgram.c: 115: switch (ret) {
+"115
+[e $U 51  ]
+{
+[; ;OrbitProgram.c: 116: case 0:
+"116
+[e :U 52 ]
+[; ;OrbitProgram.c: 117: if (CurrentOrbitProgram.Speed_deg_sec < 0.01) CurrentOrbitProgram.Speed_deg_sec = 0.01;
+"117
+[e $ ! < . _CurrentOrbitProgram 7 .0.01 53  ]
+[e = . _CurrentOrbitProgram 7 .0.01 ]
+[e :U 53 ]
+[; ;OrbitProgram.c: 118: ret = GetFloat("SPEED\0", "\xDF/Sec\0", &CurrentOrbitProgram.Speed_deg_sec, 0.01, 90, 0.01);
+"118
+[e = _ret ( _GetFloat (4 , , , , , :s 25C :s 26C &U . _CurrentOrbitProgram 7 .0.01 -> -> 90 `i `d .0.01 ]
+[; ;OrbitProgram.c: 119: if (ret == -1) goto labelSpeedMode2;
+"119
+[e $ ! == -> _ret `i -U -> 1 `i 54  ]
+[e $U 47  ]
+[e :U 54 ]
+[; ;OrbitProgram.c: 120: if (ret == -2) return (-2);
+"120
+[e $ ! == -> _ret `i -U -> 2 `i 55  ]
+[e ) -> -U -> 2 `i `c ]
+[e $UE 7  ]
+[e :U 55 ]
+[; ;OrbitProgram.c: 121: break;
+"121
+[e $U 50  ]
+[; ;OrbitProgram.c: 122: case 1:
+"122
+[e :U 56 ]
+[; ;OrbitProgram.c: 123: if (CurrentOrbitProgram.CycleTime_sec < 4) CurrentOrbitProgram.CycleTime_sec = 4;
+"123
+[e $ ! < . _CurrentOrbitProgram 6 -> -> 4 `i `d 57  ]
+[e = . _CurrentOrbitProgram 6 -> -> 4 `i `d ]
+[e :U 57 ]
+[; ;OrbitProgram.c: 124: ret = GetTime("TIME PER ORBIT:\0", &CurrentOrbitProgram.CycleTime_sec, 4, 86400, 0b1110);
+"124
+[e = _ret ( _GetTime (4 , , , , :s 27C &U . _CurrentOrbitProgram 6 -> -> 4 `i `d -> -> 86400 `l `d -> -> 14 `i `uc ]
+[; ;OrbitProgram.c: 125: if (ret == -1) goto labelSpeedMode2;
+"125
+[e $ ! == -> _ret `i -U -> 1 `i 58  ]
+[e $U 47  ]
+[e :U 58 ]
+[; ;OrbitProgram.c: 126: if (ret == -2) return (-2);
+"126
+[e $ ! == -> _ret `i -U -> 2 `i 59  ]
+[e ) -> -U -> 2 `i `c ]
+[e $UE 7  ]
+[e :U 59 ]
+[; ;OrbitProgram.c: 127: CurrentOrbitProgram.Speed_deg_sec = 360 / CurrentOrbitProgram.CycleTime_sec;
+"127
+[e = . _CurrentOrbitProgram 7 / -> -> 360 `i `d . _CurrentOrbitProgram 6 ]
+[; ;OrbitProgram.c: 128: break;
+"128
+[e $U 50  ]
+"129
+}
+[; ;OrbitProgram.c: 129: }
+[e $U 50  ]
+"115
+[e :U 51 ]
+[e [\ _ret , $ -> -> 0 `i `c 52
+ , $ -> -> 1 `i `c 56
+ 50 ]
+"129
+[e :U 50 ]
+[; ;OrbitProgram.c: 130: CurrentOrbitProgram.CycleCount_rev = (CurrentOrbitProgram.Speed_deg_sec * CurrentOrbitProgram.ProgramRunTime_sec) / 360;
+"130
+[e = . _CurrentOrbitProgram 5 / * . _CurrentOrbitProgram 7 . _CurrentOrbitProgram 4 -> -> 360 `i `d ]
+[; ;OrbitProgram.c: 131: break;
+"131
+[e $U 16  ]
+[; ;OrbitProgram.c: 132: case 2:
+"132
+[e :U 60 ]
+[; ;OrbitProgram.c: 133: labelSpeedMode3 :
+"133
+[e :U 61 ]
+[; ;OrbitProgram.c: 134: ret = DisplayChoices(SpeedModeMenu, 1, "ORBIT SPEED:\0", CurrentOrbitProgram.SpeedMode);
+"134
+[e = _ret ( _DisplayChoices (4 , , , &U _SpeedModeMenu -> -> 1 `i `uc :s 28C . _CurrentOrbitProgram 8 ]
+[; ;OrbitProgram.c: 135: if (ret == -1) goto labelEndMode;
+"135
+[e $ ! == -> _ret `i -U -> 1 `i 62  ]
+[e $U 13  ]
+[e :U 62 ]
+[; ;OrbitProgram.c: 136: if (ret == -2) return (-2);
+"136
+[e $ ! == -> _ret `i -U -> 2 `i 63  ]
+[e ) -> -U -> 2 `i `c ]
+[e $UE 7  ]
+[e :U 63 ]
+[; ;OrbitProgram.c: 137: switch (ret) {
+"137
+[e $U 65  ]
+{
+[; ;OrbitProgram.c: 138: case 0:
+"138
+[e :U 66 ]
+[; ;OrbitProgram.c: 139: if (CurrentOrbitProgram.Speed_deg_sec < 0.01) CurrentOrbitProgram.Speed_deg_sec = 0.01;
+"139
+[e $ ! < . _CurrentOrbitProgram 7 .0.01 67  ]
+[e = . _CurrentOrbitProgram 7 .0.01 ]
+[e :U 67 ]
+[; ;OrbitProgram.c: 140: ret = GetFloat("SPEED\0", "\xDF/Sec\0", &CurrentOrbitProgram.Speed_deg_sec, 0.01, 90, 0.01);
+"140
+[e = _ret ( _GetFloat (4 , , , , , :s 29C :s 30C &U . _CurrentOrbitProgram 7 .0.01 -> -> 90 `i `d .0.01 ]
+[; ;OrbitProgram.c: 141: if (ret == -1) goto labelSpeedMode3;
+"141
+[e $ ! == -> _ret `i -U -> 1 `i 68  ]
+[e $U 61  ]
+[e :U 68 ]
+[; ;OrbitProgram.c: 142: if (ret == -2) return (-2);
+"142
+[e $ ! == -> _ret `i -U -> 2 `i 69  ]
+[e ) -> -U -> 2 `i `c ]
+[e $UE 7  ]
+[e :U 69 ]
+[; ;OrbitProgram.c: 143: break;
+"143
+[e $U 64  ]
+[; ;OrbitProgram.c: 144: case 1:
+"144
+[e :U 70 ]
+[; ;OrbitProgram.c: 145: if (CurrentOrbitProgram.CycleTime_sec < 4) CurrentOrbitProgram.CycleTime_sec = 4;
+"145
+[e $ ! < . _CurrentOrbitProgram 6 -> -> 4 `i `d 71  ]
+[e = . _CurrentOrbitProgram 6 -> -> 4 `i `d ]
+[e :U 71 ]
+[; ;OrbitProgram.c: 146: ret = GetTime("TIME PER ORBIT:\0", &CurrentOrbitProgram.CycleTime_sec, 4, 86400, 0b1110);
+"146
+[e = _ret ( _GetTime (4 , , , , :s 31C &U . _CurrentOrbitProgram 6 -> -> 4 `i `d -> -> 86400 `l `d -> -> 14 `i `uc ]
+[; ;OrbitProgram.c: 147: if (ret == -1) goto labelSpeedMode3;
+"147
+[e $ ! == -> _ret `i -U -> 1 `i 72  ]
+[e $U 61  ]
+[e :U 72 ]
+[; ;OrbitProgram.c: 148: if (ret == -2) return (-2);
+"148
+[e $ ! == -> _ret `i -U -> 2 `i 73  ]
+[e ) -> -U -> 2 `i `c ]
+[e $UE 7  ]
+[e :U 73 ]
+[; ;OrbitProgram.c: 149: CurrentOrbitProgram.Speed_deg_sec = 360 / CurrentOrbitProgram.CycleTime_sec;
+"149
+[e = . _CurrentOrbitProgram 7 / -> -> 360 `i `d . _CurrentOrbitProgram 6 ]
+[; ;OrbitProgram.c: 150: break;
+"150
+[e $U 64  ]
+"151
+}
+[; ;OrbitProgram.c: 151: }
+[e $U 64  ]
+"137
+[e :U 65 ]
+[e [\ _ret , $ -> -> 0 `i `c 66
+ , $ -> -> 1 `i `c 70
+ 64 ]
+"151
+[e :U 64 ]
+[; ;OrbitProgram.c: 152: break;
+"152
+[e $U 16  ]
+"154
+}
+[; ;OrbitProgram.c: 154: }
+[e $U 16  ]
+"64
+[e :U 17 ]
+[e [\ . _CurrentOrbitProgram 2 , $ -> -> 0 `i `uc 18
+ , $ -> -> 1 `i `uc 43
+ , $ -> -> 2 `i `uc 60
+ 16 ]
+"154
+[e :U 16 ]
+[; ;OrbitProgram.c: 156: labelActions:
+"156
+[e :U 74 ]
+[; ;OrbitProgram.c: 157: ret = DisplayChoices(CommandMenu, 1, "ACTION:\0", 0);
+"157
+[e = _ret ( _DisplayChoices (4 , , , &U _CommandMenu -> -> 1 `i `uc :s 32C -> -> 0 `i `uc ]
+[; ;OrbitProgram.c: 158: if (ret == -1) goto labelCycleCount;
+"158
+[e $ ! == -> _ret `i -U -> 1 `i 75  ]
+[e $U 19  ]
+[e :U 75 ]
+[; ;OrbitProgram.c: 159: if (ret == -2) return (-2);
+"159
+[e $ ! == -> _ret `i -U -> 2 `i 76  ]
+[e ) -> -U -> 2 `i `c ]
+[e $UE 7  ]
+[e :U 76 ]
+[; ;OrbitProgram.c: 161: if (ret == 0) {
+"161
+[e $ ! == -> _ret `i -> 0 `i 77  ]
+{
+[; ;OrbitProgram.c: 162: return RunOrbitProgram();
+"162
+[e ) ( _RunOrbitProgram ..  ]
+[e $UE 7  ]
+"163
+}
+[e :U 77 ]
+[; ;OrbitProgram.c: 163: }
+[; ;OrbitProgram.c: 165: ret = GetPresetNumber();
+"165
+[e = _ret ( _GetPresetNumber ..  ]
+[; ;OrbitProgram.c: 166: if (ret == -1) goto labelActions;
+"166
+[e $ ! == -> _ret `i -U -> 1 `i 78  ]
+[e $U 74  ]
+[e :U 78 ]
+[; ;OrbitProgram.c: 167: if (ret == -2) return (-2);
+"167
+[e $ ! == -> _ret `i -U -> 2 `i 79  ]
+[e ) -> -U -> 2 `i `c ]
+[e $UE 7  ]
+[e :U 79 ]
+[; ;OrbitProgram.c: 169: CurrentOrbitProgram.Type = 2;
+"169
+[e = . _CurrentOrbitProgram 0 -> -> 2 `i `uc ]
+[; ;OrbitProgram.c: 170: SavePreset(ret, (unsigned char *) &CurrentOrbitProgram);
+"170
+[e ( _SavePreset (2 , -> _ret `uc -> &U _CurrentOrbitProgram `*uc ]
+[; ;OrbitProgram.c: 171: goto labelActions;
+"171
+[e $U 74  ]
+[; ;OrbitProgram.c: 172: }
+"172
+[e :UE 7 ]
+}
+"174
+[v _RunOrbitProgram `(c ~T0 1 ef ]
+{
+[; ;OrbitProgram.c: 174: signed char RunOrbitProgram() {
+[e :U _RunOrbitProgram ]
+[f ]
+"175
+[v _EarlyExit `uc ~T0 1 a ]
+[; ;OrbitProgram.c: 175: char EarlyExit = 0;
+[e = _EarlyExit -> -> 0 `i `uc ]
+"176
+[v _ret `uc ~T0 1 a ]
+"177
+[v _EndPos `d ~T0 1 a ]
+"178
+[v _CurrentPos `d ~T0 1 a ]
+"179
+[v _TimeRemaining `d ~T0 1 a ]
+"180
+[v _DistanceRemaining `d ~T0 1 a ]
+[; ;OrbitProgram.c: 176: char ret;
+[; ;OrbitProgram.c: 177: double EndPos;
+[; ;OrbitProgram.c: 178: double CurrentPos;
+[; ;OrbitProgram.c: 179: double TimeRemaining;
+[; ;OrbitProgram.c: 180: double DistanceRemaining;
+[; ;OrbitProgram.c: 182: LCD_ClearDisplay();
+"182
+[e ( _LCD_ClearDisplay ..  ]
+[; ;OrbitProgram.c: 183: LCD_PrintString("MOVING TO START\0");
+"183
+[e ( _LCD_PrintString (1 :s 33C ]
+[; ;OrbitProgram.c: 184: MoveToAngle(CurrentOrbitProgram.Origin_deg, 90);
+"184
+[e ( _MoveToAngle (2 , -> . _CurrentOrbitProgram 1 `d -> -> 90 `i `d ]
+[; ;OrbitProgram.c: 185: while (bMove_InProgress) {
+"185
+[e $U 81  ]
+[e :U 82 ]
+{
+[; ;OrbitProgram.c: 186: Idle();
+"186
+[e ( _Idle ..  ]
+[; ;OrbitProgram.c: 187: ret = GetInput_nonblocking();
+"187
+[e = _ret -> ( _GetInput_nonblocking ..  `uc ]
+[; ;OrbitProgram.c: 188: if (ret == 3) {
+"188
+[e $ ! == -> _ret `i -> 3 `i 84  ]
+{
+[; ;OrbitProgram.c: 189: EarlyExit = 1;
+"189
+[e = _EarlyExit -> -> 1 `i `uc ]
+[; ;OrbitProgram.c: 190: goto labelFinished;
+"190
+[e $U 85  ]
+"191
+}
+[e :U 84 ]
+"192
+}
+[e :U 81 ]
+"185
+[e $ _bMove_InProgress 82  ]
+[e :U 83 ]
+"195
+[v _Distance `d ~T0 1 a ]
+[; ;OrbitProgram.c: 191: }
+[; ;OrbitProgram.c: 192: }
+[; ;OrbitProgram.c: 195: double Distance = CurrentOrbitProgram.CycleCount_rev * 360;
+[e = _Distance * . _CurrentOrbitProgram 5 -> -> 360 `i `d ]
+[; ;OrbitProgram.c: 196: if (CurrentOrbitProgram.EndMode == 2) Distance = 7776000;
+"196
+[e $ ! == -> . _CurrentOrbitProgram 2 `i -> 2 `i 86  ]
+[e = _Distance -> -> 7776000 `l `d ]
+[e :U 86 ]
+[; ;OrbitProgram.c: 197: if (!CurrentOrbitProgram.IsClockWise) Distance = -Distance;
+"197
+[e $ ! ! != -> . _CurrentOrbitProgram 3 `i -> -> -> 0 `i `uc `i 87  ]
+[e = _Distance -U _Distance ]
+[e :U 87 ]
+[; ;OrbitProgram.c: 199: bLock_Motor_Position = 1;
+"199
+[e = _bLock_Motor_Position -> -> 1 `i `b ]
+[; ;OrbitProgram.c: 200: CurrentPos = Motor_Position;
+"200
+[e = _CurrentPos -> _Motor_Position `d ]
+[; ;OrbitProgram.c: 201: bLock_Motor_Position = 0;
+"201
+[e = _bLock_Motor_Position -> -> 0 `i `b ]
+[; ;OrbitProgram.c: 202: CurrentPos *= Config.Degrees_Per_Count;
+"202
+[e =* _CurrentPos . _Config 15 ]
+[; ;OrbitProgram.c: 204: EndPos = CurrentPos + Distance;
+"204
+[e = _EndPos + _CurrentPos _Distance ]
+[; ;OrbitProgram.c: 207: LCD_ClearDisplay();
+"207
+[e ( _LCD_ClearDisplay ..  ]
+[; ;OrbitProgram.c: 208: LCD_PrintString("RUNNING: T-HH:MM:SS\0");
+"208
+[e ( _LCD_PrintString (1 :s 34C ]
+[; ;OrbitProgram.c: 210: if (CurrentOrbitProgram.EndMode == 2) {
+"210
+[e $ ! == -> . _CurrentOrbitProgram 2 `i -> 2 `i 88  ]
+{
+[; ;OrbitProgram.c: 211: LCD_ClearDisplay();
+"211
+[e ( _LCD_ClearDisplay ..  ]
+[; ;OrbitProgram.c: 212: LCD_PrintString("ORBIT RUNNING\0");
+"212
+[e ( _LCD_PrintString (1 :s 35C ]
+[; ;OrbitProgram.c: 213: LCD_SetPosition(1, 0);
+"213
+[e ( _LCD_SetPosition (2 , -> -> 1 `i `uc -> -> 0 `i `uc ]
+[; ;OrbitProgram.c: 214: LCD_PrintString("INFINITE RUNTIME\0");
+"214
+[e ( _LCD_PrintString (1 :s 36C ]
+"215
+}
+[e :U 88 ]
+"217
+[v _SpdConvert `d ~T0 1 a ]
+[; ;OrbitProgram.c: 215: }
+[; ;OrbitProgram.c: 217: double SpdConvert = 1 / CurrentOrbitProgram.Speed_deg_sec;
+[e = _SpdConvert / -> -> 1 `i `d . _CurrentOrbitProgram 7 ]
+[; ;OrbitProgram.c: 218: ret = GetInput_nonblocking();
+"218
+[e = _ret -> ( _GetInput_nonblocking ..  `uc ]
+[; ;OrbitProgram.c: 220: Move(Distance, CurrentOrbitProgram.Speed_deg_sec);
+"220
+[e ( _Move (2 , _Distance . _CurrentOrbitProgram 7 ]
+[; ;OrbitProgram.c: 221: while (bMove_InProgress) {
+"221
+[e $U 89  ]
+[e :U 90 ]
+{
+[; ;OrbitProgram.c: 223: bLock_Motor_Position = 1;
+"223
+[e = _bLock_Motor_Position -> -> 1 `i `b ]
+[; ;OrbitProgram.c: 224: CurrentPos = Motor_Position;
+"224
+[e = _CurrentPos -> _Motor_Position `d ]
+[; ;OrbitProgram.c: 225: bLock_Motor_Position = 0;
+"225
+[e = _bLock_Motor_Position -> -> 0 `i `b ]
+[; ;OrbitProgram.c: 226: CurrentPos *= Config.Degrees_Per_Count;
+"226
+[e =* _CurrentPos . _Config 15 ]
+[; ;OrbitProgram.c: 228: DistanceRemaining = EndPos - CurrentPos;
+"228
+[e = _DistanceRemaining - _EndPos _CurrentPos ]
+[; ;OrbitProgram.c: 229: if (DistanceRemaining < 0) DistanceRemaining = -DistanceRemaining;
+"229
+[e $ ! < _DistanceRemaining -> -> 0 `i `d 92  ]
+[e = _DistanceRemaining -U _DistanceRemaining ]
+[e :U 92 ]
+[; ;OrbitProgram.c: 230: TimeRemaining = DistanceRemaining*SpdConvert;
+"230
+[e = _TimeRemaining * _DistanceRemaining _SpdConvert ]
+[; ;OrbitProgram.c: 231: DistanceRemaining *= 0.002778;
+"231
+[e =* _DistanceRemaining .0.002778 ]
+[; ;OrbitProgram.c: 233: if (!(CurrentOrbitProgram.EndMode == 2)) {
+"233
+[e $ ! ! == -> . _CurrentOrbitProgram 2 `i -> 2 `i 93  ]
+{
+[; ;OrbitProgram.c: 234: LCD_SetPosition(0, 11);
+"234
+[e ( _LCD_SetPosition (2 , -> -> 0 `i `uc -> -> 11 `i `uc ]
+[; ;OrbitProgram.c: 235: PrintTime(TimeRemaining, 0b1110, 0);
+"235
+[e ( _PrintTime (3 , , _TimeRemaining -> -> 14 `i `uc -> -> 0 `i `uc ]
+[; ;OrbitProgram.c: 236: LCD_SetPosition(1, 0);
+"236
+[e ( _LCD_SetPosition (2 , -> -> 1 `i `uc -> -> 0 `i `uc ]
+[; ;OrbitProgram.c: 237: LCD_PrintFloat(DistanceRemaining, 5, 2, 0);
+"237
+[e ( _LCD_PrintFloat (4 , , , _DistanceRemaining -> -> 5 `i `uc -> -> 2 `i `uc -> -> 0 `i `uc ]
+[; ;OrbitProgram.c: 238: LCD_PrintString(" REV REMAIN\0");
+"238
+[e ( _LCD_PrintString (1 :s 37C ]
+"239
+}
+[e :U 93 ]
+[; ;OrbitProgram.c: 239: }
+[; ;OrbitProgram.c: 241: ret = GetInput_nonblocking();
+"241
+[e = _ret -> ( _GetInput_nonblocking ..  `uc ]
+[; ;OrbitProgram.c: 242: if (ret == 3) {
+"242
+[e $ ! == -> _ret `i -> 3 `i 94  ]
+{
+[; ;OrbitProgram.c: 243: EarlyExit = 1;
+"243
+[e = _EarlyExit -> -> 1 `i `uc ]
+[; ;OrbitProgram.c: 244: goto labelFinished;
+"244
+[e $U 85  ]
+"245
+}
+[e :U 94 ]
+[; ;OrbitProgram.c: 245: }
+[; ;OrbitProgram.c: 247: Idle();
+"247
+[e ( _Idle ..  ]
+"248
+}
+[e :U 89 ]
+"221
+[e $ _bMove_InProgress 90  ]
+[e :U 91 ]
+[; ;OrbitProgram.c: 248: }
+[; ;OrbitProgram.c: 250: labelFinished:
+"250
+[e :U 85 ]
+[; ;OrbitProgram.c: 251: bMove_InProgress = 0;
+"251
+[e = _bMove_InProgress -> -> 0 `i `b ]
+[; ;OrbitProgram.c: 252: bFollowMode = 1;
+"252
+[e = _bFollowMode -> -> 1 `i `b ]
+[; ;OrbitProgram.c: 253: LCD_ClearDisplay();
+"253
+[e ( _LCD_ClearDisplay ..  ]
+[; ;OrbitProgram.c: 254: LCD_PrintString("STOPPING...\0");
+"254
+[e ( _LCD_PrintString (1 :s 38C ]
+[; ;OrbitProgram.c: 255: Idle();
+"255
+[e ( _Idle ..  ]
+[; ;OrbitProgram.c: 256: bMove_InProgress = 0;
+"256
+[e = _bMove_InProgress -> -> 0 `i `b ]
+[; ;OrbitProgram.c: 257: bFollowMode = 1;
+"257
+[e = _bFollowMode -> -> 1 `i `b ]
+[; ;OrbitProgram.c: 258: Wait_ms(500);
+"258
+[e ( _Wait_ms (1 -> -> 500 `i `ui ]
+[; ;OrbitProgram.c: 259: bFollowMode = 0;
+"259
+[e = _bFollowMode -> -> 0 `i `b ]
+[; ;OrbitProgram.c: 260: return EarlyExit;
+"260
+[e ) -> _EarlyExit `c ]
+[e $UE 80  ]
+[; ;OrbitProgram.c: 261: }
+"261
+[e :UE 80 ]
+}
+[a 20C 223 47 83 101 99 0 0 ]
+[a 26C 223 47 83 101 99 0 0 ]
+[a 30C 223 47 83 101 99 0 0 ]
+[a 33C 77 79 86 73 78 71 32 84 79 32 83 84 65 82 84 0 0 ]
+[a 6C 66 89 32 79 82 66 73 84 32 67 79 85 78 84 0 0 ]
+[a 21C 84 73 77 69 32 80 69 82 32 79 82 66 73 84 0 0 ]
+[a 4C 80 69 82 32 79 82 66 73 84 0 0 ]
+[a 10C 83 65 86 69 32 80 82 69 83 69 84 0 0 ]
+[a 22C 84 73 77 69 32 70 79 82 32 65 76 76 32 79 82 66 73 84 83 0 0 ]
+[a 5C 70 79 82 32 65 76 76 32 79 82 66 73 84 83 0 0 ]
+[a 34C 82 85 78 78 73 78 71 58 32 84 45 72 72 58 77 77 58 83 83 0 0 ]
+[a 37C 32 82 69 86 32 82 69 77 65 73 78 0 0 ]
+[a 9C 82 85 78 32 80 82 79 71 82 65 77 0 0 ]
+[a 3C 77 65 78 85 65 76 0 0 ]
+[a 35C 79 82 66 73 84 32 82 85 78 78 73 78 71 0 0 ]
+[a 8C 78 69 86 69 82 32 69 78 68 73 78 71 0 0 ]
+[a 2C 67 79 85 78 84 69 82 32 67 76 79 67 75 87 73 83 69 0 0 ]
+[a 1C 67 76 79 67 75 87 73 83 69 0 0 ]
+[a 36C 73 78 70 73 78 73 84 69 32 82 85 78 84 73 77 69 0 0 ]
+[a 7C 66 89 32 84 79 84 65 76 32 84 73 77 69 0 0 ]
+[a 19C 83 80 69 69 68 0 0 ]
+[a 25C 83 80 69 69 68 0 0 ]
+[a 29C 83 80 69 69 68 0 0 ]
+[a 15C 79 82 66 73 84 32 76 73 77 73 84 58 0 0 ]
+[a 27C 84 73 77 69 32 80 69 82 32 79 82 66 73 84 58 0 0 ]
+[a 31C 84 73 77 69 32 80 69 82 32 79 82 66 73 84 58 0 0 ]
+[a 13C 82 79 84 65 84 73 79 78 32 68 73 82 69 67 84 73 79 78 58 0 0 ]
+[a 32C 65 67 84 73 79 78 58 0 0 ]
+[a 23C 84 79 84 65 76 32 82 85 78 84 73 77 69 58 0 0 ]
+[a 14C 80 82 79 71 82 65 77 32 69 78 68 32 77 79 68 69 58 0 0 ]
+[a 17C 79 82 66 73 84 32 83 80 69 69 68 58 0 0 ]
+[a 18C 79 82 66 73 84 32 83 80 69 69 68 58 0 0 ]
+[a 24C 79 82 66 73 84 32 83 80 69 69 68 58 0 0 ]
+[a 28C 79 82 66 73 84 32 83 80 69 69 68 58 0 0 ]
+[a 12C 84 72 69 78 32 67 76 73 67 75 46 0 0 ]
+[a 11C 77 79 86 69 32 84 79 32 83 84 65 82 84 46 46 46 0 0 ]
+[a 38C 83 84 79 80 80 73 78 71 46 46 46 0 0 ]
+[a 16C 0 ]
