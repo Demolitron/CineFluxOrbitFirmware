@@ -73,7 +73,7 @@ FIXDEPS=fixDeps
 
 # The following macros may be used in the pre and post step lines
 Device=PIC18F67K22
-ProjectDir="C:\Users\aaron\Dropbox\Orbit\CineFluxOrbit.X"
+ProjectDir="C:\Users\THORAXIUM\Documents\GitHub\CineFluxOrbitFirmware\CineFluxOrbit.X"
 ConfName=Release
 ImagePath="dist\Release\${IMAGE_TYPE}\CineFluxOrbit.X.${IMAGE_TYPE}.${OUTPUT_SUFFIX}"
 ImageDir="dist\Release\${IMAGE_TYPE}"
