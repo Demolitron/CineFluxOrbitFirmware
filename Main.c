@@ -934,6 +934,7 @@ void Idle() {
                 TXBuffer[TX_Idx++] = '$';
                 MessageStream_WriteByte(CmdID);
                 MessageStream_WriteByte(UI_Location);
+                MessageStream_WriteByte(UI_Location);
                 TXBuffer[TX_Idx++] = '#';
                 idx = TX_Idx;
                 TX_Idx = 0;

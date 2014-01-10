@@ -2,7 +2,7 @@
 Serial Interface - 115200 8N1
 ------------------------------------------------------------------------
 ASCII Data Format.
-All values sent as HEX - BigEndian Example (INT16=44829 would be sent as AF1D)
+All values sent as HEX Strings - LittleEndian
 
 Messages Conventions sending to the controller (@XXCC........#)
 	@ - Signals the Start of a message to the controller
