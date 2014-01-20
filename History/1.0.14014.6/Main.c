@@ -281,7 +281,6 @@ void interrupt low_priority SlowTick() {
     signed long PID_Error;
     signed long CurrentMotorPosition;
     unsigned long PID_ResponseLimit = 0;
-    static unsigned long _AveragePID_ResponseLimit = 512;
 
     TMR1H = 0x83;
     TMR1L = 0x1A;
@@ -532,11 +531,7 @@ void interrupt low_priority SlowTick() {
     PID_ResponseLimit *= BatteryScaleQ8;
     PID_ResponseLimit >>= 6;
     if (PID_ResponseLimit > 1023) PID_ResponseLimit = 1023;
-
-    if (PID_ResponseLimit>_AveragePID_ResponseLimit) _AveragePID_ResponseLimit++;
-    if (PID_ResponseLimit>_AveragePID_ResponseLimit) _AveragePID_ResponseLimit++;
-    if (PID_ResponseLimit<_AveragePID_ResponseLimit) _AveragePID_ResponseLimit--;
-    if (PID_ResponseLimit<_AveragePID_ResponseLimit) _AveragePID_ResponseLimit--;
+    PID_ResponseLimit = 1023;
 
     //---------------------------------------------------------------------------
     //Calculate the PID Error
@@ -571,7 +566,7 @@ void interrupt low_priority SlowTick() {
         MOTOR_FORWARD = 1;
         MOTOR_REVERSE = 0;
     }
-    if (ResponseOutput > _AveragePID_ResponseLimit) ResponseOutput = _AveragePID_ResponseLimit;
+    if (ResponseOutput > PID_ResponseLimit) ResponseOutput = PID_ResponseLimit;
 
     if (bPowerOff) {
         MOTOR_FORWARD = 0;

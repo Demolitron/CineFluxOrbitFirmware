@@ -281,7 +281,6 @@ void interrupt low_priority SlowTick() {
     signed long PID_Error;
     signed long CurrentMotorPosition;
     unsigned long PID_ResponseLimit = 0;
-    static unsigned long _AveragePID_ResponseLimit = 512;
 
     TMR1H = 0x83;
     TMR1L = 0x1A;
@@ -473,14 +472,13 @@ void interrupt low_priority SlowTick() {
         Move_shifted_position.ub[2] = Move_position[1].ub[1];
         Move_shifted_position.ub[3] = Move_position[1].ub[2];
 
-        /*
         TX_Idx=0;
         TXBuffer[TX_Idx++]=Move_shifted_position.ub[0];
         TXBuffer[TX_Idx++]=Move_shifted_position.ub[1];
         TXBuffer[TX_Idx++]=Move_shifted_position.ub[2];
         TXBuffer[TX_Idx++]=Move_shifted_position.ub[3];
         TX_Idx = 0;
-        TX_bCount = 4;*/
+        TX_bCount = 4;
 
         if (bMove_Neg) internal_PID_SetPoint = Move_Origin - Move_shifted_position.ul;
         else internal_PID_SetPoint = Move_Origin + Move_shifted_position.ul;
@@ -532,11 +530,7 @@ void interrupt low_priority SlowTick() {
     PID_ResponseLimit *= BatteryScaleQ8;
     PID_ResponseLimit >>= 6;
     if (PID_ResponseLimit > 1023) PID_ResponseLimit = 1023;
-
-    if (PID_ResponseLimit>_AveragePID_ResponseLimit) _AveragePID_ResponseLimit++;
-    if (PID_ResponseLimit>_AveragePID_ResponseLimit) _AveragePID_ResponseLimit++;
-    if (PID_ResponseLimit<_AveragePID_ResponseLimit) _AveragePID_ResponseLimit--;
-    if (PID_ResponseLimit<_AveragePID_ResponseLimit) _AveragePID_ResponseLimit--;
+    PID_ResponseLimit = 1023;
 
     //---------------------------------------------------------------------------
     //Calculate the PID Error
@@ -571,7 +565,7 @@ void interrupt low_priority SlowTick() {
         MOTOR_FORWARD = 1;
         MOTOR_REVERSE = 0;
     }
-    if (ResponseOutput > _AveragePID_ResponseLimit) ResponseOutput = _AveragePID_ResponseLimit;
+    if (ResponseOutput > PID_ResponseLimit) ResponseOutput = PID_ResponseLimit;
 
     if (bPowerOff) {
         MOTOR_FORWARD = 0;

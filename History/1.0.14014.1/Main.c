@@ -231,16 +231,16 @@ void interrupt FastTick(void) {
         else LCD_BL = 0;
     } else LCD_BL = 0;
 
-    //LowTrigger--;
+    LowTrigger--;
     bTick40Khz = !bTick40Khz;
-    /*if (LowTrigger == 0) {
+    if (LowTrigger == 0) {
         TimmingError++;
         if (TimmingError == 401) {
             LowTrigger = 79;
             TimmingError = 0;
         } else LowTrigger = 80;
         TMR1IF = 1;
-    }*/
+    }
 
     Motor_Encoder <<= 2;
     Motor_Encoder |= MOTOR_ENCODER;
@@ -281,12 +281,8 @@ void interrupt low_priority SlowTick() {
     signed long PID_Error;
     signed long CurrentMotorPosition;
     unsigned long PID_ResponseLimit = 0;
-    static unsigned long _AveragePID_ResponseLimit = 512;
 
-    TMR1H = 0x83;
-    TMR1L = 0x1A;
     TMR1IF = 0;
-
 
     //---------------------------------------------------------------------------
     //Timer Functions
@@ -412,20 +408,40 @@ void interrupt low_priority SlowTick() {
     //---------------------------------------------------------------------------
     //Process the Motion Trajectory Engine
     //---------------------------------------------------------------------------
+    if (bInjectMoveValues) {
+        bInjectMoveValues = 0;
+        Move_AccelValueQ24 = SetMove_AccelValueQ24;
+        Move_CoastSpeedQ24 = SetMove_CoastSpeedQ24;
+        Move_DecelPosition = SetMove_DecelPosition;
+        Move_FinalPosition = SetMove_FinalPosition;
+    }
     if (bMove_InProgress) {
         bFollowMode = 0;
         if (Move_shifted_position.ul > Move_DecelPosition) {
             Move_speedQ24 -= Move_AccelValueQ24;
             if (Move_speedQ24 < Move_AccelValueQ24) {
                 internal_PID_SetPoint = Move_FinalPosition;
-                Move_speedQ24 = 0;                
-                bMove_InProgress = 0;                
+                Move_speedQ24 = 0;
+                if (bMove_Queued) {
+                    bMove_Queued = 0;
+                    Move_AccelValueQ24 = QueuedMove_AccelValueQ24;
+                    Move_CoastSpeedQ24 = QueuedMove_CoastSpeedQ24;
+                    Move_DecelPosition = QueuedMove_DecelPosition;
+                    Move_FinalPosition = QueuedMove_FinalPosition;
+                    Move_Origin = Move_FinalPosition;
+                    Move_position[0].ul = 0;
+                    Move_position[1].ul = 0;
+                    bMove_Neg = bQueuedMove_Neg;
+                } else {
+                    bMove_InProgress = 0;
+                }
             }
         } else {
             if (Move_speedQ24 < Move_CoastSpeedQ24) {
                 Move_speedQ24 += Move_AccelValueQ24;
                 if (Move_speedQ24 > Move_CoastSpeedQ24) Move_speedQ24 = Move_CoastSpeedQ24;
             }
+
             if (Move_speedQ24 > Move_CoastSpeedQ24) {
                 Move_speedQ24 -= Move_AccelValueQ24;
                 if (Move_speedQ24 < Move_CoastSpeedQ24) Move_speedQ24 = Move_CoastSpeedQ24;
@@ -444,6 +460,7 @@ void interrupt low_priority SlowTick() {
             if (bMove_Neg) internal_PID_SetPoint = Move_Origin - Move_shifted_position.ul;
             else internal_PID_SetPoint = Move_Origin + Move_shifted_position.ul;
         }
+
     } else if (bFollowMode) {
         PID_Error = internal_PID_SetPoint - CurrentMotorPosition;
         internal_PID_SetPoint = CurrentMotorPosition;
@@ -472,15 +489,6 @@ void interrupt low_priority SlowTick() {
         Move_shifted_position.ub[1] = Move_position[1].ub[0];
         Move_shifted_position.ub[2] = Move_position[1].ub[1];
         Move_shifted_position.ub[3] = Move_position[1].ub[2];
-
-        /*
-        TX_Idx=0;
-        TXBuffer[TX_Idx++]=Move_shifted_position.ub[0];
-        TXBuffer[TX_Idx++]=Move_shifted_position.ub[1];
-        TXBuffer[TX_Idx++]=Move_shifted_position.ub[2];
-        TXBuffer[TX_Idx++]=Move_shifted_position.ub[3];
-        TX_Idx = 0;
-        TX_bCount = 4;*/
 
         if (bMove_Neg) internal_PID_SetPoint = Move_Origin - Move_shifted_position.ul;
         else internal_PID_SetPoint = Move_Origin + Move_shifted_position.ul;
@@ -533,11 +541,6 @@ void interrupt low_priority SlowTick() {
     PID_ResponseLimit >>= 6;
     if (PID_ResponseLimit > 1023) PID_ResponseLimit = 1023;
 
-    if (PID_ResponseLimit>_AveragePID_ResponseLimit) _AveragePID_ResponseLimit++;
-    if (PID_ResponseLimit>_AveragePID_ResponseLimit) _AveragePID_ResponseLimit++;
-    if (PID_ResponseLimit<_AveragePID_ResponseLimit) _AveragePID_ResponseLimit--;
-    if (PID_ResponseLimit<_AveragePID_ResponseLimit) _AveragePID_ResponseLimit--;
-
     //---------------------------------------------------------------------------
     //Calculate the PID Error
     //---------------------------------------------------------------------------
@@ -571,7 +574,7 @@ void interrupt low_priority SlowTick() {
         MOTOR_FORWARD = 1;
         MOTOR_REVERSE = 0;
     }
-    if (ResponseOutput > _AveragePID_ResponseLimit) ResponseOutput = _AveragePID_ResponseLimit;
+    if (ResponseOutput > PID_ResponseLimit) ResponseOutput = PID_ResponseLimit;
 
     if (bPowerOff) {
         MOTOR_FORWARD = 0;
@@ -627,7 +630,7 @@ void SetupHardware() {
     TMR1IE = 1; //Enable the timer interrupt
     TMR1IP = 0; //Timer 1 is Low Level interrupt
 
-    TMR1ON = 1;
+    //TMR1ON = 1;
 
     //Setup PWM
     TMR2 = 0;
@@ -809,11 +812,9 @@ void NackCmd(unsigned char CmdID, unsigned char Reason) {
 }
 
 void Idle() {
-    unsigned int addr = 0;
     unsigned char MsgAddr = 0;
     unsigned char PresetNumber = 0;
     unsigned char *ConfigPtr;
-    ConfigStruct TempConfig;
     char idx;
     MULTI temp;
     PRESET tempPset;
@@ -1048,7 +1049,7 @@ void Idle() {
                 }
                 break;
             case CMD_GET_CONFIG:
-                ConfigPtr = (unsigned char *) &Config;
+                ConfigPtr=(unsigned char *)&Config;
                 TX_Idx = 0;
                 TXBuffer[TX_Idx++] = '$';
                 MessageStream_WriteByte(CmdID);
@@ -1062,22 +1063,6 @@ void Idle() {
                 idx = TX_Idx;
                 TX_Idx = 0;
                 TX_bCount = idx;
-                break;
-            case CMD_SET_CONFIG:
-                ConfigPtr = (unsigned char *) &TempConfig;
-                for (idx = 0; idx < sizeof (Config); idx++) {
-                    (*ConfigPtr) = MessageStream_ReadByte();
-                    ChkSum += (*ConfigPtr);
-                    ConfigPtr++;
-                }
-
-                if (ChkSum == MessageStream_ReadByte()) {
-                    addr=0;
-                    EEprom_write(&addr, (unsigned char *) &TempConfig, sizeof (TempConfig));
-                    AckCmd(CmdID);
-                } else {
-                    NackCmd(CmdID, ChkSum);
-                }
                 break;
             default:
                 NackCmd(CmdID, 0xFF);
