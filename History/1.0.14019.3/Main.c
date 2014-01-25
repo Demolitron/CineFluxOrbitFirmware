@@ -418,8 +418,8 @@ void interrupt low_priority SlowTick() {
             Move_speedQ24 -= Move_AccelValueQ24;
             if (Move_speedQ24 < Move_AccelValueQ24) {
                 internal_PID_SetPoint = Move_FinalPosition;
-                Move_speedQ24 = 0;
-                bMove_InProgress = 0;
+                Move_speedQ24 = 0;                
+                bMove_InProgress = 0;                
             }
         } else {
             if (Move_speedQ24 < Move_CoastSpeedQ24) {
@@ -472,7 +472,7 @@ void interrupt low_priority SlowTick() {
         Move_shifted_position.ub[1] = Move_position[1].ub[0];
         Move_shifted_position.ub[2] = Move_position[1].ub[1];
         Move_shifted_position.ub[3] = Move_position[1].ub[2];
-
+        
         if (bMove_Neg) internal_PID_SetPoint = Move_Origin - Move_shifted_position.ul;
         else internal_PID_SetPoint = Move_Origin + Move_shifted_position.ul;
     }
@@ -516,10 +516,10 @@ void interrupt low_priority SlowTick() {
     PID_ResponseLimit >>= 6;
     if (PID_ResponseLimit > 1023) PID_ResponseLimit = 1023;
 
-    if (PID_ResponseLimit > _AveragePID_ResponseLimit) _AveragePID_ResponseLimit++;
-    if (PID_ResponseLimit > _AveragePID_ResponseLimit) _AveragePID_ResponseLimit++;
-    if (PID_ResponseLimit < _AveragePID_ResponseLimit) _AveragePID_ResponseLimit--;
-    if (PID_ResponseLimit < _AveragePID_ResponseLimit) _AveragePID_ResponseLimit--;
+    if (PID_ResponseLimit>_AveragePID_ResponseLimit) _AveragePID_ResponseLimit++;
+    if (PID_ResponseLimit>_AveragePID_ResponseLimit) _AveragePID_ResponseLimit++;
+    if (PID_ResponseLimit<_AveragePID_ResponseLimit) _AveragePID_ResponseLimit--;
+    if (PID_ResponseLimit<_AveragePID_ResponseLimit) _AveragePID_ResponseLimit--;
 
     //---------------------------------------------------------------------------
     //Calculate the PID Error
@@ -800,7 +800,6 @@ void Idle() {
     char idx;
     MULTI temp;
     PRESET tempPset;
-    unsigned char TempID;
 
     if (ExtModeActive) {
         idx = 255;
@@ -821,38 +820,19 @@ void Idle() {
     if (MsgAddr == 0xFF) {
         TX_Idx = 0;
         TXBuffer[TX_Idx++] = '$';
-        MessageStream_WriteByte(Config.MyID);
-        ChkSum += Config.MyID;
+        MessageStream_WriteByte(MyID);
         MessageStream_WriteByte('O');
-        ChkSum += 'O';
         MessageStream_WriteByte('R');
-        ChkSum += 'R';
         MessageStream_WriteByte('B');
-        ChkSum += 'B';
         MessageStream_WriteByte('I');
-        ChkSum += 'I';
         MessageStream_WriteByte('T');
-        ChkSum += 'T';
-        MessageStream_WriteByte(ChkSum);
         TXBuffer[TX_Idx++] = '#';
         idx = TX_Idx;
         TX_Idx = 0;
-        TX_bCount = idx;        
-    } else if (MsgAddr == Config.MyID) {
+        TX_bCount = idx;
+    } else if (MsgAddr == MyID) {
         unsigned char CmdID = MessageStream_ReadByte();
         switch (CmdID) {
-            case CMD_SET_ID:
-                TempID = MessageStream_ReadByte();
-                ChkSum += TempID;
-                if (ChkSum == MessageStream_ReadByte()) {
-                    Config.MyID = TempID;
-                    addr = 0;
-                    EEprom_write(&addr, (unsigned char *) &Config, sizeof (Config));
-                    AckCmd(CmdID);
-                } else {
-                    NackCmd(CmdID, ChkSum);
-                }
-                break;
             case CMD_GET_COMPLETE_STATUS:
                 TX_Idx = 0;
                 TXBuffer[TX_Idx++] = '$';
@@ -1078,7 +1058,7 @@ void Idle() {
                 }
 
                 if (ChkSum == MessageStream_ReadByte()) {
-                    addr = 0;
+                    addr=0;
                     EEprom_write(&addr, (unsigned char *) &TempConfig, sizeof (TempConfig));
                     AckCmd(CmdID);
                 } else {

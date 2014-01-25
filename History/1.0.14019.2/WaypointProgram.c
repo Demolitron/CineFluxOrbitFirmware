@@ -431,18 +431,13 @@ signed char RunWaypointProgram() {
 
 labelFinished:
     bMove_InProgress = 0;
-    bFollowMode = 0;
-    bSpeedMode = 1;
-    Speed_SetToThis = 0;
-    Speed_SetPending = 1;
+    bFollowMode = 1;
     LCD_ClearDisplay();
     LCD_PrintString("STOPPING...\0");
-    while (Speed_SetPending);
-    while (Speed_IsAccelerating){
-        Idle();
-    }
+    Idle();
     bMove_InProgress = 0;
+    bFollowMode = 1;
+    Wait_ms(500);
     bFollowMode = 0;
-    bSpeedMode=0;
     return retCode;
 }

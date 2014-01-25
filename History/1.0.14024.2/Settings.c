@@ -27,8 +27,6 @@ void FactoryDefault() {
     Config.Counts_Per_Degree = 17.5;
     Config.Degrees_Per_Count = 0.05714286;
 
-    Config.MyID=0xAA;
-
     PRESET Empty;
     Empty.Orbit.Type = 0;
     SavePreset(0, (unsigned char *) &Empty);

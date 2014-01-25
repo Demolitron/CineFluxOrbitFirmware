@@ -16,7 +16,6 @@ typedef struct {
     unsigned int PID_Kd;
     double Counts_Per_Degree;
     double Degrees_Per_Count;
-    unsigned char MyID;
 } ConfigStruct;
 
 typedef struct {
@@ -63,4 +62,4 @@ unsigned char GetPresetType(char pnum);
 void SavePreset(char pnum, unsigned char *dat);
 void LoadPreset(char pnum, unsigned char *dat);
 
-#define CONFIG_SCHEMA_VERSION 5
+#define CONFIG_SCHEMA_VERSION 3

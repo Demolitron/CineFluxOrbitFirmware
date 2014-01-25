@@ -215,7 +215,6 @@ volatile bit bPowerOff = 0;
 #define CMD_GET_COMPLETE_STATUS  0x1B
 #define CMD_GET_CONFIG  0x1C
 #define CMD_SET_CONFIG  0x1D
-#define CMD_SET_ID      0x1E
 
 #define CMD_PREP_MOVE   0x60
 #define CMD_EXEC_MOVE   0x61
