@@ -1,0 +1,42 @@
+!_TAG_FILE_FORMAT	2	/extended format; --format=1 will not append ;" to lines/
+!_TAG_FILE_SORTED	1	/0=unsorted, 1=sorted, 2=foldcase/
+!_TAG_PROGRAM_AUTHOR	Darren Hiebert	/dhiebert@users.sourceforge.net/
+!_TAG_PROGRAM_NAME	Exuberant Ctags	//
+!_TAG_PROGRAM_URL	http://ctags.sourceforge.net	/official site/
+!_TAG_PROGRAM_VERSION	5.5.4	//
+!_TAG_REVISION_NAME	MCHPTags	//
+!_TAG_REVISION_VERSION	6.0.1	//
+BlockAddress	C:\Users\THORAXIUM\Dropbox\EaglePCB\projects\Orbit\Firmware\Bootloader\BootLoader.c	55;"	v	line:55
+Buffer	C:\Users\THORAXIUM\Dropbox\EaglePCB\projects\Orbit\Firmware\Bootloader\BootLoader.c	49;"	v	line:49
+CheckSum	C:\Users\THORAXIUM\Dropbox\EaglePCB\projects\Orbit\Firmware\Bootloader\BootLoader.c	54;"	v	line:54
+Delay_ms	C:\Users\THORAXIUM\Dropbox\EaglePCB\projects\Orbit\Firmware\Bootloader\BootLoader.c	34;"	p	line:34	file:	signature:(int ms)
+LED1_Off::TRISBbits.TRISB3=1	C:\Users\THORAXIUM\Dropbox\EaglePCB\projects\Orbit\Firmware\Bootloader\BootLoader.c	15;"	d	line:15	file:
+LED1_On::TRISBbits.TRISB3=0	C:\Users\THORAXIUM\Dropbox\EaglePCB\projects\Orbit\Firmware\Bootloader\BootLoader.c	9;"	d	line:9	file:
+LED2_Off::TRISBbits.TRISB4=1	C:\Users\THORAXIUM\Dropbox\EaglePCB\projects\Orbit\Firmware\Bootloader\BootLoader.c	16;"	d	line:16	file:
+LED2_On::TRISBbits.TRISB4=0	C:\Users\THORAXIUM\Dropbox\EaglePCB\projects\Orbit\Firmware\Bootloader\BootLoader.c	10;"	d	line:10	file:
+LED3_Off::TRISBbits.TRISB5=1	C:\Users\THORAXIUM\Dropbox\EaglePCB\projects\Orbit\Firmware\Bootloader\BootLoader.c	17;"	d	line:17	file:
+LED3_On::TRISBbits.TRISB5=0	C:\Users\THORAXIUM\Dropbox\EaglePCB\projects\Orbit\Firmware\Bootloader\BootLoader.c	11;"	d	line:11	file:
+LED4_Off::TRISAbits.TRISA6=1	C:\Users\THORAXIUM\Dropbox\EaglePCB\projects\Orbit\Firmware\Bootloader\BootLoader.c	18;"	d	line:18	file:
+LED4_On::TRISAbits.TRISA6=0	C:\Users\THORAXIUM\Dropbox\EaglePCB\projects\Orbit\Firmware\Bootloader\BootLoader.c	12;"	d	line:12	file:
+LED5_Off::TRISAbits.TRISA7=1	C:\Users\THORAXIUM\Dropbox\EaglePCB\projects\Orbit\Firmware\Bootloader\BootLoader.c	19;"	d	line:19	file:
+LED5_On::TRISAbits.TRISA7=0	C:\Users\THORAXIUM\Dropbox\EaglePCB\projects\Orbit\Firmware\Bootloader\BootLoader.c	13;"	d	line:13	file:
+LONG	C:\Users\THORAXIUM\Dropbox\EaglePCB\projects\Orbit\Firmware\Bootloader\BootLoader.c	21;"	u	line:21	file:
+PROG_START::0x1000	C:\Users\THORAXIUM\Dropbox\EaglePCB\projects\Orbit\Firmware\Bootloader\BootLoader.c	6;"	d	line:6	file:
+Set_Pins	C:\Users\THORAXIUM\Dropbox\EaglePCB\projects\Orbit\Firmware\Bootloader\BootLoader.c	31;"	p	line:31	file:	signature:(void)
+Setup_UART	C:\Users\THORAXIUM\Dropbox\EaglePCB\projects\Orbit\Firmware\Bootloader\BootLoader.c	32;"	p	line:32	file:	signature:(void)
+UI_SWITCH::((!PORTCbits.RC0)&&(!PORTFbits	C:\Users\THORAXIUM\Dropbox\EaglePCB\projects\Orbit\Firmware\Bootloader\BootLoader.c	7;"	d	line:7	file:
+ab	C:\Users\THORAXIUM\Dropbox\EaglePCB\projects\Orbit\Firmware\Bootloader\BootLoader.c	48;"	v	line:48
+b	C:\Users\THORAXIUM\Dropbox\EaglePCB\projects\Orbit\Firmware\Bootloader\BootLoader.c	23;"	m	line:23	union:LONG	file:
+getc	C:\Users\THORAXIUM\Dropbox\EaglePCB\projects\Orbit\Firmware\Bootloader\BootLoader.c	35;"	p	line:35	file:	signature:(void)
+gethex	C:\Users\THORAXIUM\Dropbox\EaglePCB\projects\Orbit\Firmware\Bootloader\BootLoader.c	36;"	p	line:36	file:	signature:(void)
+i	C:\Users\THORAXIUM\Dropbox\EaglePCB\projects\Orbit\Firmware\Bootloader\BootLoader.c	25;"	m	line:25	union:LONG	file:
+idx	C:\Users\THORAXIUM\Dropbox\EaglePCB\projects\Orbit\Firmware\Bootloader\BootLoader.c	51;"	v	line:51
+inp	C:\Users\THORAXIUM\Dropbox\EaglePCB\projects\Orbit\Firmware\Bootloader\BootLoader.c	50;"	v	line:50
+l	C:\Users\THORAXIUM\Dropbox\EaglePCB\projects\Orbit\Firmware\Bootloader\BootLoader.c	27;"	m	line:27	union:LONG	file:
+putc	C:\Users\THORAXIUM\Dropbox\EaglePCB\projects\Orbit\Firmware\Bootloader\BootLoader.c	33;"	p	line:33	file:	signature:(unsigned char dat)
+qqq	C:\Users\THORAXIUM\Dropbox\EaglePCB\projects\Orbit\Firmware\Bootloader\BootLoader.c	57;"	v	line:57
+tbuf	C:\Users\THORAXIUM\Dropbox\EaglePCB\projects\Orbit\Firmware\Bootloader\BootLoader.c	53;"	v	line:53
+temp	C:\Users\THORAXIUM\Dropbox\EaglePCB\projects\Orbit\Firmware\Bootloader\BootLoader.c	52;"	v	line:52
+ub	C:\Users\THORAXIUM\Dropbox\EaglePCB\projects\Orbit\Firmware\Bootloader\BootLoader.c	22;"	m	line:22	union:LONG	file:
+ui	C:\Users\THORAXIUM\Dropbox\EaglePCB\projects\Orbit\Firmware\Bootloader\BootLoader.c	24;"	m	line:24	union:LONG	file:
+ul	C:\Users\THORAXIUM\Dropbox\EaglePCB\projects\Orbit\Firmware\Bootloader\BootLoader.c	26;"	m	line:26	union:LONG	file:

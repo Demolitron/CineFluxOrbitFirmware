@@ -1,0 +1,8 @@
+_putc: CODE, 1422 0 18
+_main: CODE, 32 0 984
+_Delay_ms: CODE, 1016 0 104
+_Setup_UART: CODE, 1380 0 42
+_getc: CODE, 1308 0 72
+_Set_Pins: CODE, 1222 0 86
+_gethex: CODE, 1120 0 102
+Total: 1408
