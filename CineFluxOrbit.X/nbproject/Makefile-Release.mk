@@ -45,17 +45,17 @@ OBJECTDIR=build/${CND_CONF}/${IMAGE_TYPE}
 DISTDIR=dist/${CND_CONF}/${IMAGE_TYPE}
 
 # Source Files Quoted if spaced
-SOURCEFILES_QUOTED_IF_SPACED=../ExtMode.c ../LCD.c ../Main.c ../MotionEngine.c ../OrbitProgram.c ../RealtimeMode.c ../Settings.c ../Timings.c ../UserInterface.c ../WaypointProgram.c
+SOURCEFILES_QUOTED_IF_SPACED=../ExtMode.c ../Main.c ../MotionEngine.c ../OrbitProgram.c ../RealtimeMode.c ../Settings.c ../Timings.c ../UserInterface.c ../WaypointProgram.c ../LCD.c
 
 # Object Files Quoted if spaced
-OBJECTFILES_QUOTED_IF_SPACED=${OBJECTDIR}/_ext/1472/ExtMode.p1 ${OBJECTDIR}/_ext/1472/LCD.p1 ${OBJECTDIR}/_ext/1472/Main.p1 ${OBJECTDIR}/_ext/1472/MotionEngine.p1 ${OBJECTDIR}/_ext/1472/OrbitProgram.p1 ${OBJECTDIR}/_ext/1472/RealtimeMode.p1 ${OBJECTDIR}/_ext/1472/Settings.p1 ${OBJECTDIR}/_ext/1472/Timings.p1 ${OBJECTDIR}/_ext/1472/UserInterface.p1 ${OBJECTDIR}/_ext/1472/WaypointProgram.p1
-POSSIBLE_DEPFILES=${OBJECTDIR}/_ext/1472/ExtMode.p1.d ${OBJECTDIR}/_ext/1472/LCD.p1.d ${OBJECTDIR}/_ext/1472/Main.p1.d ${OBJECTDIR}/_ext/1472/MotionEngine.p1.d ${OBJECTDIR}/_ext/1472/OrbitProgram.p1.d ${OBJECTDIR}/_ext/1472/RealtimeMode.p1.d ${OBJECTDIR}/_ext/1472/Settings.p1.d ${OBJECTDIR}/_ext/1472/Timings.p1.d ${OBJECTDIR}/_ext/1472/UserInterface.p1.d ${OBJECTDIR}/_ext/1472/WaypointProgram.p1.d
+OBJECTFILES_QUOTED_IF_SPACED=${OBJECTDIR}/_ext/1472/ExtMode.p1 ${OBJECTDIR}/_ext/1472/Main.p1 ${OBJECTDIR}/_ext/1472/MotionEngine.p1 ${OBJECTDIR}/_ext/1472/OrbitProgram.p1 ${OBJECTDIR}/_ext/1472/RealtimeMode.p1 ${OBJECTDIR}/_ext/1472/Settings.p1 ${OBJECTDIR}/_ext/1472/Timings.p1 ${OBJECTDIR}/_ext/1472/UserInterface.p1 ${OBJECTDIR}/_ext/1472/WaypointProgram.p1 ${OBJECTDIR}/_ext/1472/LCD.p1
+POSSIBLE_DEPFILES=${OBJECTDIR}/_ext/1472/ExtMode.p1.d ${OBJECTDIR}/_ext/1472/Main.p1.d ${OBJECTDIR}/_ext/1472/MotionEngine.p1.d ${OBJECTDIR}/_ext/1472/OrbitProgram.p1.d ${OBJECTDIR}/_ext/1472/RealtimeMode.p1.d ${OBJECTDIR}/_ext/1472/Settings.p1.d ${OBJECTDIR}/_ext/1472/Timings.p1.d ${OBJECTDIR}/_ext/1472/UserInterface.p1.d ${OBJECTDIR}/_ext/1472/WaypointProgram.p1.d ${OBJECTDIR}/_ext/1472/LCD.p1.d
 
 # Object Files
-OBJECTFILES=${OBJECTDIR}/_ext/1472/ExtMode.p1 ${OBJECTDIR}/_ext/1472/LCD.p1 ${OBJECTDIR}/_ext/1472/Main.p1 ${OBJECTDIR}/_ext/1472/MotionEngine.p1 ${OBJECTDIR}/_ext/1472/OrbitProgram.p1 ${OBJECTDIR}/_ext/1472/RealtimeMode.p1 ${OBJECTDIR}/_ext/1472/Settings.p1 ${OBJECTDIR}/_ext/1472/Timings.p1 ${OBJECTDIR}/_ext/1472/UserInterface.p1 ${OBJECTDIR}/_ext/1472/WaypointProgram.p1
+OBJECTFILES=${OBJECTDIR}/_ext/1472/ExtMode.p1 ${OBJECTDIR}/_ext/1472/Main.p1 ${OBJECTDIR}/_ext/1472/MotionEngine.p1 ${OBJECTDIR}/_ext/1472/OrbitProgram.p1 ${OBJECTDIR}/_ext/1472/RealtimeMode.p1 ${OBJECTDIR}/_ext/1472/Settings.p1 ${OBJECTDIR}/_ext/1472/Timings.p1 ${OBJECTDIR}/_ext/1472/UserInterface.p1 ${OBJECTDIR}/_ext/1472/WaypointProgram.p1 ${OBJECTDIR}/_ext/1472/LCD.p1
 
 # Source Files
-SOURCEFILES=../ExtMode.c ../LCD.c ../Main.c ../MotionEngine.c ../OrbitProgram.c ../RealtimeMode.c ../Settings.c ../Timings.c ../UserInterface.c ../WaypointProgram.c
+SOURCEFILES=../ExtMode.c ../Main.c ../MotionEngine.c ../OrbitProgram.c ../RealtimeMode.c ../Settings.c ../Timings.c ../UserInterface.c ../WaypointProgram.c ../LCD.c
 
 
 CFLAGS=
@@ -103,14 +103,6 @@ ${OBJECTDIR}/_ext/1472/ExtMode.p1: ../ExtMode.c  nbproject/Makefile-${CND_CONF}.
 	@echo ${OBJECTDIR}/_ext/1472/ExtMode.p1: > ${OBJECTDIR}/_ext/1472/ExtMode.p1.d
 	@cat ${OBJECTDIR}/_ext/1472/ExtMode.dep >> ${OBJECTDIR}/_ext/1472/ExtMode.p1.d
 	@${FIXDEPS} "${OBJECTDIR}/_ext/1472/ExtMode.p1.d" $(SILENT) -ht  -rsi ${MP_CC_DIR}../ 
-	
-${OBJECTDIR}/_ext/1472/LCD.p1: ../LCD.c  nbproject/Makefile-${CND_CONF}.mk
-	@${MKDIR} ${OBJECTDIR}/_ext/1472 
-	${MP_CC} --pass1 ../LCD.c $(MP_EXTRA_CC_PRE) -q --chip=$(MP_PROCESSOR_OPTION) -P  --outdir="${OBJECTDIR}\_ext\1472" -P -N31 -I".." -I"." --warn=0 --runtime=default,+clear,+init,-keep,-download,+stackwarn,-config,+clib,+plib --opt=default,+asm,-asmfile,-speed,+space,9 -D__DEBUG  --cp=16 -Blarge --double=32  --mode=pro -g --asmlist "--errformat=%%f:%%l: error: %%s" "--msgformat=%%f:%%l: advisory: %%s" "--warnformat=%%f:%%l warning: %%s"  
-	@${MP_CC} --scandep  ../LCD.c $(MP_EXTRA_CC_PRE) -q --chip=$(MP_PROCESSOR_OPTION) -P  --outdir="${OBJECTDIR}\_ext\1472" -P -N31 -I".." -I"." --warn=0 --runtime=default,+clear,+init,-keep,-download,+stackwarn,-config,+clib,+plib --opt=default,+asm,-asmfile,-speed,+space,9 -D__DEBUG  --cp=16 -Blarge --double=32  --mode=pro -g --asmlist "--errformat=%%f:%%l: error: %%s" "--msgformat=%%f:%%l: advisory: %%s" "--warnformat=%%f:%%l warning: %%s"  
-	@echo ${OBJECTDIR}/_ext/1472/LCD.p1: > ${OBJECTDIR}/_ext/1472/LCD.p1.d
-	@cat ${OBJECTDIR}/_ext/1472/LCD.dep >> ${OBJECTDIR}/_ext/1472/LCD.p1.d
-	@${FIXDEPS} "${OBJECTDIR}/_ext/1472/LCD.p1.d" $(SILENT) -ht  -rsi ${MP_CC_DIR}../ 
 	
 ${OBJECTDIR}/_ext/1472/Main.p1: ../Main.c  nbproject/Makefile-${CND_CONF}.mk
 	@${MKDIR} ${OBJECTDIR}/_ext/1472 
@@ -176,6 +168,14 @@ ${OBJECTDIR}/_ext/1472/WaypointProgram.p1: ../WaypointProgram.c  nbproject/Makef
 	@cat ${OBJECTDIR}/_ext/1472/WaypointProgram.dep >> ${OBJECTDIR}/_ext/1472/WaypointProgram.p1.d
 	@${FIXDEPS} "${OBJECTDIR}/_ext/1472/WaypointProgram.p1.d" $(SILENT) -ht  -rsi ${MP_CC_DIR}../ 
 	
+${OBJECTDIR}/_ext/1472/LCD.p1: ../LCD.c  nbproject/Makefile-${CND_CONF}.mk
+	@${MKDIR} ${OBJECTDIR}/_ext/1472 
+	${MP_CC} --pass1 ../LCD.c $(MP_EXTRA_CC_PRE) -q --chip=$(MP_PROCESSOR_OPTION) -P  --outdir="${OBJECTDIR}\_ext\1472" -P -N31 -I".." -I"." --warn=0 --runtime=default,+clear,+init,-keep,-download,+stackwarn,-config,+clib,+plib --opt=default,+asm,-asmfile,-speed,+space,9 -D__DEBUG  --cp=16 -Blarge --double=32  --mode=pro -g --asmlist "--errformat=%%f:%%l: error: %%s" "--msgformat=%%f:%%l: advisory: %%s" "--warnformat=%%f:%%l warning: %%s"  
+	@${MP_CC} --scandep  ../LCD.c $(MP_EXTRA_CC_PRE) -q --chip=$(MP_PROCESSOR_OPTION) -P  --outdir="${OBJECTDIR}\_ext\1472" -P -N31 -I".." -I"." --warn=0 --runtime=default,+clear,+init,-keep,-download,+stackwarn,-config,+clib,+plib --opt=default,+asm,-asmfile,-speed,+space,9 -D__DEBUG  --cp=16 -Blarge --double=32  --mode=pro -g --asmlist "--errformat=%%f:%%l: error: %%s" "--msgformat=%%f:%%l: advisory: %%s" "--warnformat=%%f:%%l warning: %%s"  
+	@echo ${OBJECTDIR}/_ext/1472/LCD.p1: > ${OBJECTDIR}/_ext/1472/LCD.p1.d
+	@cat ${OBJECTDIR}/_ext/1472/LCD.dep >> ${OBJECTDIR}/_ext/1472/LCD.p1.d
+	@${FIXDEPS} "${OBJECTDIR}/_ext/1472/LCD.p1.d" $(SILENT) -ht  -rsi ${MP_CC_DIR}../ 
+	
 else
 ${OBJECTDIR}/_ext/1472/ExtMode.p1: ../ExtMode.c  nbproject/Makefile-${CND_CONF}.mk
 	@${MKDIR} ${OBJECTDIR}/_ext/1472 
@@ -184,14 +184,6 @@ ${OBJECTDIR}/_ext/1472/ExtMode.p1: ../ExtMode.c  nbproject/Makefile-${CND_CONF}.
 	@echo ${OBJECTDIR}/_ext/1472/ExtMode.p1: > ${OBJECTDIR}/_ext/1472/ExtMode.p1.d
 	@cat ${OBJECTDIR}/_ext/1472/ExtMode.dep >> ${OBJECTDIR}/_ext/1472/ExtMode.p1.d
 	@${FIXDEPS} "${OBJECTDIR}/_ext/1472/ExtMode.p1.d" $(SILENT) -ht  -rsi ${MP_CC_DIR}../ 
-	
-${OBJECTDIR}/_ext/1472/LCD.p1: ../LCD.c  nbproject/Makefile-${CND_CONF}.mk
-	@${MKDIR} ${OBJECTDIR}/_ext/1472 
-	${MP_CC} --pass1 ../LCD.c $(MP_EXTRA_CC_PRE) -q --chip=$(MP_PROCESSOR_OPTION) -P  --outdir="${OBJECTDIR}\_ext\1472" -P -N31 -I".." -I"." --warn=0 --runtime=default,+clear,+init,-keep,-download,+stackwarn,-config,+clib,+plib --opt=default,+asm,-asmfile,-speed,+space,9 --cp=16 -Blarge --double=32  --mode=pro -g --asmlist "--errformat=%%f:%%l: error: %%s" "--msgformat=%%f:%%l: advisory: %%s" "--warnformat=%%f:%%l warning: %%s"  
-	@${MP_CC} --scandep  ../LCD.c $(MP_EXTRA_CC_PRE) -q --chip=$(MP_PROCESSOR_OPTION) -P  --outdir="${OBJECTDIR}\_ext\1472" -P -N31 -I".." -I"." --warn=0 --runtime=default,+clear,+init,-keep,-download,+stackwarn,-config,+clib,+plib --opt=default,+asm,-asmfile,-speed,+space,9 --cp=16 -Blarge --double=32  --mode=pro -g --asmlist "--errformat=%%f:%%l: error: %%s" "--msgformat=%%f:%%l: advisory: %%s" "--warnformat=%%f:%%l warning: %%s"  
-	@echo ${OBJECTDIR}/_ext/1472/LCD.p1: > ${OBJECTDIR}/_ext/1472/LCD.p1.d
-	@cat ${OBJECTDIR}/_ext/1472/LCD.dep >> ${OBJECTDIR}/_ext/1472/LCD.p1.d
-	@${FIXDEPS} "${OBJECTDIR}/_ext/1472/LCD.p1.d" $(SILENT) -ht  -rsi ${MP_CC_DIR}../ 
 	
 ${OBJECTDIR}/_ext/1472/Main.p1: ../Main.c  nbproject/Makefile-${CND_CONF}.mk
 	@${MKDIR} ${OBJECTDIR}/_ext/1472 
@@ -256,6 +248,14 @@ ${OBJECTDIR}/_ext/1472/WaypointProgram.p1: ../WaypointProgram.c  nbproject/Makef
 	@echo ${OBJECTDIR}/_ext/1472/WaypointProgram.p1: > ${OBJECTDIR}/_ext/1472/WaypointProgram.p1.d
 	@cat ${OBJECTDIR}/_ext/1472/WaypointProgram.dep >> ${OBJECTDIR}/_ext/1472/WaypointProgram.p1.d
 	@${FIXDEPS} "${OBJECTDIR}/_ext/1472/WaypointProgram.p1.d" $(SILENT) -ht  -rsi ${MP_CC_DIR}../ 
+	
+${OBJECTDIR}/_ext/1472/LCD.p1: ../LCD.c  nbproject/Makefile-${CND_CONF}.mk
+	@${MKDIR} ${OBJECTDIR}/_ext/1472 
+	${MP_CC} --pass1 ../LCD.c $(MP_EXTRA_CC_PRE) -q --chip=$(MP_PROCESSOR_OPTION) -P  --outdir="${OBJECTDIR}\_ext\1472" -P -N31 -I".." -I"." --warn=0 --runtime=default,+clear,+init,-keep,-download,+stackwarn,-config,+clib,+plib --opt=default,+asm,-asmfile,-speed,+space,9 --cp=16 -Blarge --double=32  --mode=pro -g --asmlist "--errformat=%%f:%%l: error: %%s" "--msgformat=%%f:%%l: advisory: %%s" "--warnformat=%%f:%%l warning: %%s"  
+	@${MP_CC} --scandep  ../LCD.c $(MP_EXTRA_CC_PRE) -q --chip=$(MP_PROCESSOR_OPTION) -P  --outdir="${OBJECTDIR}\_ext\1472" -P -N31 -I".." -I"." --warn=0 --runtime=default,+clear,+init,-keep,-download,+stackwarn,-config,+clib,+plib --opt=default,+asm,-asmfile,-speed,+space,9 --cp=16 -Blarge --double=32  --mode=pro -g --asmlist "--errformat=%%f:%%l: error: %%s" "--msgformat=%%f:%%l: advisory: %%s" "--warnformat=%%f:%%l warning: %%s"  
+	@echo ${OBJECTDIR}/_ext/1472/LCD.p1: > ${OBJECTDIR}/_ext/1472/LCD.p1.d
+	@cat ${OBJECTDIR}/_ext/1472/LCD.dep >> ${OBJECTDIR}/_ext/1472/LCD.p1.d
+	@${FIXDEPS} "${OBJECTDIR}/_ext/1472/LCD.p1.d" $(SILENT) -ht  -rsi ${MP_CC_DIR}../ 
 	
 endif
 
